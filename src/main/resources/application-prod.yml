@@ -1,0 +1,13 @@
+spring:
+    profiles: prod
+
+environment: prod
+name: Production
+url: localhost
+port: 8080
+
+mongo:
+    hosts: 10.9.250.151
+    port: 27017
+    dbName: prod
+    auth: false

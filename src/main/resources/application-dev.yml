@@ -1,0 +1,15 @@
+spring:
+    profiles: dev
+
+environment: test
+name: Test
+url: localhost
+port: 8080
+
+mongo:
+    clusterHost: ita-covid19-beipl.mongodb.net
+    port: 27017
+    dbName: covid19
+    auth: true
+    user: carmelolg
+    password: r1p_oppy
