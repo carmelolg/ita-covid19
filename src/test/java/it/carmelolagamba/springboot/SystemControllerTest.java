@@ -6,9 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import it.carmelolagamba.ita.covid19.SpringBootApp;
 import it.carmelolagamba.ita.covid19.controller.SystemController;
 
-@SpringBootTest
+@SpringBootTest(classes = SpringBootApp.class)
 public class SystemControllerTest {
 
 	@Autowired

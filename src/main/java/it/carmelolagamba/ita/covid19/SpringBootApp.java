@@ -1,5 +1,7 @@
 package it.carmelolagamba.ita.covid19;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +16,8 @@ import it.carmelolagamba.ita.covid19.config.ApplicationProperties;
 @EnableConfigurationProperties
 public class SpringBootApp implements CommandLineRunner {
 
+	private static Logger log = LoggerFactory.getLogger(SpringBootApp.class);
+
 	@Autowired
 	private ApplicationProperties config;
 
@@ -23,12 +27,13 @@ public class SpringBootApp implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		System.out.println(" ---------------------------------------------------- ");
-		System.out.println(" -- ");
-		System.out.println(" --   Environment: " + config.getEnvironment());
-		System.out.println(" --   App name: " + config.getName());
-		System.out.println(" --   Rest API available at: " + config.getUrl() + ":" + String.valueOf(config.getPort()));
-		System.out.println(" -- ");
-		System.out.println(" ---------------------------------------------------- ");
+		log.info(" ---------------------------------------------------- ");
+		log.info(" -- ");
+		log.info(" --   Environment: {}", config.getEnvironment());
+		log.info(" --   App name: {}", config.getName());
+		log.info(" --   Rest API available at: {}:{}", config.getUrl(),
+				(config.getPort() != null) ? String.valueOf(config.getPort()) : "");
+		log.info(" -- ");
+		log.info(" ---------------------------------------------------- ");
 	}
 }
