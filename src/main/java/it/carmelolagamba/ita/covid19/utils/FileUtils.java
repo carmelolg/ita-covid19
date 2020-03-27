@@ -9,6 +9,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -26,33 +28,27 @@ public class FileUtils {
 		System.out.println(listFiles.listAllFiles(folder));
 	}
 
-	// Uses listFiles method
-	public List<String> listAllFiles(File folder) {
+	public List<File> listAllFiles(File folder) {
 
 		File[] fileNames = folder.listFiles();
-		List<String> filenameList = new ArrayList<>();
+		List<File> list = new ArrayList<>();
 		for (File file : fileNames) {
 			if (file.isDirectory()) {
 				logger.error("Path {} is a folder", file.getAbsoluteFile());
 			} else {
-				filenameList.add(file.getAbsolutePath());
+				list.add(file);
 			}
 		}
 
-		return filenameList;
-	}
-
-	public List<String[]> readAll(Reader reader) throws IOException {
-		CSVReader csvReader = new CSVReader(reader);
-		List<String[]> list;
-		list = csvReader.readAll();
-		reader.close();
-		csvReader.close();
 		return list;
 	}
 
-	public String readAllExample() throws URISyntaxException, IOException {
-		Reader reader = Files.newBufferedReader(Paths.get(ClassLoader.getSystemResource("csv/twoColumn.csv").toURI()));
-		return readAll(reader).toString();
+	public static Integer convertStringToInteger(String value){
+		try{
+			Integer i = Integer.parseInt(value);
+			return i;
+		}catch (NumberFormatException e){
+			return -1;
+		}
 	}
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.async.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-import it.carmelolagamba.ita.covid19.domain.FileImportedMongo;
+import it.carmelolagamba.ita.covid19.domain.FileImported;
 import it.carmelolagamba.mongo.service.DatabaseService;
 
 
@@ -16,13 +16,13 @@ public class FileImportedCollectionService {
 	@Autowired
 	private DatabaseService dbService;
 
-	public com.mongodb.client.MongoCollection<FileImportedMongo> getCollection(String nameCollection) {
+	public com.mongodb.client.MongoCollection<FileImported> getCollection(String nameCollection) {
 		MongoDatabase db = dbService.getDefaultDb();
-		return db.getCollection(nameCollection, FileImportedMongo.class);
+		return db.getCollection(nameCollection, FileImported.class);
 	}
 
-	public MongoCollection<FileImportedMongo> getAsyncCollection(String nameCollection) {
+	public MongoCollection<FileImported> getAsyncCollection(String nameCollection) {
 		com.mongodb.async.client.MongoDatabase db = dbService.getAsyncDefaultDb();
-		return db.getCollection(nameCollection, FileImportedMongo.class);
+		return db.getCollection(nameCollection, FileImported.class);
 	}
 }

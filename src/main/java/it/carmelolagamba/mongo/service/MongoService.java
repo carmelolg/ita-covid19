@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mongodb.connection.ClusterSettings;
+import com.mongodb.connection.SslSettings;
+import com.mongodb.connection.netty.NettyStreamFactoryFactory;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.Convention;
 import org.bson.codecs.pojo.Conventions;
@@ -35,146 +40,157 @@ import it.carmelolagamba.mongo.utils.MongoStatusConnection;
 import it.carmelolagamba.mongo.utils.MongoStatusConnection.Status;
 
 @Component
-@EnableConfigurationProperties({ MongoProperties.class })
+@EnableConfigurationProperties({MongoProperties.class})
 public class MongoService {
 
-	private Logger logger = LoggerFactory.getLogger(MongoService.class);
+    private Logger logger = LoggerFactory.getLogger(MongoService.class);
 
-	@Autowired
-	private MongoProperties mongoProperties;
+    @Autowired
+    private MongoProperties mongoProperties;
 
-	private MongoClient mongoClientInstance = null;
-	private com.mongodb.async.client.MongoClient asyncMongoClientInstance = null;
+    private MongoClient mongoClientInstance = null;
+    private com.mongodb.async.client.MongoClient asyncMongoClientInstance = null;
 
-	public CodecRegistry getCodecRegistry() {
+    public CodecRegistry getCodecRegistry() {
 
-		List<Convention> conventions = new ArrayList<>();
-		conventions.addAll(Conventions.DEFAULT_CONVENTIONS);
+        List<Convention> conventions = new ArrayList<>();
+        conventions.addAll(Conventions.DEFAULT_CONVENTIONS);
 
-		return fromRegistries(MongoClient.getDefaultCodecRegistry(),
-				fromProviders(PojoCodecProvider.builder().conventions(conventions).automatic(true).build()));
-	}
+        return fromRegistries(MongoClient.getDefaultCodecRegistry(),
+                fromProviders(PojoCodecProvider.builder().conventions(conventions).automatic(true).build()));
+    }
 
-	public MongoClient getMongoClient() {
+    public MongoClient getMongoClient() {
 
-		if (mongoClientInstance == null) {
+        if (mongoClientInstance == null) {
 
-			String clusterConnectionString = String.join("", "mongodb+srv://", mongoProperties.getUser(), ":",
-					mongoProperties.getPassword(), "@", mongoProperties.getClusterHost(), "/",
-					mongoProperties.getDbName());
-			
-			MongoClientURI uri = new MongoClientURI(clusterConnectionString);
-			mongoClientInstance = new MongoClient(uri);
+            String clusterConnectionString = String.join("", "mongodb+srv://", mongoProperties.getUser(), ":",
+                    mongoProperties.getPassword(), "@", mongoProperties.getClusterHost(), "/",
+                    mongoProperties.getDbName());
 
-		}
+            MongoClientURI uri = new MongoClientURI(clusterConnectionString);
+            mongoClientInstance = new MongoClient(uri);
 
-		return mongoClientInstance;
-	}
+        }
 
-	public com.mongodb.async.client.MongoClient getAsyncMongoClient() {
+        return mongoClientInstance;
+    }
 
-		if (asyncMongoClientInstance == null) {
+    public com.mongodb.async.client.MongoClient getAsyncMongoClient() {
 
-			List<String> hostsPrepare = mongoProperties.getHosts().stream()
-					.map(h -> h.concat(":" + mongoProperties.getPort())).collect(Collectors.toList());
-			String hosts = String.join(",", hostsPrepare);
+        if (asyncMongoClientInstance == null) {
 
-			ConnectionString connectionString = new ConnectionString(
-					"mongodb://" + hosts + "/?authSource=" + mongoProperties.getDbName());
+            if (mongoProperties.getClusterHost() != null) {
+                String clusterConnectionString = String.join("", "mongodb+srv://", mongoProperties.getUser(), ":",
+                        mongoProperties.getPassword(), "@", mongoProperties.getClusterHost(), "/",
+                        mongoProperties.getDbName());
 
-			connectionString = new ConnectionString(
-					"mongodb://carmelolg:r1p_oppy@ita-covid19-shard-00-00-beipl.mongodb.net:27017,ita-covid19-shard-00-01-beipl.mongodb.net:27017,ita-covid19-shard-00-02-beipl.mongodb.net:27017/test?ssl=true&replicaSet=ita-covid19-shard-0&authSource=admin&retryWrites=true&w=majority");
+                ConnectionString connectionString = new ConnectionString(clusterConnectionString);
+                EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+                MongoClientSettings settings = MongoClientSettings.builder()
+                        .applyConnectionString(connectionString)
+                        .streamFactoryFactory(NettyStreamFactoryFactory.builder().eventLoopGroup(eventLoopGroup).build())
+                        .build();
 
-			MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(connectionString)
-					.build();
+                asyncMongoClientInstance = MongoClients.create(settings);
+            } else {
+                List<String> hostsPrepare = mongoProperties.getHosts().stream()
+                        .map(h -> h.concat(":" + mongoProperties.getPort())).collect(Collectors.toList());
+                String hosts = String.join(",", hostsPrepare);
 
-			// FIXME temporaneo finche ambiente di test non abbia authentication
-			if (mongoProperties.isAuth()) {
-				MongoCredential credential = MongoCredential.createCredential(mongoProperties.getUser(),
-						mongoProperties.getDbName(), mongoProperties.getPassword().toCharArray());
+                ConnectionString connectionString = new ConnectionString(
+                        "mongodb://" + hosts + "/?authSource=" + mongoProperties.getDbName());
 
-				settings = MongoClientSettings.builder().applyConnectionString(connectionString).credential(credential)
-						.build();
-			}
+                MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(connectionString)
+                        .build();
 
-			asyncMongoClientInstance = MongoClients.create(settings);
+                // FIXME temporaneo finche ambiente di test non abbia authentication
+                if (mongoProperties.isAuth()) {
+                    MongoCredential credential = MongoCredential.createCredential(mongoProperties.getUser(),
+                            mongoProperties.getDbName(), mongoProperties.getPassword().toCharArray());
 
-		}
+                    settings = MongoClientSettings.builder().applyConnectionString(connectionString).credential(credential)
+                            .build();
+                }
 
-		return asyncMongoClientInstance;
-	}
+                asyncMongoClientInstance = MongoClients.create(settings);
+            }
+        }
 
-	private void ping() {
-		DBObject ping = new BasicDBObject("ping", "1");
-		MongoIterable<String> dbList = getMongoClient().listDatabaseNames();
-		getMongoClient().getDatabase(dbList.first()).runCommand((Bson) ping);
-	}
+        return asyncMongoClientInstance;
+    }
 
-	private MongoStatusConnection replicaStatus() {
+    private void ping() {
+        DBObject ping = new BasicDBObject("ping", "1");
+        MongoIterable<String> dbList = getMongoClient().listDatabaseNames();
+        getMongoClient().getDatabase(dbList.first()).runCommand((Bson) ping);
+    }
 
-		String message = "";
-		MongoStatusConnection replicaStatus = new MongoStatusConnection();
-		replicaStatus.setName(MongoStatusConnection.Services.MONGO_REPLICA_SET.getValue());
+    private MongoStatusConnection replicaStatus() {
 
-		try {
-			final long startTime = System.currentTimeMillis();
-			ReplicaSetStatus replicaSetStatus = getMongoClient().getReplicaSetStatus();
+        String message = "";
+        MongoStatusConnection replicaStatus = new MongoStatusConnection();
+        replicaStatus.setName(MongoStatusConnection.Services.MONGO_REPLICA_SET.getValue());
 
-			String[] hostParameters = getMongoClient().getConnectPoint().split(":", 2);
-			String hostAddress = hostParameters[0];
-			Integer hostPort = Integer.parseInt(hostParameters[1]);
-			StringBuilder builder = new StringBuilder();
+        try {
+            final long startTime = System.currentTimeMillis();
+            ReplicaSetStatus replicaSetStatus = getMongoClient().getReplicaSetStatus();
 
-			if (replicaSetStatus == null) {
-				builder.append("I'm not currently connected to the mongo replica set");
-				builder.append(" Host: " + hostAddress + " Port: " + hostPort);
-			} else {
-				boolean isMaster = replicaSetStatus.isMaster(new ServerAddress(hostAddress, hostPort));
-				builder.append("I'm currently connected to the mongo replica set: " + replicaSetStatus.getName());
-				builder.append(" Host: " + hostAddress + " Port: " + hostPort);
-				builder.append(" I'm connected to master: " + isMaster);
-			}
+            String[] hostParameters = getMongoClient().getConnectPoint().split(":", 2);
+            String hostAddress = hostParameters[0];
+            Integer hostPort = Integer.parseInt(hostParameters[1]);
+            StringBuilder builder = new StringBuilder();
 
-			final long elapsedTime = System.currentTimeMillis() - startTime;
-			replicaStatus.setMessage(builder.toString());
-			replicaStatus.setStatus(Status.OK);
-			replicaStatus.setTimeInMillis(elapsedTime);
+            if (replicaSetStatus == null) {
+                builder.append("I'm not currently connected to the mongo replica set");
+                builder.append(" Host: " + hostAddress + " Port: " + hostPort);
+            } else {
+                boolean isMaster = replicaSetStatus.isMaster(new ServerAddress(hostAddress, hostPort));
+                builder.append("I'm currently connected to the mongo replica set: " + replicaSetStatus.getName());
+                builder.append(" Host: " + hostAddress + " Port: " + hostPort);
+                builder.append(" I'm connected to master: " + isMaster);
+            }
 
-		} catch (NumberFormatException e) {
-			message = "[MongoService]: errore nel recuperare l'informazione dell'host primario.";
-			logger.error(message, e);
-			replicaStatus.setMessage(message);
-			replicaStatus.setStatus(Status.KO);
-		} catch (Exception e) {
-			message = "[MongoService]: errore nel recuperare l'informazione dell'host primario.";
-			logger.error(message, e);
-			replicaStatus.setMessage(message);
-			replicaStatus.setStatus(Status.KO);
-		}
+            final long elapsedTime = System.currentTimeMillis() - startTime;
+            replicaStatus.setMessage(builder.toString());
+            replicaStatus.setStatus(Status.OK);
+            replicaStatus.setTimeInMillis(elapsedTime);
 
-		return replicaStatus;
-	}
+        } catch (NumberFormatException e) {
+            message = "[MongoService]: errore nel recuperare l'informazione dell'host primario.";
+            logger.error(message, e);
+            replicaStatus.setMessage(message);
+            replicaStatus.setStatus(Status.KO);
+        } catch (Exception e) {
+            message = "[MongoService]: errore nel recuperare l'informazione dell'host primario.";
+            logger.error(message, e);
+            replicaStatus.setMessage(message);
+            replicaStatus.setStatus(Status.KO);
+        }
 
-	public MongoStatusConnection statusInfo() {
-		final String statusName = MongoStatusConnection.Services.MONGODB.getValue();
-		MongoStatusConnection statusConnection = new MongoStatusConnection();
-		try {
-			logger.info("Verifica stato connessione {}", MongoStatusConnection.Services.MONGODB.getValue());
-			final long startTime = System.currentTimeMillis();
-			ping();
-			final long elapsedTime = System.currentTimeMillis() - startTime;
-			statusConnection.setName(statusName).setStatus(MongoStatusConnection.Status.OK)
-					.setMessage("Connessione Attiva").setTimeInMillis(elapsedTime);
+        return replicaStatus;
+    }
 
-			statusConnection.addDetail(replicaStatus());
-			logger.info("Status connessione {} - {}", MongoStatusConnection.Services.MONGODB.getValue(),
-					statusConnection.toString());
-		} catch (Exception ex) {
-			logger.error("Status connessione " + MongoStatusConnection.Services.MONGODB.getValue() + " - KO", ex);
-			statusConnection.setName(statusName).setStatus(MongoStatusConnection.Status.KO)
-					.setMessage("Errore di connessione - " + ex.getMessage());
-		}
-		return statusConnection;
-	}
+    public MongoStatusConnection statusInfo() {
+        final String statusName = MongoStatusConnection.Services.MONGODB.getValue();
+        MongoStatusConnection statusConnection = new MongoStatusConnection();
+        try {
+            logger.info("Verifica stato connessione {}", MongoStatusConnection.Services.MONGODB.getValue());
+            final long startTime = System.currentTimeMillis();
+            ping();
+            final long elapsedTime = System.currentTimeMillis() - startTime;
+            statusConnection.setName(statusName).setStatus(MongoStatusConnection.Status.OK)
+                    .setMessage("Connessione Attiva").setTimeInMillis(elapsedTime);
+
+            statusConnection.addDetail(replicaStatus());
+            logger.info("Status connessione {} - {}", MongoStatusConnection.Services.MONGODB.getValue(),
+                    statusConnection.toString());
+        } catch (Exception ex) {
+            logger.error("Status connessione " + MongoStatusConnection.Services.MONGODB.getValue() + " - KO", ex);
+            statusConnection.setName(statusName).setStatus(MongoStatusConnection.Status.KO)
+                    .setMessage("Errore di connessione - " + ex.getMessage());
+        }
+        return statusConnection;
+    }
 
 }
