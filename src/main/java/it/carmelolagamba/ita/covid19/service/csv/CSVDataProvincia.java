@@ -33,7 +33,7 @@ public class CSVDataProvincia extends AbstractCSVDataReader<DataProvincia>{
         switch (fields[i]) {
             case DATA:
                 try {
-                    dataProvincia.setData(new SimpleDateFormat("yyyy-MM-dd").parse(value));
+                    dataProvincia.setData(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(value));
                 } catch (ParseException e) {
                     logger.error("Date format error", e);
                 }

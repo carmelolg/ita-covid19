@@ -33,7 +33,7 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
         switch (fields[i]){
             case DATA:
                 try {
-                    dataNazione.setData(new SimpleDateFormat("yyyy-MM-dd").parse(value));
+                    dataNazione.setData(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(value));
                 } catch (ParseException e) {
                     logger.error("Date format error", e);
                 }

@@ -26,7 +26,6 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
 
     public boolean insertAll(List<DataProvincia> dataProvinciaList) {
         try {
-            MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
             return asyncInsertMany(dataProvinciaCollectionService.getAsyncCollection(COLLECTION_NAME), dataProvinciaList);
         } catch (InterruptedException | ExecutionException e) {
             logger.error("Errore durante il salvataggio dei dati", e);

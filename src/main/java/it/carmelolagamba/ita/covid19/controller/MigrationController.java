@@ -47,7 +47,7 @@ public class MigrationController {
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/country")
 	public String country() {
 		nazioneMigrationService.migrateData();
-		return "Dati delle province importati";
+		return "Dati nazionali importati";
 
 	}
 
