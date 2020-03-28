@@ -46,7 +46,7 @@ public class RegioneMigrationService extends AbstractMigrationService {
         return new File(Constants.folderRegioni);
     }
 
-    @Scheduled(cron = "04 19 * * * ?")
+    @Scheduled(cron = "0 35 17 * * ?")
     public void getFile() throws Exception {
         try {
             Date date = new Date(System.currentTimeMillis());
@@ -57,6 +57,10 @@ public class RegioneMigrationService extends AbstractMigrationService {
             String saveDir = Constants.folderRegioni;
             FileUtils.downloadFile(fileURL, saveDir);
             logger.info("Dati delle regioni aggiornati correttamente alle 18h35");
+
+            migrateData();
+            logger.info("Dati delle regioni migrati correttamente alle 18h35");
+
         } catch (IOException ex) {
             logger.error("Scheduling per scaricare i dati delle regioni giornalieri andato in errore", ex);
         }

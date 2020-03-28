@@ -44,7 +44,7 @@ public class NazioneMigrationService extends AbstractMigrationService {
         return new File(Constants.folderNazioni);
     }
 
-    @Scheduled(cron = "0 19 * * * ?")
+    @Scheduled(cron = "0 30 17 * * ?")
     public void getFile() throws Exception {
         try {
             Date date = new Date(System.currentTimeMillis());
@@ -54,7 +54,11 @@ public class NazioneMigrationService extends AbstractMigrationService {
             String fileURL = String.join("", Constants.baseUrlNazione, dateString, Constants.defaultExtension);
             String saveDir = Constants.folderNazioni;
             FileUtils.downloadFile(fileURL, saveDir);
-            logger.info("Dati nazionali aggiornati correttamente alle 18h30.");
+            logger.info("Dati nazionali aggiornati correttamente alle 18h30");
+
+            migrateData();
+            logger.info("Dati nazionali migrati correttamente alle 18h30");
+
         } catch (IOException ex) {
             logger.error("Scheduling per scaricare i dati nazionali giornalieri andato in errore", ex);
         }
