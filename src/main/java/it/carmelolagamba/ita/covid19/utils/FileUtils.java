@@ -18,16 +18,6 @@ public class FileUtils {
 
     private Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
-    public static void main(String[] args) {
-        String fileURL = String.join("",Constants.baseUrlNazione, "latest", Constants.defaultExtension);
-        String saveDir = "./data/dati-andamento-nazionale";
-        try {
-			FileUtils.downloadFile(fileURL, saveDir);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private static final int BUFFER_SIZE = 4096;
 
     /**
