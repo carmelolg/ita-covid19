@@ -46,7 +46,7 @@ public class RegioneMigrationService extends AbstractMigrationService {
         return new File(Constants.folderRegioni);
     }
 
-    @Scheduled(cron = "0 35 18 * * ?")
+    @Scheduled(cron = "04 19 * * * ?")
     public void getFile() throws Exception {
         try {
             Date date = new Date(System.currentTimeMillis());

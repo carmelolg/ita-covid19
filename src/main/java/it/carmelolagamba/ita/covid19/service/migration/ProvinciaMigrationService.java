@@ -43,7 +43,7 @@ public class ProvinciaMigrationService extends AbstractMigrationService {
         return new File(Constants.folderProvincia);
     }
 
-    @Scheduled(cron = "30 32 18 * * ?")
+    @Scheduled(cron = "02 19 * * * ?")
     public void getFile() throws Exception {
         try {
             Date date = new Date(System.currentTimeMillis());
