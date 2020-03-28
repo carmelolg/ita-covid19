@@ -150,7 +150,7 @@ interface MongoFindOperationInterface extends MongoBaseCrudOperationInterface {
 	 * 
 	 * @param collection A {@link MongoCollection}
 	 * @param map        map of filters
-	 * @param sort       sort filters
+	 * @param sortFilter       sort filters
 	 * @return {@link List} of generics object
 	 */
 	default public <T> List<T> findByFilters(MongoCollection<T> collection, Map<String, Object> map,
