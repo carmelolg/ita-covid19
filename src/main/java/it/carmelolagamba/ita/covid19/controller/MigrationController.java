@@ -3,6 +3,7 @@ package it.carmelolagamba.ita.covid19.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.config.ApplicationProperties;
+import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
 import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.RegioneMigrationService;
@@ -29,6 +30,9 @@ public class MigrationController {
 	@Autowired
 	private NazioneMigrationService nazioneMigrationService;
 
+	@Autowired
+	private MigrateAllService migrateAllService;
+
 	@ApiOperation(value = "Migrate region")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/region")
 	public String region() {
@@ -51,6 +55,18 @@ public class MigrationController {
 		nazioneMigrationService.migrateData();
 		return "Dati nazionali importati";
 
+	}
+
+
+	@ApiOperation(value = "Migrate all")
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/all")
+	public String all() {
+		try {
+			migrateAllService.dowloadAllFilesManually();
+			return "Tutti i dati sono stati importati.";
+		} catch (Exception e) {
+			return "Errore nella migrazione dei files [guarda i logs per maggiori informazioni]";
+		}
 	}
 
 }
