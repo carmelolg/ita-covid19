@@ -1,4 +1,4 @@
-package it.carmelolagamba.ita.covid19.dto.system;
+package it.carmelolagamba.ita.covid19.view;
 
 public class InfoDto {
 

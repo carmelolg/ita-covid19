@@ -10,10 +10,12 @@ import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfigurat
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import it.carmelolagamba.ita.covid19.config.ApplicationProperties;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(exclude = { MongoAutoConfiguration.class,
 		MongoDataAutoConfiguration.class }, scanBasePackages = { "it.carmelolagamba" })
 @EnableConfigurationProperties
+@EnableScheduling
 public class SpringBootApp implements CommandLineRunner {
 
 	private static Logger log = LoggerFactory.getLogger(SpringBootApp.class);

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.config.ApplicationProperties;
-import it.carmelolagamba.ita.covid19.dto.system.InfoDto;
+import it.carmelolagamba.ita.covid19.view.InfoDto;
 import it.carmelolagamba.mongo.service.MongoService;
 import it.carmelolagamba.mongo.utils.MongoStatusConnection;
 

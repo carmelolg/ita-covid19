@@ -1,16 +1,20 @@
-package it.carmelolagamba.ita.covid19.service;
+package it.carmelolagamba.ita.covid19.service.migration;
 
 import it.carmelolagamba.ita.covid19.domain.DataNazione;
-import it.carmelolagamba.ita.covid19.domain.DataProvincia;
 import it.carmelolagamba.ita.covid19.service.csv.CSVDataNazione;
+import it.carmelolagamba.ita.covid19.utils.Constants;
+import it.carmelolagamba.ita.covid19.utils.FileUtils;
 import it.carmelolagamba.mongo.service.custom.DataNazioneDocumentService;
-import it.carmelolagamba.mongo.service.custom.DataProvinciaDocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -23,9 +27,6 @@ public class NazioneMigrationService extends AbstractMigrationService {
 
     @Autowired
     private CSVDataNazione csvDataNazione;
-
-    public NazioneMigrationService() {
-    }
 
     @Override
     protected void migrationInvoke(File file) throws Exception {
@@ -40,7 +41,23 @@ public class NazioneMigrationService extends AbstractMigrationService {
 
     @Override
     protected File getFolderPath() {
-        return new File("./data/dati-andamento-nazionale");
+        return new File(Constants.folderNazioni);
+    }
+
+    @Scheduled(cron = "0 30 18 * * ?")
+    public void getFile() throws Exception {
+        try {
+            Date date = new Date(System.currentTimeMillis());
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            String dateString = format.format(date);
+
+            String fileURL = String.join("", Constants.baseUrlNazione, dateString, Constants.defaultExtension);
+            String saveDir = Constants.folderNazioni;
+            FileUtils.downloadFile(fileURL, saveDir);
+            logger.info("Dati nazionali aggiornati correttamente alle 18h30.");
+        } catch (IOException ex) {
+            logger.error("Scheduling per scaricare i dati nazionali giornalieri andato in errore", ex);
+        }
     }
 
 }

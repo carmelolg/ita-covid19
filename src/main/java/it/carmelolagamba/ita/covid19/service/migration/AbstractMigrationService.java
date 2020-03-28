@@ -1,4 +1,4 @@
-package it.carmelolagamba.ita.covid19.service;
+package it.carmelolagamba.ita.covid19.service.migration;
 
 import it.carmelolagamba.ita.covid19.domain.FileImported;
 import it.carmelolagamba.ita.covid19.service.csv.CSVDataProvincia;
