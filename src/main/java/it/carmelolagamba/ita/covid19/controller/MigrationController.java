@@ -3,6 +3,7 @@ package it.carmelolagamba.ita.covid19.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.config.ApplicationProperties;
+import it.carmelolagamba.ita.covid19.service.NazioneMigrationService;
 import it.carmelolagamba.ita.covid19.service.ProvinciaMigrationService;
 import it.carmelolagamba.ita.covid19.service.RegioneMigrationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class MigrationController {
 	@Autowired
 	private ProvinciaMigrationService provinciaMigrationService;
 
+	@Autowired
+	private NazioneMigrationService nazioneMigrationService;
+
 	@ApiOperation(value = "Migrate region")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/region")
 	public String region() {
@@ -35,6 +39,14 @@ public class MigrationController {
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/district")
 	public String district() {
 		provinciaMigrationService.migrateData();
+		return "Dati delle province importati";
+
+	}
+
+	@ApiOperation(value = "Migrate country")
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/country")
+	public String country() {
+		nazioneMigrationService.migrateData();
 		return "Dati delle province importati";
 
 	}
