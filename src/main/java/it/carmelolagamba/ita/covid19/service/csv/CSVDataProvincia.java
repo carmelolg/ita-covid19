@@ -1,63 +1,33 @@
 package it.carmelolagamba.ita.covid19.service.csv;
 
-import com.opencsv.CSVReader;
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
 import it.carmelolagamba.ita.covid19.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static it.carmelolagamba.ita.covid19.domain.DataProvincia.FIELD;
 
 @Component
-public class CSVDataProvincia {
+public class CSVDataProvincia extends AbstractCSVDataReader<DataProvincia>{
 
     private static Logger logger = LoggerFactory.getLogger(CSVDataProvincia.class);
 
-    // TODO da rifare con i generics perché codice duplicato con CSVDataRegioni
-    public List<DataProvincia> convertProvinciaDataByFilename(String filename) throws Exception {
-
-        List<DataProvincia> dataProvinciaList = new ArrayList<>();
-        List<List<String>> rows = new ArrayList<>();
-
-        logger.info("Leggo il file: {}", filename);
-
-        try (CSVReader csvReader = new CSVReader(new FileReader(filename));) {
-            String[] values = null;
-            while ((values = csvReader.readNext()) != null) {
-                rows.add(Arrays.asList(values));
-            }
-        } catch (IOException e) {
-            throw e;
-        }
-
-        if (rows.size() == 0) {
-            throw new Exception("Nessun dato estrapolato dal csv");
-        }
-
-        rows.remove(0);
-
-        rows.forEach(row -> {
-            DataProvincia dataProvincia = new DataProvincia();
-            for (int i = 0; i < row.size(); i++) {
-                String value = row.get(i);
-                map(dataProvincia, i, value);
-            }
-            dataProvinciaList.add(dataProvincia);
-        });
-
-        return dataProvinciaList;
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 
-    private void map(DataProvincia dataProvincia, int i, String value) {
+    @Override
+    protected DataProvincia getInstance() {
+        return new DataProvincia();
+    }
+
+    @Override
+    protected void map(DataProvincia dataProvincia, int i, String value) {
 
         final FIELD[] fields = FIELD.values();
         switch (fields[i]) {

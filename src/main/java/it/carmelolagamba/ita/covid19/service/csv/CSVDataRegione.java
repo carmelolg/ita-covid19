@@ -1,62 +1,33 @@
 package it.carmelolagamba.ita.covid19.service.csv;
 
-import com.opencsv.CSVReader;
 import it.carmelolagamba.ita.covid19.domain.DataRegione;
 import it.carmelolagamba.ita.covid19.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static it.carmelolagamba.ita.covid19.domain.DataRegione.FIELD;
 
 @Component
-public class CSVDataRegione {
+public class CSVDataRegione extends AbstractCSVDataReader<DataRegione>{
 
     private static Logger logger = LoggerFactory.getLogger(CSVDataRegione.class);
 
-    public List<DataRegione> convertRegionDataByFilename(String filename) throws Exception {
-
-        List<DataRegione> dataRegioneList = new ArrayList<>();
-        List<List<String>> rows = new ArrayList<>();
-
-        logger.info("Leggo il file: {}", filename);
-
-        try (CSVReader csvReader = new CSVReader(new FileReader(filename));) {
-            String[] values = null;
-            while ((values = csvReader.readNext()) != null) {
-                rows.add(Arrays.asList(values));
-            }
-        } catch (IOException e) {
-            throw e;
-        }
-
-        if(rows.size() == 0){
-            throw new Exception("Nessun dato estrapolato dal csv");
-        }
-
-        rows.remove(0);
-
-        rows.forEach(row -> {
-            DataRegione dataRegione = new DataRegione();
-            for (int i = 0; i < row.size(); i++){
-                String value = row.get(i);
-                map(dataRegione, i, value);
-            }
-            dataRegioneList.add(dataRegione);
-        });
-
-        return dataRegioneList;
+    @Override
+    protected Logger getLogger() {
+        return logger;
     }
 
-    private void map(DataRegione dataRegione, int i, String value){
+    @Override
+    protected DataRegione getInstance() {
+        return new DataRegione();
+    }
+
+    @Override
+    protected void map(DataRegione dataRegione, int i, String value){
 
         final FIELD[] fields = FIELD.values();
         switch (fields[i]){
