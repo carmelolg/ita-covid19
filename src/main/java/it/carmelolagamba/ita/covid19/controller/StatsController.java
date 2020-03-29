@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin
 @Api(value = "Data Stats")
 public class StatsController {
 
