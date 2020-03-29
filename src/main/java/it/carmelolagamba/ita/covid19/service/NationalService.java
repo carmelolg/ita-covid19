@@ -127,5 +127,27 @@ public class NationalService {
         }
     }
 
+    public AndamentoDto findLast30Recovered() {
+
+        AndamentoDto andamentoDto = new AndamentoDto();
+
+        List<DataNazione> dataNazioneList = dataNazioneDocumentService.findLast30();
+
+        if (dataNazioneList.isEmpty()) {
+            andamentoDto.setDescription("Dati non presenti");
+            return andamentoDto;
+        } else {
+            andamentoDto.setDescription(String.format("Statistiche del numero di ospedalizzati in Italia"));
+
+            dataNazioneList.forEach(data -> {
+                DataNazione yesterdayDate = dataNazioneDocumentService.findYesterdayData(data.getData());
+                int increaseFromYesterday = (yesterdayDate != null) ? data.getDimessi_guariti() - yesterdayDate.getDimessi_guariti() : 0;
+                andamentoDto.getResults().add(new ResultDto(data.getDimessi_guariti(), increaseFromYesterday, data.getData()));
+            });
+
+            return andamentoDto;
+        }
+    }
+
 
 }

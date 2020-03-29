@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 @Component
 public class DataProvinciaDocumentService extends AbstractDocumentService {
@@ -34,7 +35,7 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
 
     }
 
-    public List<DataProvincia> findAllByDistrictName(String name){
+    public List<DataProvincia> findLast30ByDistrictName(String name){
         MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
 
         HashMap<String, Object> filters = new HashMap<>();
@@ -43,7 +44,9 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
         HashMap<String, Object> sortFilters = new HashMap<>();
         sortFilters.put("data", 1);
 
-        return findByFilters(collection, filters, sortFilters);
+        List<DataProvincia> list = findByFilters(collection, filters, sortFilters);
+
+        return list.stream().skip(Math.max(0, list.size() - 30)).collect(Collectors.toList());
     }
 
     public DataProvincia findYesterdayDataByDistrict(String name, Date currentDate){

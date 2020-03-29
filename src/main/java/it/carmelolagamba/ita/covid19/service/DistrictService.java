@@ -10,16 +10,16 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class StatsService {
+public class DistrictService {
 
     @Autowired
     private DataProvinciaDocumentService dataProvinciaDocumentService;
 
-    public AndamentoDto findStatsByDistrictName(String district) {
+    public AndamentoDto findLast30ByDistrictName(String district) {
 
         AndamentoDto andamentoDto = new AndamentoDto();
 
-        List<DataProvincia> dataProvinciaList = dataProvinciaDocumentService.findAllByDistrictName(district);
+        List<DataProvincia> dataProvinciaList = dataProvinciaDocumentService.findLast30ByDistrictName(district);
 
         if (dataProvinciaList.isEmpty()) {
             andamentoDto.setDescription("Dati non presenti");
