@@ -1,8 +1,8 @@
 # Ita Covid19 Stats
 
-[![Heroku CI Status](https://ita-covid19-badge.herokuapp.com/last.svg)](https://dashboard.heroku.com/pipelines/ita-covid19-pipeline/tests)
-
 ## How to build
 
 run: `mvn spring-boot:run -Dspring-boot.run.profiles=<dev|prod>`
 
+## Attribution
+All the data displayed in this dashboard is provided by the Italian Ministry of Health (Ministero della Salute) and elaborated by Dipartimento della Protezione Civile. This work is therefore a derivative of [COVID-19 Italia - Monitoraggio situazione](https://github.com/pcm-dpc/COVID-19) licensed under [CC BY 4.0](https://github.com/pcm-dpc/COVID-19/blob/master/LICENSE)
