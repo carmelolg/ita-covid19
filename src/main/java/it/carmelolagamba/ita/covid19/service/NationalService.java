@@ -30,9 +30,7 @@ public class NationalService {
             andamentoDto.setDescription(String.format("Statistiche del numero di casi italiani"));
 
             dataNazioneList.forEach(data -> {
-                DataNazione yesterdayDate = dataNazioneDocumentService.findYesterdayData(data.getData());
-                int increaseFromYesterday = (yesterdayDate != null) ? data.getTotale_casi() - yesterdayDate.getTotale_casi() : 0;
-                andamentoDto.getResults().add(new ResultDto(data.getTotale_casi(), increaseFromYesterday, data.getData()));
+                andamentoDto.getResults().add(new ResultDto(data.getTotale_casi(), data.getNuovi_positivi(), data.getData()));
             });
 
             return andamentoDto;

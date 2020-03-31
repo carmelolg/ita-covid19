@@ -28,9 +28,7 @@ public class RegionService {
             andamentoDto.setDescription(String.format("Statistiche del numero di casi per la provincia di %s", district));
 
             dataRegioneList.forEach(data -> {
-                DataRegione yesterdayDate = dataRegioneDocumentService.findYesterdayDataByDistrict(district, data.getData());
-                int increaseFromYesterday = (yesterdayDate != null) ? data.getTotale_casi() - yesterdayDate.getTotale_casi() : 0;
-                andamentoDto.getResults().add(new ResultDto(data.getTotale_casi(), increaseFromYesterday, data.getData()));
+                andamentoDto.getResults().add(new ResultDto(data.getTotale_casi(), data.getNuovi_positivi(), data.getData()));
             });
 
             return andamentoDto;

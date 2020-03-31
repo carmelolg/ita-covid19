@@ -14,8 +14,9 @@ public class DataNazione {
         TERAPIA_INTENSIVA,
         TOTALE_OSPEDALIZZATI,
         ISOLAMENTO_DOMICILIARE,
-        TOTALE_ATTUALMENTE_POSITIVI,
-        NUOVI_ATTUALMENTE_POSITIVI,
+        TOTALE_POSITIVI,
+        VARIAZIONE_TOTALE_POSITIVI,
+        NUOVI_POSITIVI,
         DIMESSI_GUARITI,
         DECEDUTI,
         TOTALE_CASI,
@@ -33,8 +34,9 @@ public class DataNazione {
             terapia_intensiva,
             totale_ospedalizzati,
             isolamento_domiciliare,
-            totale_attualmente_positivi,
-            nuovi_attualmente_positivi,
+            totale_positivi,
+            variazione_totale_positivi,
+            nuovi_positivi,
             dimessi_guariti,
             deceduti,
             totale_casi,
@@ -98,20 +100,28 @@ public class DataNazione {
         this.isolamento_domiciliare = isolamento_domiciliare;
     }
 
-    public int getTotale_attualmente_positivi() {
-        return totale_attualmente_positivi;
+    public int getTotale_positivi() {
+        return totale_positivi;
     }
 
-    public void setTotale_attualmente_positivi(int totale_attualmente_positivi) {
-        this.totale_attualmente_positivi = totale_attualmente_positivi;
+    public void setTotale_positivi(int totale_positivi) {
+        this.totale_positivi = totale_positivi;
     }
 
-    public int getNuovi_attualmente_positivi() {
-        return nuovi_attualmente_positivi;
+    public int getVariazione_totale_positivi() {
+        return variazione_totale_positivi;
     }
 
-    public void setNuovi_attualmente_positivi(int nuovi_attualmente_positivi) {
-        this.nuovi_attualmente_positivi = nuovi_attualmente_positivi;
+    public void setVariazione_totale_positivi(int variazione_totale_positivi) {
+        this.variazione_totale_positivi = variazione_totale_positivi;
+    }
+
+    public int getNuovi_positivi() {
+        return nuovi_positivi;
+    }
+
+    public void setNuovi_positivi(int nuovi_positivi) {
+        this.nuovi_positivi = nuovi_positivi;
     }
 
     public int getDimessi_guariti() {

@@ -65,11 +65,14 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione>{
             case ISOLAMENTO_DOMICILIARE:
                 dataRegione.setIsolamento_domiciliare(FileUtils.convertStringToInteger(value));
                 break;
-            case TOTALE_ATTUALMENTE_POSITIVI:
-                dataRegione.setTotale_attualmente_positivi(FileUtils.convertStringToInteger(value));
+            case TOTALE_POSITIVI:
+                dataRegione.setTotale_positivi(FileUtils.convertStringToInteger(value));
                 break;
-            case NUOVI_ATTUALMENTE_POSITIVI:
-                dataRegione.setNuovi_attualmente_positivi(FileUtils.convertStringToInteger(value));
+            case VARIAZIONE_TOTALE_POSITIVI:
+                dataRegione.setVariazione_totale_positivi(FileUtils.convertStringToInteger(value));
+                break;
+            case NUOVI_POSITIVI:
+                dataRegione.setNuovi_positivi(FileUtils.convertStringToInteger(value));
                 break;
             case DIMESSI_GUARITI:
                 dataRegione.setDimessi_guariti(FileUtils.convertStringToInteger(value));

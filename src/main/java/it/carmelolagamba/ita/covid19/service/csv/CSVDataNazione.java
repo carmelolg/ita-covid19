@@ -53,11 +53,14 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
             case ISOLAMENTO_DOMICILIARE:
                 dataNazione.setIsolamento_domiciliare(FileUtils.convertStringToInteger(value));
                 break;
-            case TOTALE_ATTUALMENTE_POSITIVI:
-                dataNazione.setTotale_attualmente_positivi(FileUtils.convertStringToInteger(value));
+            case TOTALE_POSITIVI:
+                dataNazione.setTotale_positivi(FileUtils.convertStringToInteger(value));
                 break;
-            case NUOVI_ATTUALMENTE_POSITIVI:
-                dataNazione.setNuovi_attualmente_positivi(FileUtils.convertStringToInteger(value));
+            case VARIAZIONE_TOTALE_POSITIVI:
+                dataNazione.setVariazione_totale_positivi(FileUtils.convertStringToInteger(value));
+                break;
+            case NUOVI_POSITIVI:
+                dataNazione.setNuovi_positivi(FileUtils.convertStringToInteger(value));
                 break;
             case DIMESSI_GUARITI:
                 dataNazione.setDimessi_guariti(FileUtils.convertStringToInteger(value));
