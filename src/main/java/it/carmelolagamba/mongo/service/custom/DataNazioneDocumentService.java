@@ -1,5 +1,8 @@
 package it.carmelolagamba.mongo.service.custom;
 
+import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
+import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import it.carmelolagamba.ita.covid19.domain.DataNazione;
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
@@ -59,7 +62,7 @@ public class DataNazioneDocumentService extends AbstractDocumentService {
         Date yesterdayFromCurrentDate = calendar.getTime();
 
         HashMap<String, Object> filters = new HashMap<>();
-        filters.put("data", yesterdayFromCurrentDate);
+        filters.put("data", BasicDBObjectBuilder.start("$gte", yesterdayFromCurrentDate).add("$lte", currentDate).get());
 
         HashMap<String, Object> sortFilters = new HashMap<>();
         sortFilters.put("data", 1);

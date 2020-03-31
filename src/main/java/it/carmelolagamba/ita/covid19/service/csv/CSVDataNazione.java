@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import static it.carmelolagamba.ita.covid19.domain.DataNazione.FIELD;
 
@@ -33,7 +34,10 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
         switch (fields[i]){
             case DATA:
                 try {
-                    dataNazione.setData(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(value));
+                    Calendar dateCalendar = Calendar.getInstance();
+                    dateCalendar.setTime(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(value));
+                    dateCalendar.set(Calendar.HOUR_OF_DAY, 18);
+                    dataNazione.setData(dateCalendar.getTime());
                 } catch (ParseException e) {
                     logger.error("Date format error", e);
                 }

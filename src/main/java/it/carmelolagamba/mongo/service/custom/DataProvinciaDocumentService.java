@@ -1,5 +1,6 @@
 package it.carmelolagamba.mongo.service.custom;
 
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.client.MongoCollection;
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
@@ -59,7 +60,7 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
 
         HashMap<String, Object> filters = new HashMap<>();
         filters.put("denominazione_provincia", name);
-        filters.put("data", yesterdayFromCurrentDate);
+        filters.put("data", BasicDBObjectBuilder.start("$gte", yesterdayFromCurrentDate).add("$lte", currentDate).get());
 
         HashMap<String, Object> sortFilters = new HashMap<>();
         sortFilters.put("data", 1);
