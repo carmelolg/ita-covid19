@@ -59,6 +59,7 @@ public class DataNazioneDocumentService extends AbstractDocumentService {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.DATE, -1);
+        calendar.add(Calendar.HOUR_OF_DAY, -12);
         Date yesterdayFromCurrentDate = calendar.getTime();
 
         HashMap<String, Object> filters = new HashMap<>();
