@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
@@ -44,7 +45,7 @@ public class DataRegioneDocumentService extends AbstractDocumentService {
         MongoCollection<DataRegione> collection = dataRegioneCollectionService.getCollection(COLLECTION_NAME);
 
         HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_regione", name);
+        filters.put("denominazione_regione", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
 
         HashMap<String, Object> sortFilters = new HashMap<>();
         sortFilters.put("data", 1);
@@ -64,7 +65,7 @@ public class DataRegioneDocumentService extends AbstractDocumentService {
         Date yesterdayFromCurrentDate = calendar.getTime();
 
         HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_regione", name);
+        filters.put("denominazione_regione", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
         filters.put("data", BasicDBObjectBuilder.start("$gte", yesterdayFromCurrentDate).add("$lte", currentDate).get());
 
         HashMap<String, Object> sortFilters = new HashMap<>();

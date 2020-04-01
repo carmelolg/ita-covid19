@@ -13,6 +13,7 @@ import java.time.ZoneId;
 import java.time.temporal.TemporalAccessor;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Component
@@ -39,7 +40,7 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
         MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
 
         HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_provincia", name);
+        filters.put("denominazione_provincia", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
 
         HashMap<String, Object> sortFilters = new HashMap<>();
         sortFilters.put("data", 1);
@@ -59,7 +60,7 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
         Date yesterdayFromCurrentDate = calendar.getTime();
 
         HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_provincia", name);
+        filters.put("denominazione_provincia", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
         filters.put("data", BasicDBObjectBuilder.start("$gte", yesterdayFromCurrentDate).add("$lte", currentDate).get());
 
         HashMap<String, Object> sortFilters = new HashMap<>();
