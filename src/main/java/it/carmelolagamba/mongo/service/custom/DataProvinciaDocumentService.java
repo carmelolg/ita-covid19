@@ -9,10 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAccessor;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
@@ -56,6 +55,7 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(currentDate);
         calendar.add(Calendar.DATE, -1);
+        calendar.add(Calendar.HOUR_OF_DAY, -12);
         Date yesterdayFromCurrentDate = calendar.getTime();
 
         HashMap<String, Object> filters = new HashMap<>();
