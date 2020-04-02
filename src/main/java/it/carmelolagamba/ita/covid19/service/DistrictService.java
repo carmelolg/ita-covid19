@@ -4,6 +4,8 @@ import it.carmelolagamba.ita.covid19.domain.DataProvincia;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
 import it.carmelolagamba.ita.covid19.view.ResultDto;
 import it.carmelolagamba.mongo.service.custom.DataProvinciaDocumentService;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,6 +34,11 @@ public class DistrictService {
                 int increaseFromYesterday = (yesterdayDate != null) ? data.getTotale_casi() - yesterdayDate.getTotale_casi() : 0;
                 andamentoDto.getResults().add(new ResultDto(data.getTotale_casi(), increaseFromYesterday, data.getData()));
             });
+
+//            if(dataProvinciaList.size() > 2){
+//                Pair<DataProvincia, DataProvincia> pair = new ImmutablePair<>(dataProvinciaList.get(dataProvinciaList.size()))
+//
+//            }
 
             return andamentoDto;
         }

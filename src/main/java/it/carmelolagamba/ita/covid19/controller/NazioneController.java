@@ -16,6 +16,12 @@ public class NazioneController {
     @Autowired
     private NationalService nationalService;
 
+//    @ApiOperation(value = "Statistiche generali nazionali")
+//    @RequestMapping(method = RequestMethod.GET, path = "/italy/total")
+//    public AndamentoDto statsNazionali() {
+//        return nationalService.findLast30TotalCases();
+//    }
+
     @ApiOperation(value = "Totale casi nazionali")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/total")
     public AndamentoDto totaleNazionali() {
