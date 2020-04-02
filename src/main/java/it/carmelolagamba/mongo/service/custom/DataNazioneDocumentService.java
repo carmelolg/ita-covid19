@@ -71,4 +71,16 @@ public class DataNazioneDocumentService extends AbstractDocumentService {
         return findOne(collection, filters, sortFilters);
     }
 
+
+    public DataNazione findLast(){
+
+        MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
+
+        HashMap<String, Object> filters = new HashMap<>();
+
+        HashMap<String, Object> sortFilters = new HashMap<>();
+        sortFilters.put("data", -1);
+
+        return findOne(collection, filters, sortFilters);
+    }
 }

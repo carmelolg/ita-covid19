@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.NationalService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
+import it.carmelolagamba.ita.covid19.view.NazioneStatsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,11 @@ public class NazioneController {
     @Autowired
     private NationalService nationalService;
 
-//    @ApiOperation(value = "Statistiche generali nazionali")
-//    @RequestMapping(method = RequestMethod.GET, path = "/italy/total")
-//    public AndamentoDto statsNazionali() {
-//        return nationalService.findLast30TotalCases();
-//    }
+    @ApiOperation(value = "Statistiche generali nazionali")
+    @RequestMapping(method = RequestMethod.GET, path = "/italy/stats")
+    public NazioneStatsDto statsNazionali() {
+        return nationalService.findStats();
+    }
 
     @ApiOperation(value = "Totale casi nazionali")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/total")
