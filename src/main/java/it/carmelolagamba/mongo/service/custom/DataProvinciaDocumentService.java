@@ -3,6 +3,7 @@ package it.carmelolagamba.mongo.service.custom;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.client.MongoCollection;
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
+import it.carmelolagamba.ita.covid19.domain.DataRegione;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,4 +70,17 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
         return findOne(collection, filters, sortFilters);
     }
 
+
+    public DataProvincia findLast(String name){
+
+        MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
+
+        HashMap<String, Object> filters = new HashMap<>();
+        filters.put("denominazione_provincia", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+
+        HashMap<String, Object> sortFilters = new HashMap<>();
+        sortFilters.put("data", -1);
+
+        return findOne(collection, filters, sortFilters);
+    }
 }

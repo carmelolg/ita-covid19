@@ -5,7 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.NationalService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
-import it.carmelolagamba.ita.covid19.view.NazioneStatsDto;
+import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class NazioneController {
 
     @ApiOperation(value = "Statistiche generali nazionali")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/stats")
-    public NazioneStatsDto statsNazionali() {
+    public GenericStatsDto statsNazionali() {
         return nationalService.findStats();
     }
 

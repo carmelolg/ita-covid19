@@ -2,6 +2,7 @@ package it.carmelolagamba.ita.covid19.service;
 
 import it.carmelolagamba.ita.covid19.domain.DataRegione;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
+import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import it.carmelolagamba.ita.covid19.view.ResultDto;
 import it.carmelolagamba.mongo.service.custom.DataRegioneDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +10,74 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static it.carmelolagamba.ita.covid19.utils.MathUtils.round;
+
 @Component
 public class RegionService {
 
     @Autowired
     private DataRegioneDocumentService dataRegioneDocumentService;
+
+    public GenericStatsDto findStats(String region){
+
+        GenericStatsDto dto = new GenericStatsDto();
+
+        // Tasso di crescita
+        DataRegione last = dataRegioneDocumentService.findLast(region);
+        DataRegione lastYesterday = dataRegioneDocumentService.findYesterdayDataByDistrict(region, last.getData());
+
+        if(last != null && lastYesterday != null){
+
+            // growth rate
+            Double currentCase = Double.valueOf(last.getTotale_casi());
+            Double yesterdayCase = Double.valueOf(lastYesterday.getTotale_casi());
+
+            Double rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+            dto.setCurrentRateOfGrowth(round(rate));
+
+            // growth rate new positive
+            Double currentNewPositive = Double.valueOf(last.getNuovi_positivi());
+            Double yesterdayNewPositive = Double.valueOf(lastYesterday.getNuovi_positivi());
+
+            Double rateNewPositive = ((currentNewPositive - yesterdayNewPositive) / yesterdayNewPositive) * 100;
+            dto.setCurrentNewPositiveRateOfGrowth(round(rateNewPositive));
+
+
+            // percentage test based
+            Double currentTest = Double.valueOf(last.getTamponi());
+            Double percentage = Double.valueOf((currentCase * 100) / currentTest);
+
+            dto.setCurrentPositivePercentageBasedOnTests(round(percentage));
+
+            // percentage recovered
+            Double currentRecovered = Double.valueOf(last.getDimessi_guariti());
+            Double percentageRecovered = Double.valueOf((currentRecovered * 100) / currentCase);
+
+            dto.setCurrentRecoveredPercentage(round(percentageRecovered));
+
+            // percentage dead
+            Double currentDead = Double.valueOf(last.getDeceduti());
+            Double percentageDead = Double.valueOf((currentDead * 100) / currentCase);
+
+            dto.setCurrentDeadPercentage(round(percentageDead));
+
+            // percentage intensive care
+            Double currentIntensiveCare = Double.valueOf(last.getTerapia_intensiva());
+            Double percentageIntensiveCare = Double.valueOf((currentIntensiveCare * 100) / currentCase);
+
+            dto.setCurrentIntensiveCarePercentage(round(percentageIntensiveCare));
+
+            // percentage hospitalized
+            Double currentHospitalized = Double.valueOf(last.getTotale_ospedalizzati());
+            Double percentageHospitalized = Double.valueOf((currentHospitalized * 100) / currentCase);
+
+            dto.setCurrentHospitalizedPercentage(round(percentageHospitalized));
+
+        }
+
+
+        return dto;
+    }
 
     public AndamentoDto findLast30ByDistrictName(String district) {
 

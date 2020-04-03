@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.DistrictService;
 import it.carmelolagamba.ita.covid19.service.RegionService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
+import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,12 @@ public class RegioneController {
 
     @Autowired
     private RegionService regionService;
+
+    @ApiOperation(value = "Statistiche generali regionali")
+    @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/stats")
+    public GenericStatsDto statsRegionali(@PathVariable("name") String name) {
+        return regionService.findStats(name);
+    }
 
     @ApiOperation(value = "Totale casi per regionali")
     @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/total")

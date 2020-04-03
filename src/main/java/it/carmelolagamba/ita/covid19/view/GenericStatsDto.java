@@ -1,6 +1,6 @@
 package it.carmelolagamba.ita.covid19.view;
 
-public class NazioneStatsDto {
+public class GenericStatsDto {
 
     private Double currentRateOfGrowth;
     private Double currentNewPositiveRateOfGrowth;

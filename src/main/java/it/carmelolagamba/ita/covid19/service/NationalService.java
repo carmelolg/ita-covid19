@@ -2,15 +2,15 @@ package it.carmelolagamba.ita.covid19.service;
 
 import it.carmelolagamba.ita.covid19.domain.DataNazione;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
-import it.carmelolagamba.ita.covid19.view.NazioneStatsDto;
+import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import it.carmelolagamba.ita.covid19.view.ResultDto;
 import it.carmelolagamba.mongo.service.custom.DataNazioneDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
+
+import static it.carmelolagamba.ita.covid19.utils.MathUtils.round;
 
 @Component
 public class NationalService {
@@ -18,9 +18,9 @@ public class NationalService {
     @Autowired
     private DataNazioneDocumentService dataNazioneDocumentService;
 
-    public NazioneStatsDto findStats(){
+    public GenericStatsDto findStats(){
 
-        NazioneStatsDto dto = new NazioneStatsDto();
+        GenericStatsDto dto = new GenericStatsDto();
 
         // Tasso di crescita
         DataNazione last = dataNazioneDocumentService.findLast();
@@ -207,12 +207,6 @@ public class NationalService {
 
             return andamentoDto;
         }
-    }
-
-    private double round(double value) {
-        BigDecimal bd = BigDecimal.valueOf(value);
-        bd = bd.setScale(2, RoundingMode.HALF_UP);
-        return bd.doubleValue();
     }
 
 }
