@@ -1,9 +1,8 @@
 package it.carmelolagamba.ita.covid19.service;
 
 import it.carmelolagamba.ita.covid19.domain.DataNazione;
-import it.carmelolagamba.ita.covid19.view.AndamentoDto;
-import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
-import it.carmelolagamba.ita.covid19.view.ResultDto;
+import it.carmelolagamba.ita.covid19.utils.MathUtils;
+import it.carmelolagamba.ita.covid19.view.*;
 import it.carmelolagamba.mongo.service.custom.DataNazioneDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,7 +17,7 @@ public class NationalService {
     @Autowired
     private DataNazioneDocumentService dataNazioneDocumentService;
 
-    public GenericStatsDto findStats(){
+    public GenericStatsDto findStats() {
 
         GenericStatsDto dto = new GenericStatsDto();
 
@@ -26,7 +25,7 @@ public class NationalService {
         DataNazione last = dataNazioneDocumentService.findLast();
         DataNazione lastYesterday = dataNazioneDocumentService.findYesterdayData(last.getData());
 
-        if(last != null && lastYesterday != null){
+        if (last != null && lastYesterday != null) {
 
             // growth rate
             Double currentCase = Double.valueOf(last.getTotale_casi());
@@ -77,6 +76,34 @@ public class NationalService {
 
 
         return dto;
+    }
+
+    public GrowthRateDto findGrowthRate() {
+
+        GrowthRateDto growthRateDto = new GrowthRateDto();
+
+        // Tasso di crescita
+        List<DataNazione> dataNazioneList = dataNazioneDocumentService.findLast30();
+
+        if (dataNazioneList.isEmpty()) {
+            growthRateDto.setDescription("Dati non presenti");
+            return growthRateDto;
+        } else {
+            growthRateDto.setDescription(String.format("Statistiche del tasso di crescita italiano"));
+
+            dataNazioneList.forEach(data -> {
+                // calcolo
+                Double currentCase = Double.valueOf(data.getTotale_casi());
+                DataNazione yesterdayDate = dataNazioneDocumentService.findYesterdayData(data.getData());
+                Double yesterdayCase = Double.valueOf(yesterdayDate.getTotale_casi());
+
+                Double rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+
+                growthRateDto.getResults().add(new GrowthRateResultDto(MathUtils.round(rate), data.getData()));
+            });
+
+            return growthRateDto;
+        }
     }
 
     public AndamentoDto findLast30TotalCases() {

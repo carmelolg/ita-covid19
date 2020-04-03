@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.DistrictService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
 import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
+import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,4 +30,9 @@ public class ProvinciaController {
         return districtService.findLast30ByDistrictName(name);
     }
 
+    @ApiOperation(value = "Statistiche growth rate provinciali")
+    @RequestMapping(method = RequestMethod.GET, path = "/district/{name}/growthRate")
+    public GrowthRateDto growthRateNazionali(@PathVariable("name") String name) {
+        return districtService.findGrowthRate(name);
+    }
 }

@@ -7,6 +7,7 @@ import it.carmelolagamba.ita.covid19.service.DistrictService;
 import it.carmelolagamba.ita.covid19.service.RegionService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
 import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
+import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,12 @@ public class RegioneController {
 
     @Autowired
     private RegionService regionService;
+
+    @ApiOperation(value = "Statistiche growth rate regionali")
+    @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/growthRate")
+    public GrowthRateDto growthRateNazionali(@PathVariable("name") String name) {
+        return regionService.findGrowthRate(name);
+    }
 
     @ApiOperation(value = "Statistiche generali regionali")
     @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/stats")

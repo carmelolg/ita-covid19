@@ -2,9 +2,8 @@ package it.carmelolagamba.ita.covid19.service;
 
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
 import it.carmelolagamba.ita.covid19.domain.DataRegione;
-import it.carmelolagamba.ita.covid19.view.AndamentoDto;
-import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
-import it.carmelolagamba.ita.covid19.view.ResultDto;
+import it.carmelolagamba.ita.covid19.utils.MathUtils;
+import it.carmelolagamba.ita.covid19.view.*;
 import it.carmelolagamba.mongo.service.custom.DataProvinciaDocumentService;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -20,6 +19,34 @@ public class DistrictService {
 
     @Autowired
     private DataProvinciaDocumentService dataProvinciaDocumentService;
+
+    public GrowthRateDto findGrowthRate(String region) {
+
+        GrowthRateDto growthRateDto = new GrowthRateDto();
+
+        // Tasso di crescita
+        List<DataProvincia> dataNazioneList = dataProvinciaDocumentService.findLast30ByDistrictName(region);
+
+        if (dataNazioneList.isEmpty()) {
+            growthRateDto.setDescription("Dati non presenti");
+            return growthRateDto;
+        } else {
+            growthRateDto.setDescription(String.format("Statistiche del tasso di crescita per la regione %s", region));
+
+            dataNazioneList.forEach(data -> {
+                // calcolo
+                Double currentCase = Double.valueOf(data.getTotale_casi());
+                DataProvincia yesterdayDate = dataProvinciaDocumentService.findYesterdayDataByDistrict(region, data.getData());
+                Double yesterdayCase = Double.valueOf(yesterdayDate.getTotale_casi());
+
+                Double rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+
+                growthRateDto.getResults().add(new GrowthRateResultDto(MathUtils.round(rate), data.getData()));
+            });
+
+            return growthRateDto;
+        }
+    }
 
     public GenericStatsDto findStats(String district){
 
