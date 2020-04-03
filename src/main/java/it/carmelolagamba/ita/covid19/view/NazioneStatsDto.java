@@ -5,6 +5,7 @@ public class NazioneStatsDto {
     private Double currentRateOfGrowth;
     private Double currentNewPositiveRateOfGrowth;
     private Double currentPositivePercentageBasedOnTests;
+    private Double currentRecoveredPercentage;
 
     public Double getCurrentRateOfGrowth() {
         return currentRateOfGrowth;
@@ -28,5 +29,13 @@ public class NazioneStatsDto {
 
     public void setCurrentPositivePercentageBasedOnTests(Double currentPositivePercentageBasedOnTests) {
         this.currentPositivePercentageBasedOnTests = currentPositivePercentageBasedOnTests;
+    }
+
+    public Double getCurrentRecoveredPercentage() {
+        return currentRecoveredPercentage;
+    }
+
+    public void setCurrentRecoveredPercentage(Double currentRecoveredPercentage) {
+        this.currentRecoveredPercentage = currentRecoveredPercentage;
     }
 }

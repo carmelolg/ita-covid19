@@ -49,6 +49,12 @@ public class NationalService {
 
             dto.setCurrentPositivePercentageBasedOnTests(round(percentage));
 
+            // percentage test based
+            Double currentRecovered = Double.valueOf(last.getDimessi_guariti());
+            Double percentageRecovered = Double.valueOf((currentRecovered * 100) / currentCase);
+
+            dto.setCurrentRecoveredPercentage(round(percentageRecovered));
+
         }
 
 
