@@ -6,6 +6,9 @@ public class NazioneStatsDto {
     private Double currentNewPositiveRateOfGrowth;
     private Double currentPositivePercentageBasedOnTests;
     private Double currentRecoveredPercentage;
+    private Double currentDeadPercentage;
+    private Double currentIntensiveCarePercentage;
+    private Double currentHospitalizedPercentage;
 
     public Double getCurrentRateOfGrowth() {
         return currentRateOfGrowth;
@@ -37,5 +40,29 @@ public class NazioneStatsDto {
 
     public void setCurrentRecoveredPercentage(Double currentRecoveredPercentage) {
         this.currentRecoveredPercentage = currentRecoveredPercentage;
+    }
+
+    public Double getCurrentDeadPercentage() {
+        return currentDeadPercentage;
+    }
+
+    public void setCurrentDeadPercentage(Double currentDeadPercentage) {
+        this.currentDeadPercentage = currentDeadPercentage;
+    }
+
+    public Double getCurrentIntensiveCarePercentage() {
+        return currentIntensiveCarePercentage;
+    }
+
+    public void setCurrentIntensiveCarePercentage(Double currentIntensiveCarePercentage) {
+        this.currentIntensiveCarePercentage = currentIntensiveCarePercentage;
+    }
+
+    public Double getCurrentHospitalizedPercentage() {
+        return currentHospitalizedPercentage;
+    }
+
+    public void setCurrentHospitalizedPercentage(Double currentHospitalizedPercentage) {
+        this.currentHospitalizedPercentage = currentHospitalizedPercentage;
     }
 }

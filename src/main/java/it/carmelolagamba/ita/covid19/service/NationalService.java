@@ -49,11 +49,29 @@ public class NationalService {
 
             dto.setCurrentPositivePercentageBasedOnTests(round(percentage));
 
-            // percentage test based
+            // percentage recovered
             Double currentRecovered = Double.valueOf(last.getDimessi_guariti());
             Double percentageRecovered = Double.valueOf((currentRecovered * 100) / currentCase);
 
             dto.setCurrentRecoveredPercentage(round(percentageRecovered));
+
+            // percentage dead
+            Double currentDead = Double.valueOf(last.getDeceduti());
+            Double percentageDead = Double.valueOf((currentDead * 100) / currentCase);
+
+            dto.setCurrentDeadPercentage(round(percentageDead));
+
+            // percentage intensive care
+            Double currentIntensiveCare = Double.valueOf(last.getTerapia_intensiva());
+            Double percentageIntensiveCare = Double.valueOf((currentIntensiveCare * 100) / currentCase);
+
+            dto.setCurrentIntensiveCarePercentage(round(percentageIntensiveCare));
+
+            // percentage hospitalized
+            Double currentHospitalized = Double.valueOf(last.getTotale_ospedalizzati());
+            Double percentageHospitalized = Double.valueOf((currentHospitalized * 100) / currentCase);
+
+            dto.setCurrentHospitalizedPercentage(round(percentageHospitalized));
 
         }
 
