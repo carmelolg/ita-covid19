@@ -129,6 +129,28 @@ public class RegionService {
 
     }
 
+    public AndamentoDto findLast30NewPositiveByRegion(String region) {
+
+        AndamentoDto andamentoDto = new AndamentoDto();
+
+        List<DataRegione> dataNazioneList = dataRegioneDocumentService.findLast30ByDistrictName(region);
+
+        if (dataNazioneList.isEmpty()) {
+            andamentoDto.setDescription("Dati non presenti");
+            return andamentoDto;
+        } else {
+            andamentoDto.setDescription(String.format("Statistiche dei nuovi positivi in Italia"));
+
+            dataNazioneList.forEach(data -> {
+                DataRegione yesterdayDate = dataRegioneDocumentService.findYesterdayDataByDistrict(region, data.getData());
+                int increaseFromYesterday = (yesterdayDate != null) ? data.getNuovi_positivi() - yesterdayDate.getNuovi_positivi() : 0;
+                andamentoDto.getResults().add(new ResultDto(data.getNuovi_positivi(), increaseFromYesterday, data.getData()));
+            });
+
+            return andamentoDto;
+        }
+    }
+
     public AndamentoDto findLast30HospitalizedByDistrictName(String district) {
         AndamentoDto andamentoDto = new AndamentoDto();
 

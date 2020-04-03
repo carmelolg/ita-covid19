@@ -36,6 +36,12 @@ public class NazioneController {
         return nationalService.findLast30TotalCases();
     }
 
+    @ApiOperation(value = "Totale nuovi casi nazionali")
+    @RequestMapping(method = RequestMethod.GET, path = "/italy/total/new")
+    public AndamentoDto totaleNuoviCasiNazionali() {
+        return nationalService.findLast30NewPositive();
+    }
+
     @ApiOperation(value = "Totale ricoverati nazionali")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/total/hospitalized")
     public AndamentoDto totaleNazionaliRicoverati() {

@@ -126,6 +126,28 @@ public class NationalService {
         }
     }
 
+    public AndamentoDto findLast30NewPositive() {
+
+        AndamentoDto andamentoDto = new AndamentoDto();
+
+        List<DataNazione> dataNazioneList = dataNazioneDocumentService.findLast30();
+
+        if (dataNazioneList.isEmpty()) {
+            andamentoDto.setDescription("Dati non presenti");
+            return andamentoDto;
+        } else {
+            andamentoDto.setDescription(String.format("Statistiche dei nuovi positivi in Italia"));
+
+            dataNazioneList.forEach(data -> {
+                DataNazione yesterdayDate = dataNazioneDocumentService.findYesterdayData(data.getData());
+                int increaseFromYesterday = (yesterdayDate != null) ? data.getNuovi_positivi() - yesterdayDate.getNuovi_positivi() : 0;
+                andamentoDto.getResults().add(new ResultDto(data.getNuovi_positivi(), increaseFromYesterday, data.getData()));
+            });
+
+            return andamentoDto;
+        }
+    }
+
     public AndamentoDto findLast30Hospitalized() {
 
         AndamentoDto andamentoDto = new AndamentoDto();
