@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class GrowthRateResultDto {
     private Double value;
-    private Date data;
+    private Date date;
 
     public GrowthRateResultDto() {
     }
 
-    public GrowthRateResultDto(Double value, Date data) {
+    public GrowthRateResultDto(Double value, Date date) {
         this.value = value;
-        this.data = data;
+        this.date = date;
     }
 
     public Double getValue() {
@@ -22,11 +22,11 @@ public class GrowthRateResultDto {
         this.value = value;
     }
 
-    public Date getData() {
-        return data;
+    public Date getDate() {
+        return date;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
