@@ -39,7 +39,12 @@ public class DistrictService {
                 DataProvincia yesterdayDate = dataProvinciaDocumentService.findYesterdayDataByDistrict(region, data.getData());
                 Double yesterdayCase = Double.valueOf(yesterdayDate.getTotale_casi());
 
-                Double rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+                Double rate = 0.0;
+                if(yesterdayCase == 0){
+                    rate = currentCase * 100;
+                }else{
+                    rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+                }
 
                 growthRateDto.getResults().add(new GrowthRateResultDto(MathUtils.round(rate), data.getData()));
             });

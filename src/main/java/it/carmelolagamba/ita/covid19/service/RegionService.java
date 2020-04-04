@@ -1,6 +1,5 @@
 package it.carmelolagamba.ita.covid19.service;
 
-import it.carmelolagamba.ita.covid19.domain.DataNazione;
 import it.carmelolagamba.ita.covid19.domain.DataRegione;
 import it.carmelolagamba.ita.covid19.utils.MathUtils;
 import it.carmelolagamba.ita.covid19.view.*;
@@ -37,7 +36,12 @@ public class RegionService {
                 DataRegione yesterdayDate = dataRegioneDocumentService.findYesterdayDataByDistrict(region, data.getData());
                 Double yesterdayCase = Double.valueOf(yesterdayDate.getTotale_casi());
 
-                Double rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+                Double rate = 0.0;
+                if(yesterdayCase == 0){
+                    rate = currentCase * 100;
+                }else{
+                    rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+                }
 
                 growthRateDto.getResults().add(new GrowthRateResultDto(MathUtils.round(rate), data.getData()));
             });
@@ -60,14 +64,24 @@ public class RegionService {
             Double currentCase = Double.valueOf(last.getTotale_casi());
             Double yesterdayCase = Double.valueOf(lastYesterday.getTotale_casi());
 
-            Double rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+            Double rate = 0.0;
+            if(yesterdayCase == 0){
+                rate = currentCase * 100;
+            }else{
+                rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
+            }
             dto.setCurrentRateOfGrowth(round(rate));
 
             // growth rate new positive
             Double currentNewPositive = Double.valueOf(last.getNuovi_positivi());
             Double yesterdayNewPositive = Double.valueOf(lastYesterday.getNuovi_positivi());
 
-            Double rateNewPositive = ((currentNewPositive - yesterdayNewPositive) / yesterdayNewPositive) * 100;
+            Double rateNewPositive = 0.0;
+            if(yesterdayCase == 0){
+                rateNewPositive = currentNewPositive * 100;
+            }else{
+                rateNewPositive = ((currentNewPositive - yesterdayNewPositive) / yesterdayNewPositive) * 100;
+            }
             dto.setCurrentNewPositiveRateOfGrowth(round(rateNewPositive));
 
 
