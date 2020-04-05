@@ -1,15 +1,14 @@
 package it.carmelolagamba.ita.covid19.service;
 
 import it.carmelolagamba.ita.covid19.domain.DataNazione;
-import it.carmelolagamba.ita.covid19.view.AndamentoDto;
-import it.carmelolagamba.ita.covid19.view.NazioneStatsDto;
-import it.carmelolagamba.ita.covid19.view.ResultDto;
+import it.carmelolagamba.ita.covid19.view.*;
 import it.carmelolagamba.mongo.service.custom.DataNazioneDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -18,7 +17,42 @@ public class NationalService {
     @Autowired
     private DataNazioneDocumentService dataNazioneDocumentService;
 
-    public NazioneStatsDto findStats(){
+    public ResumeStatsDto findResume(boolean all) {
+
+        ResumeStatsDto resumeDto = new ResumeStatsDto();
+
+        List<DataNazione> dataNazioneList = new ArrayList<>();
+
+        if (all) {
+            dataNazioneList = dataNazioneDocumentService.findAll();
+        } else {
+            dataNazioneList = dataNazioneDocumentService.findLast30();
+        }
+
+        if (dataNazioneList.isEmpty()) {
+            resumeDto.setDescription("Dati non presenti");
+            return resumeDto;
+        } else {
+            resumeDto.setDescription(String.format("Riepilogo statistiche italiane"));
+
+            dataNazioneList.forEach(data -> {
+
+                AllResultDto result = new AllResultDto(
+                        data.getTotale_casi(),
+                        data.getTotale_positivi(),
+                        data.getDimessi_guariti(),
+                        data.getDeceduti(),
+                        data.getData()
+                );
+
+                resumeDto.getResults().add(result);
+            });
+
+            return resumeDto;
+        }
+    }
+
+    public NazioneStatsDto findStats() {
 
         NazioneStatsDto dto = new NazioneStatsDto();
 
@@ -26,7 +60,7 @@ public class NationalService {
         DataNazione last = dataNazioneDocumentService.findLast();
         DataNazione lastYesterday = dataNazioneDocumentService.findYesterdayData(last.getData());
 
-        if(last != null && lastYesterday != null){
+        if (last != null && lastYesterday != null) {
 
             // growth rate
             Double currentCase = Double.valueOf(last.getTotale_casi());

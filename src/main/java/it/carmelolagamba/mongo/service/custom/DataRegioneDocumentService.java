@@ -3,6 +3,7 @@ package it.carmelolagamba.mongo.service.custom;
 import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.client.MongoCollection;
+import it.carmelolagamba.ita.covid19.domain.DataNazione;
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
 import it.carmelolagamba.ita.covid19.domain.DataRegione;
 import it.carmelolagamba.ita.covid19.domain.FileImported;
@@ -39,6 +40,20 @@ public class DataRegioneDocumentService extends AbstractDocumentService {
             return false;
         }
 
+    }
+
+    public List<DataRegione> findAll(String name){
+        MongoCollection<DataRegione> collection = dataRegioneCollectionService.getCollection(COLLECTION_NAME);
+
+        HashMap<String, Object> filters = new HashMap<>();
+        filters.put("denominazione_regione", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+
+        HashMap<String, Object> sortFilters = new HashMap<>();
+        sortFilters.put("data", 1);
+
+        List<DataRegione> list = findByFilters(collection, filters, sortFilters);
+
+        return list;
     }
 
     public List<DataRegione> findLast30ByDistrictName(String name){

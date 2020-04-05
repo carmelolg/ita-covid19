@@ -40,6 +40,19 @@ public class DataNazioneDocumentService extends AbstractDocumentService {
 
     }
 
+    public List<DataNazione> findAll(){
+        MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
+
+        HashMap<String, Object> filters = new HashMap<>();
+
+        HashMap<String, Object> sortFilters = new HashMap<>();
+        sortFilters.put("data", 1);
+
+        List<DataNazione> list = findByFilters(collection, filters, sortFilters);
+
+        return list;
+    }
+
     public List<DataNazione> findLast30(){
         MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
 

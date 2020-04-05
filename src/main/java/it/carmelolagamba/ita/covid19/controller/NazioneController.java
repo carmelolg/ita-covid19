@@ -6,8 +6,11 @@ import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.NationalService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
 import it.carmelolagamba.ita.covid19.view.NazioneStatsDto;
+import it.carmelolagamba.ita.covid19.view.ResumeStatsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.ws.rs.QueryParam;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -21,6 +24,12 @@ public class NazioneController {
     @RequestMapping(method = RequestMethod.GET, path = "/italy/stats")
     public NazioneStatsDto statsNazionali() {
         return nationalService.findStats();
+    }
+
+    @ApiOperation(value = "Riepilogo")
+    @RequestMapping(method = RequestMethod.GET, path = "/italy/resume")
+    public ResumeStatsDto riepilogoNazionali(@RequestParam("all") boolean all) {
+        return nationalService.findResume(all);
     }
 
     @ApiOperation(value = "Totale casi nazionali")
