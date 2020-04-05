@@ -5,12 +5,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.NationalService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
-import it.carmelolagamba.ita.covid19.view.NazioneStatsDto;
+import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
+import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
 import it.carmelolagamba.ita.covid19.view.ResumeStatsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.ws.rs.QueryParam;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -22,7 +21,7 @@ public class NazioneController {
 
     @ApiOperation(value = "Statistiche generali nazionali")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/stats")
-    public NazioneStatsDto statsNazionali() {
+    public GenericStatsDto statsNazionali() {
         return nationalService.findStats();
     }
 
@@ -32,10 +31,22 @@ public class NazioneController {
         return nationalService.findResume(all);
     }
 
+    @ApiOperation(value = "Statistiche generali nazionali")
+    @RequestMapping(method = RequestMethod.GET, path = "/italy/growthRate")
+    public GrowthRateDto growthRateNazionali() {
+        return nationalService.findGrowthRate();
+    }
+
     @ApiOperation(value = "Totale casi nazionali")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/total")
     public AndamentoDto totaleNazionali() {
         return nationalService.findLast30TotalCases();
+    }
+
+    @ApiOperation(value = "Totale nuovi casi nazionali")
+    @RequestMapping(method = RequestMethod.GET, path = "/italy/total/new")
+    public AndamentoDto totaleNuoviCasiNazionali() {
+        return nationalService.findLast30NewPositive();
     }
 
     @ApiOperation(value = "Totale ricoverati nazionali")
