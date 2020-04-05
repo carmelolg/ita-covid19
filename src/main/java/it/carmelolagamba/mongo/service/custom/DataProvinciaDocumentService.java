@@ -10,9 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.ZoneId;
-import java.time.temporal.TemporalAccessor;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -35,6 +36,19 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
             return false;
         }
 
+    }
+
+    public List<DataProvincia> findAll(){
+        MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
+
+        HashMap<String, Object> filters = new HashMap<>();
+
+        HashMap<String, Object> sortFilters = new HashMap<>();
+        sortFilters.put("data", 1);
+
+        List<DataProvincia> list = findByFilters(collection, filters, sortFilters);
+
+        return list;
     }
 
     public List<DataProvincia> findLast30ByDistrictName(String name){

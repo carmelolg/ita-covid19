@@ -7,6 +7,9 @@ import it.carmelolagamba.mongo.service.custom.DataNazioneDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.carmelolagamba.ita.covid19.utils.MathUtils.round;
@@ -17,6 +20,41 @@ public class NationalService {
     @Autowired
     private DataNazioneDocumentService dataNazioneDocumentService;
 
+    
+    public ResumeStatsDto findResume(boolean all) {
+
+        ResumeStatsDto resumeDto = new ResumeStatsDto();
+
+        List<DataNazione> dataNazioneList = new ArrayList<>();
+
+        if (all) {
+            dataNazioneList = dataNazioneDocumentService.findAll();
+        } else {
+            dataNazioneList = dataNazioneDocumentService.findLast30();
+        }
+
+        if (dataNazioneList.isEmpty()) {
+            resumeDto.setDescription("Dati non presenti");
+            return resumeDto;
+        } else {
+            resumeDto.setDescription(String.format("Riepilogo statistiche italiane"));
+
+            dataNazioneList.forEach(data -> {
+
+                AllResultDto result = new AllResultDto(
+                        data.getTotale_casi(),
+                        data.getTotale_positivi(),
+                        data.getDimessi_guariti(),
+                        data.getDeceduti(),
+                        data.getData()
+                );
+
+                resumeDto.getResults().add(result);
+            });
+
+            return resumeDto;
+        }
+    }
     public GenericStatsDto findStats() {
 
         GenericStatsDto dto = new GenericStatsDto();

@@ -7,6 +7,7 @@ import it.carmelolagamba.ita.covid19.service.NationalService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
 import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
+import it.carmelolagamba.ita.covid19.view.ResumeStatsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,12 @@ public class NazioneController {
     @RequestMapping(method = RequestMethod.GET, path = "/italy/stats")
     public GenericStatsDto statsNazionali() {
         return nationalService.findStats();
+    }
+
+    @ApiOperation(value = "Riepilogo")
+    @RequestMapping(method = RequestMethod.GET, path = "/italy/resume")
+    public ResumeStatsDto riepilogoNazionali(@RequestParam("all") boolean all) {
+        return nationalService.findResume(all);
     }
 
     @ApiOperation(value = "Statistiche generali nazionali")

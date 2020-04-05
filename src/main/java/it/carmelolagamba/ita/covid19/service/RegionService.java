@@ -7,6 +7,7 @@ import it.carmelolagamba.mongo.service.custom.DataRegioneDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static it.carmelolagamba.ita.covid19.utils.MathUtils.round;
@@ -16,6 +17,42 @@ public class RegionService {
 
     @Autowired
     private DataRegioneDocumentService dataRegioneDocumentService;
+
+
+    public ResumeStatsDto findResume(String region, boolean all) {
+
+        ResumeStatsDto resumeDto = new ResumeStatsDto();
+
+        List<DataRegione> dataRegioneList = new ArrayList<>();
+
+        if (all) {
+            dataRegioneList = dataRegioneDocumentService.findAll(region);
+        } else {
+            dataRegioneList = dataRegioneDocumentService.findLast30ByDistrictName(region);
+        }
+
+        if (dataRegioneList.isEmpty()) {
+            resumeDto.setDescription("Dati non presenti");
+            return resumeDto;
+        } else {
+            resumeDto.setDescription(String.format("Riepilogo statistiche regionali"));
+
+            dataRegioneList.forEach(data -> {
+
+                AllResultDto result = new AllResultDto(
+                        data.getTotale_casi(),
+                        data.getTotale_positivi(),
+                        data.getDimessi_guariti(),
+                        data.getDeceduti(),
+                        data.getData()
+                );
+
+                resumeDto.getResults().add(result);
+            });
+
+            return resumeDto;
+        }
+    }
 
     public GrowthRateDto findGrowthRate(String region) {
 
@@ -37,9 +74,9 @@ public class RegionService {
                 Double yesterdayCase = Double.valueOf(yesterdayDate.getTotale_casi());
 
                 Double rate = 0.0;
-                if(yesterdayCase == 0){
+                if (yesterdayCase == 0) {
                     rate = currentCase * 100;
-                }else{
+                } else {
                     rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
                 }
 
@@ -50,7 +87,7 @@ public class RegionService {
         }
     }
 
-    public GenericStatsDto findStats(String region){
+    public GenericStatsDto findStats(String region) {
 
         GenericStatsDto dto = new GenericStatsDto();
 
@@ -58,16 +95,16 @@ public class RegionService {
         DataRegione last = dataRegioneDocumentService.findLast(region);
         DataRegione lastYesterday = dataRegioneDocumentService.findYesterdayDataByDistrict(region, last.getData());
 
-        if(last != null && lastYesterday != null){
+        if (last != null && lastYesterday != null) {
 
             // growth rate
             Double currentCase = Double.valueOf(last.getTotale_casi());
             Double yesterdayCase = Double.valueOf(lastYesterday.getTotale_casi());
 
             Double rate = 0.0;
-            if(yesterdayCase == 0){
+            if (yesterdayCase == 0) {
                 rate = currentCase * 100;
-            }else{
+            } else {
                 rate = ((currentCase - yesterdayCase) / yesterdayCase) * 100;
             }
             dto.setCurrentRateOfGrowth(round(rate));
@@ -77,9 +114,9 @@ public class RegionService {
             Double yesterdayNewPositive = Double.valueOf(lastYesterday.getNuovi_positivi());
 
             Double rateNewPositive = 0.0;
-            if(yesterdayCase == 0){
+            if (yesterdayCase == 0) {
                 rateNewPositive = currentNewPositive * 100;
-            }else{
+            } else {
                 rateNewPositive = ((currentNewPositive - yesterdayNewPositive) / yesterdayNewPositive) * 100;
             }
             dto.setCurrentNewPositiveRateOfGrowth(round(rateNewPositive));

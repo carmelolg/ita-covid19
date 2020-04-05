@@ -8,6 +8,7 @@ import it.carmelolagamba.ita.covid19.service.RegionService;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
 import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
+import it.carmelolagamba.ita.covid19.view.ResumeStatsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,6 +36,12 @@ public class RegioneController {
     @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/total")
     public AndamentoDto statsPerProvincia(@PathVariable("name") String name) {
         return regionService.findLast30ByDistrictName(name);
+    }
+
+    @ApiOperation(value = "Riepilogo")
+    @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/resume")
+    public ResumeStatsDto riepilogoNazionali(@PathVariable("name") String name, @RequestParam("all") boolean all) {
+        return regionService.findResume(name, all);
     }
 
     @ApiOperation(value = "Totale nuovi casi regionali")
