@@ -26,7 +26,8 @@ public class RegionService {
         List<DataRegione> dataRegioneList = new ArrayList<>();
 
         if (all) {
-            dataRegioneList = dataRegioneDocumentService.findAll(region);
+            // TODO da migliorare parte grafica prima altrimenti findAll()
+            dataRegioneList = dataRegioneDocumentService.findLast30ByDistrictName(region);
         } else {
             dataRegioneList = dataRegioneDocumentService.findLast30ByDistrictName(region);
         }

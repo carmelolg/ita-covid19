@@ -28,7 +28,8 @@ public class NationalService {
         List<DataNazione> dataNazioneList = new ArrayList<>();
 
         if (all) {
-            dataNazioneList = dataNazioneDocumentService.findAll();
+            // TODO da migliorare parte grafica prima altrimenti findAll()
+            dataNazioneList = dataNazioneDocumentService.findLast30();
         } else {
             dataNazioneList = dataNazioneDocumentService.findLast30();
         }
