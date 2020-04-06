@@ -63,6 +63,17 @@ public class NationalService {
         DataNazione last = dataNazioneDocumentService.findLast();
         DataNazione lastYesterday = dataNazioneDocumentService.findYesterdayData(last.getData());
 
+        if(last != null) {
+            dto.setCurrentDead(last.getDeceduti());
+            dto.setCurrentHomeIsolation(last.getIsolamento_domiciliare());
+            dto.setCurrentHospedalized(last.getTotale_ospedalizzati());
+            dto.setCurrentIntesiveCare(last.getTerapia_intensiva());
+            dto.setCurrentPositives(last.getTotale_positivi());
+            dto.setCurrentRecovered(last.getDimessi_guariti());
+            dto.setCurrentTests(last.getTamponi());
+            dto.setCurrentTotalCases(last.getTotale_casi());
+        }
+
         if (last != null && lastYesterday != null) {
 
             // growth rate
