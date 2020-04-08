@@ -2,6 +2,15 @@ package it.carmelolagamba.ita.covid19.view;
 
 public class GenericStatsDto {
 
+    private int currentTotalCases;
+    private int currentPositives;
+    private int currentDead;
+    private int currentRecovered;
+    private int currentTests;
+    private int currentHospedalized;
+    private int currentIntesiveCare;
+    private int currentHomeIsolation;
+
     private Double currentRateOfGrowth;
     private Double currentNewPositiveRateOfGrowth;
     private Double currentPositivePercentageBasedOnTests;
@@ -9,6 +18,70 @@ public class GenericStatsDto {
     private Double currentDeadPercentage;
     private Double currentIntensiveCarePercentage;
     private Double currentHospitalizedPercentage;
+
+    public int getCurrentTotalCases() {
+        return currentTotalCases;
+    }
+
+    public void setCurrentTotalCases(int currentTotalCases) {
+        this.currentTotalCases = currentTotalCases;
+    }
+
+    public int getCurrentPositives() {
+        return currentPositives;
+    }
+
+    public void setCurrentPositives(int currentPositives) {
+        this.currentPositives = currentPositives;
+    }
+
+    public int getCurrentDead() {
+        return currentDead;
+    }
+
+    public void setCurrentDead(int currentDead) {
+        this.currentDead = currentDead;
+    }
+
+    public int getCurrentRecovered() {
+        return currentRecovered;
+    }
+
+    public void setCurrentRecovered(int currentRecovered) {
+        this.currentRecovered = currentRecovered;
+    }
+
+    public int getCurrentTests() {
+        return currentTests;
+    }
+
+    public void setCurrentTests(int currentTests) {
+        this.currentTests = currentTests;
+    }
+
+    public int getCurrentHospedalized() {
+        return currentHospedalized;
+    }
+
+    public void setCurrentHospedalized(int currentHospedalized) {
+        this.currentHospedalized = currentHospedalized;
+    }
+
+    public int getCurrentIntesiveCare() {
+        return currentIntesiveCare;
+    }
+
+    public void setCurrentIntesiveCare(int currentIntesiveCare) {
+        this.currentIntesiveCare = currentIntesiveCare;
+    }
+
+    public int getCurrentHomeIsolation() {
+        return currentHomeIsolation;
+    }
+
+    public void setCurrentHomeIsolation(int currentHomeIsolation) {
+        this.currentHomeIsolation = currentHomeIsolation;
+    }
 
     public Double getCurrentRateOfGrowth() {
         return currentRateOfGrowth;
