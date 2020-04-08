@@ -1,12 +1,9 @@
 package it.carmelolagamba.ita.covid19.service;
 
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
-import it.carmelolagamba.ita.covid19.domain.DataRegione;
 import it.carmelolagamba.ita.covid19.utils.MathUtils;
 import it.carmelolagamba.ita.covid19.view.*;
 import it.carmelolagamba.mongo.service.custom.DataProvinciaDocumentService;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
