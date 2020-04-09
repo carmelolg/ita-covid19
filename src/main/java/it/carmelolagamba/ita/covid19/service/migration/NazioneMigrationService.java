@@ -44,29 +44,9 @@ public class NazioneMigrationService extends AbstractMigrationService {
         return new File(Constants.folderNazioni);
     }
 
-//    @Scheduled(cron = "0 30 17 * * ?")
-//    public void getFile() throws Exception {
-//        try {
-//            Date date = new Date(System.currentTimeMillis());
-//            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-//            String dateString = format.format(date);
-//
-//            String fileURL = String.join("", Constants.baseUrlNazione, dateString, Constants.defaultExtension);
-//            String saveDir = Constants.folderNazioni;
-//            FileUtils.downloadFile(fileURL, saveDir);
-//            logger.info("Dati nazionali aggiornati correttamente alle 18h30");
-//
-//            migrateData();
-//            logger.info("Dati nazionali migrati correttamente alle 18h30");
-//
-//        } catch (IOException ex) {
-//            logger.error("Scheduling per scaricare i dati nazionali giornalieri andato in errore", ex);
-//        }
-//    }
-
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "0 0/30 15-19 * * *")
     public void getFile() throws Exception {
-        logger.info("I'm alive");
+
         try {
             Date date = new Date(System.currentTimeMillis());
             SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
@@ -76,10 +56,9 @@ public class NazioneMigrationService extends AbstractMigrationService {
             String saveDir = Constants.folderNazioni;
             FileUtils.downloadFile(fileURL, saveDir);
             logger.info("File importato: {}", fileURL);
-            logger.info("Salvato nella cartella: {}", saveDir);
 
             migrateData();
-            logger.info("I dati sono stati migrati");
+            logger.info("File migrato: {}", fileURL);
 
         } catch (IOException ex) {
             logger.error("Scheduling per scaricare i dati nazionali giornalieri andato in errore", ex);

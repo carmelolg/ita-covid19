@@ -43,7 +43,7 @@ public class ProvinciaMigrationService extends AbstractMigrationService {
         return new File(Constants.folderProvincia);
     }
 
-    @Scheduled(cron = "30 32 17 * * ?")
+    @Scheduled(cron = "0 0/30 15-19 * * *")
     public void getFile() throws Exception {
         try {
             Date date = new Date(System.currentTimeMillis());
@@ -53,10 +53,10 @@ public class ProvinciaMigrationService extends AbstractMigrationService {
             String fileURL = String.join("", Constants.baseUrlProvincia, dateString, Constants.defaultExtension);
             String saveDir = Constants.folderProvincia;
             FileUtils.downloadFile(fileURL, saveDir);
-            logger.info("Dati delle province aggiornati correttamente alle 18h32:30.");
+            logger.info("File importato: {}", fileURL);
 
             migrateData();
-            logger.info("Dati delle province migrati correttamente alle 18h32:30.");
+            logger.info("File migrato: {}", fileURL);
 
         } catch (IOException ex) {
             logger.error("Scheduling per scaricare i dati delle province giornalieri andato in errore", ex);

@@ -18,8 +18,8 @@ public class Constants {
     public static String baseUrlProvincia = String.join("", baseUrlGithubRepoRaw, baseFolderProvincia, baseNameFileProvincia);
     public static String defaultExtension = ".csv";
 
-    public static String folderNazioni = "./data/dati-andamento-nazionale";
-    public static String folderProvincia = "./data/dati-province";
-    public static String folderRegioni = "./data/dati-regioni";
+    public static String folderNazioni = "data/dati-andamento-nazionale";
+    public static String folderProvincia = "data/dati-province";
+    public static String folderRegioni = "data/dati-regioni";
 
 }
