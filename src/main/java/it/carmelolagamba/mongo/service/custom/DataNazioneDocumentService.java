@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Component
 public class DataNazioneDocumentService extends AbstractDocumentService {
 
-    private static final String COLLECTION_NAME = "DataNazione";
+    private static final String COLLECTION_NAME = "DataNazioneTest";
 
     private Logger logger = LoggerFactory.getLogger(DataNazioneDocumentService.class);
 

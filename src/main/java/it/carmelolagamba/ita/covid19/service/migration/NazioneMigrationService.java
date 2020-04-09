@@ -64,9 +64,26 @@ public class NazioneMigrationService extends AbstractMigrationService {
 //        }
 //    }
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/30 * * * * *")
     public void getFile() throws Exception {
         logger.info("I'm alive");
+        try {
+            Date date = new Date(System.currentTimeMillis());
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+            String dateString = format.format(date);
+
+            String fileURL = String.join("", Constants.baseUrlNazione, dateString, Constants.defaultExtension);
+            String saveDir = Constants.folderNazioni;
+            FileUtils.downloadFile(fileURL, saveDir);
+            logger.info("File importato: {}", fileURL);
+            logger.info("Salvato nella cartella: {}", saveDir);
+
+            migrateData();
+            logger.info("I dati sono stati migrati");
+
+        } catch (IOException ex) {
+            logger.error("Scheduling per scaricare i dati nazionali giornalieri andato in errore", ex);
+        }
     }
 
 }
