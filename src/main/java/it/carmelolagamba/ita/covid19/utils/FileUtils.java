@@ -62,8 +62,14 @@ public class FileUtils {
             InputStream inputStream = httpConn.getInputStream();
             String saveFilePath = saveDir + File.separator + fileName;
 
-            // opens an output stream to save into file
-            FileOutputStream outputStream = new FileOutputStream(saveFilePath);
+            File directory = new File(saveDir);
+            if (! directory.exists()){
+                directory.mkdirs();
+            }
+
+            File file = new File(saveFilePath);
+            file.createNewFile(); // if file already exists will do nothing
+            FileOutputStream outputStream = new FileOutputStream(saveFilePath, false);
 
             int bytesRead = -1;
             byte[] buffer = new byte[BUFFER_SIZE];
