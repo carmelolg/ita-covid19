@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 @Component
 public class FileImportedDocumentService extends AbstractDocumentService {
 
-    private static final String COLLECTION_NAME = "FileImportedTest";
+    private static final String COLLECTION_NAME = "FileImported";
 
     private Logger logger = LoggerFactory.getLogger(FileImportedDocumentService.class);
 
