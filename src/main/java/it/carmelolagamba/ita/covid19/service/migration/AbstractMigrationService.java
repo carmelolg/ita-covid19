@@ -38,6 +38,7 @@ public abstract class AbstractMigrationService {
                 try {
                     migrationInvoke(file);
                     fileImportedDocumentService.insert(new FileImported(file.getName()));
+                    getLogger().info("Migrazione file {} avvenuta con successo");
                 } catch (Exception e) {
                     getLogger().error("Errore nella conversione del file {} in oggetto", file.getName());
                     getLogger().error("Ecco lo stacktrace", e);
