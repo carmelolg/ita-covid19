@@ -165,6 +165,32 @@ public abstract class AbstractService<T extends AbstractFullData> {
         }
     }
 
+    public AndamentoDto findLast30TotalPositive() {
+        return findLast30TotalPositive(null);
+    }
+
+    public AndamentoDto findLast30TotalPositive(Optional<String> name) {
+
+        AndamentoDto andamentoDto = new AndamentoDto();
+
+        List<T> list = findLast30(name);
+
+        if (list.isEmpty()) {
+            andamentoDto.setDescription("Dati non presenti");
+            return andamentoDto;
+        } else {
+            andamentoDto.setDescription(String.format("Statistiche del numero di positivi italiani"));
+
+            list.forEach(data -> {
+                T yesterdayDate = findYesterdayData(name, data.getData());
+                int increaseFromYesterday = (yesterdayDate != null) ? data.getTotale_positivi() - yesterdayDate.getTotale_positivi() : 0;
+                andamentoDto.getResults().add(new ResultDto(data.getTotale_positivi(), increaseFromYesterday, data.getData()));
+            });
+
+            return andamentoDto;
+        }
+    }
+
     public AndamentoDto findLast30TotalCases() {
         return findLast30TotalCases(null);
     }
