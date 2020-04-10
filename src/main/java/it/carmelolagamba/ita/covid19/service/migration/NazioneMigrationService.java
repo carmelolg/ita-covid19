@@ -54,11 +54,14 @@ public class NazioneMigrationService extends AbstractMigrationService {
 
             String fileURL = String.join("", Constants.baseUrlNazione, dateString, Constants.defaultExtension);
             String saveDir = Constants.folderNazioni;
-            FileUtils.downloadFile(fileURL, saveDir);
-            logger.info("File importato: {}", fileURL);
-
-            migrateData();
-            logger.info("File migrato: {}", fileURL);
+            boolean saved = FileUtils.downloadFile(fileURL, saveDir);
+            if(saved){
+                logger.info("File importato: {}", fileURL);
+                migrateData();
+                logger.info("File migrato: {}", fileURL);
+            }else{
+                logger.info("File: {} non ancora disponibile", fileURL);
+            }
 
         } catch (IOException ex) {
             logger.error("Scheduling per scaricare i dati nazionali giornalieri andato in errore", ex);
