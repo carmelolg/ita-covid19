@@ -165,6 +165,32 @@ public abstract class AbstractService<T extends AbstractFullData> {
         }
     }
 
+    public AndamentoDto findLast30Isolated() {
+        return findLast30Isolated(null);
+    }
+
+    public AndamentoDto findLast30Isolated(Optional<String> name) {
+
+        AndamentoDto andamentoDto = new AndamentoDto();
+
+        List<T> list = findLast30(name);
+
+        if (list.isEmpty()) {
+            andamentoDto.setDescription("Dati non presenti");
+            return andamentoDto;
+        } else {
+            andamentoDto.setDescription(String.format("Statistiche del numero di italiani in isolamento domiciliare"));
+
+            list.forEach(data -> {
+                T yesterdayDate = findYesterdayData(name, data.getData());
+                int increaseFromYesterday = (yesterdayDate != null) ? data.getIsolamento_domiciliare() - yesterdayDate.getIsolamento_domiciliare() : 0;
+                andamentoDto.getResults().add(new ResultDto(data.getIsolamento_domiciliare(), increaseFromYesterday, data.getData()));
+            });
+
+            return andamentoDto;
+        }
+    }
+
     public AndamentoDto findLast30TotalPositive() {
         return findLast30TotalPositive(null);
     }

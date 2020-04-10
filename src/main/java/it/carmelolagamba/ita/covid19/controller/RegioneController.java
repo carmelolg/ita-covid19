@@ -57,6 +57,11 @@ public class RegioneController {
         return regionService.findLast30TotalPositive(Optional.of(name));
     }
 
+    @ApiOperation(value = "Totale isolati a casa regionali")
+    @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/total/isolated")
+    public AndamentoDto totaleIsolatiRegionali(@PathVariable("name") String name) {
+        return regionService.findLast30Isolated(Optional.of(name));
+    }
 
     @ApiOperation(value = "Totale ricoverati regionali")
     @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/total/hospitalized")
