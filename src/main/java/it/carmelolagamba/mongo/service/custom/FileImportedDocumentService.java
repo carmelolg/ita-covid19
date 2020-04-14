@@ -1,5 +1,7 @@
 package it.carmelolagamba.mongo.service.custom;
 
+import com.mongodb.client.model.Filters;
+import it.carmelolagamba.ita.covid19.domain.DataNazione;
 import it.carmelolagamba.ita.covid19.domain.DataRegione;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import com.mongodb.client.MongoCollection;
 import it.carmelolagamba.ita.covid19.domain.FileImported;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -33,6 +36,19 @@ public class FileImportedDocumentService extends AbstractDocumentService {
 
         return (file != null) ? true : false;
 
+    }
+
+    public FileImported findLastByType(String type) {
+        MongoCollection<FileImported> collection = fileImportedCollectionService.getCollection(COLLECTION_NAME);
+        HashMap<String, Object> filters = new HashMap<>();
+        filters.put("filename", new BasicDBObject("$regex", ".*" + type +  "*."));
+
+        HashMap<String, Object> sortFilters = new HashMap<>();
+        sortFilters.put("_id", -1);
+
+        FileImported file = findOne(collection, filters, sortFilters);
+
+        return file;
     }
 
     public FileImported insert(FileImported fileImported) {

@@ -3,8 +3,12 @@ package it.carmelolagamba.ita.covid19.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import it.carmelolagamba.ita.covid19.domain.FileImported;
 import it.carmelolagamba.ita.covid19.service.DistrictService;
+import it.carmelolagamba.ita.covid19.service.UtilsService;
+import it.carmelolagamba.ita.covid19.utils.Constants;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
+import it.carmelolagamba.ita.covid19.view.FileImportedDto;
 import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,14 @@ public class ProvinciaController {
     @Autowired
     private DistrictService districtService;
 
+    @Autowired
+    private UtilsService utilsService;
+
+    @ApiOperation(value = "Last file imported")
+    @RequestMapping(method = RequestMethod.GET, path = "/district/file/last")
+    public FileImportedDto lastFile() {
+        return utilsService.getLastFileImportedByType(Constants.provinciaText);
+    }
     @ApiOperation(value = "Statistiche generali provinciali")
     @RequestMapping(method = RequestMethod.GET, path = "/district/{name}/stats")
     public GenericStatsDto statsProvinciali(@PathVariable("name") String name) {
