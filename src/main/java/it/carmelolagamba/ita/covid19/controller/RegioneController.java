@@ -44,6 +44,12 @@ public class RegioneController {
     public ResumeStatsDto riepilogoNazionali(@PathVariable("name") String name, @RequestParam("all") boolean all) {
         return regionService.findResume(all, Optional.of(name));
     }
+    
+    @ApiOperation(value = "Variazione del totale positivi regionale (totale_positivi giorno corrente - totale_positivi giorno precedente)	")
+    @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/total/new/variation")
+    public AndamentoDto variazioneTotalePositivi(@PathVariable("name") String name) {
+        return regionService.findLast30VariationNewPositive(Optional.of(name));
+    }
 
     @ApiOperation(value = "Totale nuovi casi regionali")
     @RequestMapping(method = RequestMethod.GET, path = "/region/{name}/total/new")

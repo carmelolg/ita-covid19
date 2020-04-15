@@ -214,6 +214,33 @@ public abstract class AbstractService<T extends AbstractFullData> {
             return andamentoDto;
         }
     }
+    
+    public AndamentoDto findLast30VariationNewPositive() {
+    	return findLast30VariationNewPositive(null);
+    }
+    
+    public AndamentoDto findLast30VariationNewPositive(Optional<String> name) {
+    	
+    	AndamentoDto andamentoDto = new AndamentoDto();
+    	
+    	List<T> list = findLast30(name);
+
+        if (list.isEmpty()) {
+            andamentoDto.setDescription("Dati non presenti");
+            return andamentoDto;
+        } else {
+            andamentoDto.setDescription(String.format("Statistiche della variazione dei nuovi positivi in Italia"));
+
+            list.forEach(data -> {
+                T yesterdayDate = findYesterdayData(name, data.getData());
+                int increaseFromYesterday = (yesterdayDate != null) ? data.getVariazione_totale_positivi() - yesterdayDate.getVariazione_totale_positivi() : 0;
+                andamentoDto.getResults().add(new ResultDto(data.getVariazione_totale_positivi(), increaseFromYesterday, data.getData()));
+            });
+
+            return andamentoDto;
+        }
+    	
+    }
 
     public AndamentoDto findLast30Hospitalized() {
         return findLast30Hospitalized(null);
