@@ -52,6 +52,12 @@ public class NazioneController {
         return nationalService.findLast30TotalCases();
     }
 
+    @ApiOperation(value = "Variazione del totale positivi nazionale (totale_positivi giorno corrente - totale_positivi giorno precedente)	")
+    @RequestMapping(method = RequestMethod.GET, path = "/italy/total/new/variation")
+    public AndamentoDto variazioneTotalePositivi() {
+        return nationalService.findLast30VariationNewPositive();
+    }
+    
     @ApiOperation(value = "Totale nuovi casi nazionali")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/total/new")
     public AndamentoDto totaleNuoviCasiNazionali() {
