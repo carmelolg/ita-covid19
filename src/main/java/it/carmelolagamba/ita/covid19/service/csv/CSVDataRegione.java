@@ -14,7 +14,7 @@ import java.util.Date;
 import static it.carmelolagamba.ita.covid19.domain.DataRegione.FIELD;
 
 @Component
-public class CSVDataRegione extends AbstractCSVDataReader<DataRegione>{
+public class CSVDataRegione extends AbstractCSVDataReader<DataRegione> {
 
     private static Logger logger = LoggerFactory.getLogger(CSVDataRegione.class);
 
@@ -29,10 +29,10 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione>{
     }
 
     @Override
-    protected void map(DataRegione dataRegione, int i, String value){
+    protected void map(DataRegione dataRegione, int i, String value) {
 
         final FIELD[] fields = FIELD.values();
-        switch (fields[i]){
+        switch (fields[i]) {
             case DATA:
                 try {
                     Calendar dateCalendar = Calendar.getInstance();
@@ -90,6 +90,9 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione>{
                 break;
             case TAMPONI:
                 dataRegione.setTamponi(FileUtils.convertStringToInteger(value));
+                break;
+            case CASI_TESTATI:
+                dataRegione.setCasi_testati(FileUtils.convertStringToInteger(value));
                 break;
             case NOTE_IT:
                 dataRegione.setNote_it(value);
