@@ -12,7 +12,8 @@ public class AbstractFullData extends AbstractData {
             dimessi_guariti,
             deceduti,
             totale_casi,
-            tamponi;
+            tamponi,
+            casi_testati;
 
     public int getRicoverati_con_sintomi() {
         return ricoverati_con_sintomi;
@@ -102,5 +103,13 @@ public class AbstractFullData extends AbstractData {
 
     public void setTamponi(int tamponi) {
         this.tamponi = tamponi;
+    }
+
+    public int getCasi_testati() {
+        return casi_testati;
+    }
+
+    public void setCasi_testati(int casi_testati) {
+        this.casi_testati = casi_testati;
     }
 }
