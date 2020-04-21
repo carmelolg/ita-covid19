@@ -78,6 +78,9 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
             case TAMPONI:
                 dataNazione.setTamponi(FileUtils.convertStringToInteger(value));
                 break;
+            case CASI_TESTATI:
+                dataNazione.setCasi_testati(FileUtils.convertStringToInteger(value));
+                break;
             case NOTE_IT:
                 dataNazione.setNote_it(value);
                 break;

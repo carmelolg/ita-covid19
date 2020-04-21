@@ -20,6 +20,7 @@ public class DataRegione extends AbstractFullData{
         DECEDUTI,
         TOTALE_CASI,
         TAMPONI,
+        CASI_TESTATI,
         NOTE_IT,
         NOTE_EN
     }
