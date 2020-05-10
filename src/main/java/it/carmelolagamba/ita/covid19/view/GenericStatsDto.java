@@ -18,6 +18,25 @@ public class GenericStatsDto {
     private Double currentDeadPercentage;
     private Double currentIntensiveCarePercentage;
     private Double currentHospitalizedPercentage;
+    
+    private int newPositives;
+    private int variationNewPositives;
+    
+    public int getVariationNewPositives() {
+		return variationNewPositives;
+	}
+    
+    public void setVariationNewPositives(int variationNewPositives) {
+		this.variationNewPositives = variationNewPositives;
+	}    
+    
+    public int getNewPositives() {
+		return newPositives;
+	}
+    
+    public void setNewPositives(int newPositives) {
+		this.newPositives = newPositives;
+	}
 
     public int getCurrentTotalCases() {
         return currentTotalCases;

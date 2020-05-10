@@ -73,6 +73,12 @@ public abstract class AbstractService<T extends AbstractFullData> {
             dto.setCurrentRecovered(last.getDimessi_guariti());
             dto.setCurrentTests(last.getTamponi());
             dto.setCurrentTotalCases(last.getTotale_casi());
+            dto.setNewPositives(last.getNuovi_positivi());
+            dto.setNewPositives(last.getNuovi_positivi());
+            
+            int variationNewPositives= (lastYesterday != null) ? last.getTotale_positivi() - lastYesterday.getTotale_positivi() : 0;
+            dto.setVariationNewPositives(variationNewPositives);
+            
         }
 
         if (last != null && lastYesterday != null) {
