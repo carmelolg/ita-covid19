@@ -14,10 +14,11 @@ public class DataNazione extends AbstractFullData{
         NUOVI_POSITIVI,
         DIMESSI_GUARITI,
         DECEDUTI,
+        CASI_DA_SOSPETTO_DIAGNOSTICO,
+        CASI_DA_SCREENING,
         TOTALE_CASI,
         TAMPONI,
         CASI_TESTATI,
-        NOTE_IT,
-        NOTE_EN
+        NOTE
     }
 }

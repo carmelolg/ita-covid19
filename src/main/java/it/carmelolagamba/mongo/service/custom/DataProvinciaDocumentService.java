@@ -1,5 +1,6 @@
 package it.carmelolagamba.mongo.service.custom;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.client.MongoCollection;
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
@@ -36,6 +37,10 @@ public class DataProvinciaDocumentService extends AbstractDocumentService {
             return false;
         }
 
+    }
+
+    public void removeAll(){
+        removeByFilters(COLLECTION_NAME, new BasicDBObject());
     }
 
     public List<DataProvincia> findAll(){

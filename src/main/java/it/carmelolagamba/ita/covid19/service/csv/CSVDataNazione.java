@@ -72,6 +72,10 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
             case DECEDUTI:
                 dataNazione.setDeceduti(FileUtils.convertStringToInteger(value));
                 break;
+            case CASI_DA_SOSPETTO_DIAGNOSTICO:
+                break;
+            case CASI_DA_SCREENING:
+                break;
             case TOTALE_CASI:
                 dataNazione.setTotale_casi(FileUtils.convertStringToInteger(value));
                 break;
@@ -81,10 +85,8 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
             case CASI_TESTATI:
                 dataNazione.setCasi_testati(FileUtils.convertStringToInteger(value));
                 break;
-            case NOTE_IT:
+            case NOTE:
                 dataNazione.setNote_it(value);
-                break;
-            case NOTE_EN:
                 dataNazione.setNote_en(value);
                 break;
             default:

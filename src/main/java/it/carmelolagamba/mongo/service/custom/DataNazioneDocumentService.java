@@ -29,6 +29,10 @@ public class DataNazioneDocumentService extends AbstractDocumentService {
     @Autowired
     private DataNazioneCollectionService dataNazioneCollectionService;
 
+    public void removeAll(){
+        removeByFilters(COLLECTION_NAME, new BasicDBObject());
+    }
+
     public boolean insertAll(List<DataNazione> dataNazioneList) {
         try {
             MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);

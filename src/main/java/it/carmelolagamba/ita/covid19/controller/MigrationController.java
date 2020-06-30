@@ -69,4 +69,15 @@ public class MigrationController {
 		}
 	}
 
+	@ApiOperation(value = "Reset Migrate all")
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/reset")
+	public String reset() {
+		try {
+			migrateAllService.resetDataMigration();
+			return "Tutti i dati sono stati importati.";
+		} catch (Exception e) {
+			return "Errore nella migrazione dei files [guarda i logs per maggiori informazioni]";
+		}
+	}
+
 }

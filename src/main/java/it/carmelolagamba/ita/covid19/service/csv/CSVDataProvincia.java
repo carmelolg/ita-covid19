@@ -70,10 +70,8 @@ public class CSVDataProvincia extends AbstractCSVDataReader<DataProvincia>{
             case TOTALE_CASI:
                 dataProvincia.setTotale_casi(FileUtils.convertStringToInteger(value));
                 break;
-            case NOTE_IT:
+            case NOTE:
                 dataProvincia.setNote_it(value);
-                break;
-            case NOTE_EN:
                 dataProvincia.setNote_en(value);
                 break;
             default:

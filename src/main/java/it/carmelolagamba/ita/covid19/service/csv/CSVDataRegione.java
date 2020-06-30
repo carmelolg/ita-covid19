@@ -85,6 +85,10 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione> {
             case DECEDUTI:
                 dataRegione.setDeceduti(FileUtils.convertStringToInteger(value));
                 break;
+            case CASI_DA_SOSPETTO_DIAGNOSTICO:
+                break;
+            case CASI_DA_SCREENING:
+                break;
             case TOTALE_CASI:
                 dataRegione.setTotale_casi(FileUtils.convertStringToInteger(value));
                 break;
@@ -94,10 +98,8 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione> {
             case CASI_TESTATI:
                 dataRegione.setCasi_testati(FileUtils.convertStringToInteger(value));
                 break;
-            case NOTE_IT:
+            case NOTE:
                 dataRegione.setNote_it(value);
-                break;
-            case NOTE_EN:
                 dataRegione.setNote_en(value);
                 break;
             default:

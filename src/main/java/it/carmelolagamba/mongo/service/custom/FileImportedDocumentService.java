@@ -38,6 +38,10 @@ public class FileImportedDocumentService extends AbstractDocumentService {
 
     }
 
+    public void removeAll(){
+        removeByFilters(COLLECTION_NAME, new BasicDBObject());
+    }
+
     public FileImported findLastByType(String type) {
         MongoCollection<FileImported> collection = fileImportedCollectionService.getCollection(COLLECTION_NAME);
         HashMap<String, Object> filters = new HashMap<>();

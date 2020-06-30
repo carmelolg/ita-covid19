@@ -13,8 +13,7 @@ public class DataProvincia extends AbstractData {
         LAT,
         LON,
         TOTALE_CASI,
-        NOTE_IT,
-        NOTE_EN
+        NOTE
     }
 
     private int codice_regione;
