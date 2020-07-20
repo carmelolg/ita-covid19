@@ -3,8 +3,6 @@ package it.carmelolagamba.ita.covid19.domain;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
-import java.util.Date;
-
 public class Regione {
 
     @BsonId

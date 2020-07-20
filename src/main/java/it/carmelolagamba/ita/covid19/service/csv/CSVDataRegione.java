@@ -1,17 +1,16 @@
 package it.carmelolagamba.ita.covid19.service.csv;
 
-import it.carmelolagamba.ita.covid19.domain.DataRegione;
-import it.carmelolagamba.ita.covid19.utils.FileUtils;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import static it.carmelolagamba.ita.covid19.domain.DataRegione.FIELD;
+import it.carmelolagamba.ita.covid19.domain.DataRegione;
+import it.carmelolagamba.ita.covid19.domain.DataRegione.FIELD;
+import it.carmelolagamba.ita.covid19.utils.FileUtils;
 
 @Component
 public class CSVDataRegione extends AbstractCSVDataReader<DataRegione> {

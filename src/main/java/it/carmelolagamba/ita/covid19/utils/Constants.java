@@ -1,7 +1,5 @@
 package it.carmelolagamba.ita.covid19.utils;
 
-import org.springframework.stereotype.Component;
-
 public class Constants {
 
     private static String baseUrlGithubRepoRaw = "https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/";

@@ -1,20 +1,16 @@
 package it.carmelolagamba.ita.covid19.service;
 
-import it.carmelolagamba.ita.covid19.domain.DataRegione;
-import it.carmelolagamba.ita.covid19.utils.MathUtils;
-import it.carmelolagamba.ita.covid19.view.*;
-import it.carmelolagamba.mongo.service.custom.DataRegioneDocumentService;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import static it.carmelolagamba.ita.covid19.utils.MathUtils.round;
+import it.carmelolagamba.ita.covid19.domain.DataRegione;
+import it.carmelolagamba.mongo.service.custom.DataRegioneDocumentService;
 
 @Component
 public class RegionService extends AbstractService<DataRegione> {

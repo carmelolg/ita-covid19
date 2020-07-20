@@ -1,13 +1,14 @@
 package it.carmelolagamba.ita.covid19.service.csv;
 
-import com.opencsv.CSVReader;
-import org.slf4j.Logger;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.slf4j.Logger;
+
+import com.opencsv.CSVReader;
 
 public abstract class AbstractCSVDataReader<T> {
 

@@ -1,25 +1,22 @@
 package it.carmelolagamba.ita.covid19.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import it.carmelolagamba.ita.covid19.config.ApplicationProperties;
-import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
-import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
-import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
-import it.carmelolagamba.ita.covid19.service.migration.RegioneMigrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
+import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
+import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
+import it.carmelolagamba.ita.covid19.service.migration.RegioneMigrationService;
+
 @RestController
 @CrossOrigin(origins = "*")
 @Api(value = "Migration of data")
 public class MigrationController {
-
-	@Autowired
-	private ApplicationProperties config;
 	
 	@Autowired
 	private RegioneMigrationService regioneMigrationService;

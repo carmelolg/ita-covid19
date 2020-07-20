@@ -1,7 +1,6 @@
 package it.carmelolagamba.ita.covid19.view;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AndamentoDto {

@@ -1,15 +1,23 @@
 package it.carmelolagamba.ita.covid19.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import it.carmelolagamba.ita.covid19.domain.FileImported;
 import it.carmelolagamba.ita.covid19.service.NationalService;
 import it.carmelolagamba.ita.covid19.service.UtilsService;
 import it.carmelolagamba.ita.covid19.utils.Constants;
-import it.carmelolagamba.ita.covid19.view.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import it.carmelolagamba.ita.covid19.view.AndamentoDto;
+import it.carmelolagamba.ita.covid19.view.FileImportedDto;
+import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
+import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
+import it.carmelolagamba.ita.covid19.view.ResumeStatsDto;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
