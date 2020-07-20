@@ -1,12 +1,13 @@
 package it.carmelolagamba.mongo.service.custom;
 
-import com.mongodb.async.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import it.carmelolagamba.ita.covid19.domain.Provincia;
-import it.carmelolagamba.ita.covid19.domain.Regione;
-import it.carmelolagamba.mongo.service.DatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mongodb.async.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+import it.carmelolagamba.ita.covid19.domain.Provincia;
+import it.carmelolagamba.mongo.service.DatabaseService;
 
 
 @Component

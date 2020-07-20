@@ -1,8 +1,7 @@
 package it.carmelolagamba.mongo.service.custom;
 
-import com.mongodb.client.model.Filters;
-import it.carmelolagamba.ita.covid19.domain.DataNazione;
-import it.carmelolagamba.ita.covid19.domain.DataRegione;
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,6 @@ import com.mongodb.client.MongoCollection;
 
 import it.carmelolagamba.ita.covid19.domain.FileImported;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Component
 public class FileImportedDocumentService extends AbstractDocumentService {

@@ -1,103 +1,42 @@
 package it.carmelolagamba.mongo.service.custom;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.DBObject;
-import com.mongodb.client.MongoCollection;
-import it.carmelolagamba.ita.covid19.domain.DataNazione;
-import it.carmelolagamba.ita.covid19.domain.DataProvincia;
-import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.stream.Collectors;
+import com.mongodb.client.MongoCollection;
+
+import it.carmelolagamba.ita.covid19.domain.DataNazione;
 
 @Component
-public class DataNazioneDocumentService extends AbstractDocumentService {
+public class DataNazioneDocumentService extends DataCollectionAbstract<DataNazione> {
 
-    private static final String COLLECTION_NAME = "DataNazione";
+	private static final String COLLECTION_NAME = "DataNazione";
 
-    private Logger logger = LoggerFactory.getLogger(DataNazioneDocumentService.class);
+	private Logger logger = LoggerFactory.getLogger(DataNazioneDocumentService.class);
 
-    @Autowired
-    private DataNazioneCollectionService dataNazioneCollectionService;
+	@Autowired
+	private DataNazioneCollectionService dataNazioneCollectionService;
 
-    public void removeAll(){
-        removeByFilters(COLLECTION_NAME, new BasicDBObject());
-    }
+	@Override
+	protected Logger getLogInstance() {
+		return logger;
+	}
 
-    public boolean insertAll(List<DataNazione> dataNazioneList) {
-        try {
-            MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
-            return asyncInsertMany(dataNazioneCollectionService.getAsyncCollection(COLLECTION_NAME), dataNazioneList);
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Errore durante il salvataggio dei dati", e);
-            return false;
-        }
+	@Override
+	protected String getCollectionName() {
+		return COLLECTION_NAME;
+	}
 
-    }
+	@Override
+	protected MongoCollection<DataNazione> getCollection() {
+		return dataNazioneCollectionService.getCollection(COLLECTION_NAME);
+	}
 
-    public List<DataNazione> findAll(){
-        MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
+	@Override
+	protected com.mongodb.async.client.MongoCollection<DataNazione> getAsyncCollection() {
+		return dataNazioneCollectionService.getAsyncCollection(COLLECTION_NAME);
+	}
 
-        HashMap<String, Object> filters = new HashMap<>();
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
-
-        List<DataNazione> list = findByFilters(collection, filters, sortFilters);
-
-        return list;
-    }
-
-    public List<DataNazione> findLast30(){
-        MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
-
-        HashMap<String, Object> filters = new HashMap<>();
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
-
-        List<DataNazione> list = findByFilters(collection, filters, sortFilters);
-
-        return list.stream().skip(Math.max(0, list.size() - 30)).collect(Collectors.toList());
-    }
-
-    public DataNazione findYesterdayData(Date currentDate){
-        MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.add(Calendar.DATE, -1);
-        calendar.add(Calendar.HOUR_OF_DAY, -12);
-        Date yesterdayFromCurrentDate = calendar.getTime();
-
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("data", BasicDBObjectBuilder.start("$gte", yesterdayFromCurrentDate).add("$lte", currentDate).get());
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
-
-        return findOne(collection, filters, sortFilters);
-    }
-
-
-    public DataNazione findLast(){
-
-        MongoCollection<DataNazione> collection = dataNazioneCollectionService.getCollection(COLLECTION_NAME);
-
-        HashMap<String, Object> filters = new HashMap<>();
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", -1);
-
-        return findOne(collection, filters, sortFilters);
-    }
 }

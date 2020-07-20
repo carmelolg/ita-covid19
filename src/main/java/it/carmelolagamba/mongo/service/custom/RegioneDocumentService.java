@@ -1,15 +1,17 @@
 package it.carmelolagamba.mongo.service.custom;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCollection;
-import it.carmelolagamba.ita.covid19.domain.Regione;
-import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+
+import it.carmelolagamba.ita.covid19.domain.Regione;
+import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
 @Component
 public class RegioneDocumentService extends AbstractDocumentService {

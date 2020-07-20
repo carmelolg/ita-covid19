@@ -1,110 +1,76 @@
 package it.carmelolagamba.mongo.service.custom;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.client.MongoCollection;
-import it.carmelolagamba.ita.covid19.domain.DataNazione;
-import it.carmelolagamba.ita.covid19.domain.DataProvincia;
-import it.carmelolagamba.ita.covid19.domain.DataRegione;
-import it.carmelolagamba.ita.covid19.domain.FileImported;
-import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import com.mongodb.client.MongoCollection;
+
+import it.carmelolagamba.ita.covid19.domain.DataRegione;
 
 @Component
-public class DataRegioneDocumentService extends AbstractDocumentService {
+@SuppressWarnings("unchecked")
+public class DataRegioneDocumentService extends DataCollectionAbstract<DataRegione> {
 
-    private static final String COLLECTION_NAME = "DataRegione";
+	private static final String COLLECTION_NAME = "DataRegione";
+	private static final String FILTER_NAME = "denominazione_regione";
 
-    private Logger logger = LoggerFactory.getLogger(DataRegioneDocumentService.class);
+	private Logger logger = LoggerFactory.getLogger(DataRegioneDocumentService.class);
 
-    @Autowired
-    private DataRegioneCollectionService dataRegioneCollectionService;
+	@Autowired
+	private DataRegioneCollectionService dataRegioneCollectionService;
 
-    public boolean insertAll(List<DataRegione> dataRegioneList) {
-        try {
-            MongoCollection<DataRegione> collection = dataRegioneCollectionService.getCollection(COLLECTION_NAME);
-            return asyncInsertMany(dataRegioneCollectionService.getAsyncCollection(COLLECTION_NAME), dataRegioneList);
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Errore durante il salvataggio dei dati", e);
-            return false;
-        }
+	public List<DataRegione> findAll(String name) {
 
-    }
+		ImmutablePair<String, Object> nameFilter = new ImmutablePair<>(FILTER_NAME,
+				Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+		return findAll(nameFilter);
+	}
 
+	public List<DataRegione> findLast30ByDistrictName(String name) {
 
-    public void removeAll(){
-        removeByFilters(COLLECTION_NAME, new BasicDBObject());
-    }
+		ImmutablePair<String, Object> nameFilter = new ImmutablePair<>(FILTER_NAME,
+				Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+		return findLastX(30, nameFilter);
+	}
 
-    public List<DataRegione> findAll(String name){
-        MongoCollection<DataRegione> collection = dataRegioneCollectionService.getCollection(COLLECTION_NAME);
+	public DataRegione findYesterdayDataByDistrict(String name, Date currentDate) {
 
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_regione", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+		ImmutablePair<String, Object> nameFilter = new ImmutablePair<>(FILTER_NAME,
+				Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+		return findYesterdayData(currentDate, nameFilter);
+	}
 
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
+	public DataRegione findLast(String name) {
+		ImmutablePair<String, Object> nameFilter = new ImmutablePair<>(FILTER_NAME,
+				Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+		return findLast(nameFilter);
+	}
 
-        List<DataRegione> list = findByFilters(collection, filters, sortFilters);
+	@Override
+	protected Logger getLogInstance() {
+		return logger;
+	}
 
-        return list;
-    }
+	@Override
+	protected String getCollectionName() {
+		return COLLECTION_NAME;
+	}
 
-    public List<DataRegione> findLast30ByDistrictName(String name){
-        MongoCollection<DataRegione> collection = dataRegioneCollectionService.getCollection(COLLECTION_NAME);
+	@Override
+	protected MongoCollection<DataRegione> getCollection() {
+		return dataRegioneCollectionService.getCollection(COLLECTION_NAME);
+	}
 
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_regione", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
-
-        List<DataRegione> list = findByFilters(collection, filters, sortFilters);
-
-        return list.stream().skip(Math.max(0, list.size() - 30)).collect(Collectors.toList());
-    }
-
-    public DataRegione findYesterdayDataByDistrict(String name, Date currentDate){
-        MongoCollection<DataRegione> collection = dataRegioneCollectionService.getCollection(COLLECTION_NAME);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.add(Calendar.DATE, -1);
-        calendar.add(Calendar.HOUR_OF_DAY, -12);
-        Date yesterdayFromCurrentDate = calendar.getTime();
-
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_regione", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
-        filters.put("data", BasicDBObjectBuilder.start("$gte", yesterdayFromCurrentDate).add("$lte", currentDate).get());
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
-
-        return findOne(collection, filters, sortFilters);
-    }
-
-    public DataRegione findLast(String name){
-
-        MongoCollection<DataRegione> collection = dataRegioneCollectionService.getCollection(COLLECTION_NAME);
-
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_regione", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", -1);
-
-        return findOne(collection, filters, sortFilters);
-    }
+	@Override
+	protected com.mongodb.async.client.MongoCollection<DataRegione> getAsyncCollection() {
+		return dataRegioneCollectionService.getAsyncCollection(COLLECTION_NAME);
+	}
 
 }

@@ -1,105 +1,70 @@
 package it.carmelolagamba.mongo.service.custom;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.BasicDBObjectBuilder;
-import com.mongodb.client.MongoCollection;
-import it.carmelolagamba.ita.covid19.domain.DataProvincia;
-import it.carmelolagamba.ita.covid19.domain.DataRegione;
-import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import com.mongodb.client.MongoCollection;
+
+import it.carmelolagamba.ita.covid19.domain.DataProvincia;
 
 @Component
-public class DataProvinciaDocumentService extends AbstractDocumentService {
+@SuppressWarnings("unchecked")
+public class DataProvinciaDocumentService extends DataCollectionAbstract<DataProvincia> {
 
-    private static final String COLLECTION_NAME = "DataProvincia";
+	private static final String COLLECTION_NAME = "DataProvincia";
+	private static final String FILTER_NAME = "denominazione_provincia";
 
-    private Logger logger = LoggerFactory.getLogger(DataProvinciaDocumentService.class);
+	private Logger logger = LoggerFactory.getLogger(DataProvinciaDocumentService.class);
 
-    @Autowired
-    private DataProvinciaCollectionService dataProvinciaCollectionService;
+	@Autowired
+	private DataProvinciaCollectionService dataProvinciaCollectionService;
 
-    public boolean insertAll(List<DataProvincia> dataProvinciaList) {
-        try {
-            return asyncInsertMany(dataProvinciaCollectionService.getAsyncCollection(COLLECTION_NAME), dataProvinciaList);
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Errore durante il salvataggio dei dati", e);
-            return false;
-        }
+	public List<DataProvincia> findLast30ByDistrictName(String name) {
+		ImmutablePair<String, Object> nameFilter = new ImmutablePair<>(FILTER_NAME,
+				Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+		return findLastX(30, nameFilter);
+	}
 
-    }
+	public DataProvincia findYesterdayDataByDistrict(String name, Date currentDate) {
 
-    public void removeAll(){
-        removeByFilters(COLLECTION_NAME, new BasicDBObject());
-    }
+		ImmutablePair<String, Object> nameFilter = new ImmutablePair<>(FILTER_NAME,
+				Pattern.compile(name, Pattern.CASE_INSENSITIVE));
 
-    public List<DataProvincia> findAll(){
-        MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
+		return findYesterdayData(currentDate, nameFilter);
+	}
 
-        HashMap<String, Object> filters = new HashMap<>();
+	public DataProvincia findLast(String name) {
 
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
+		ImmutablePair<String, Object> nameFilter = new ImmutablePair<>(FILTER_NAME,
+				Pattern.compile(name, Pattern.CASE_INSENSITIVE));
 
-        List<DataProvincia> list = findByFilters(collection, filters, sortFilters);
+		return findLast(nameFilter);
+	}
 
-        return list;
-    }
+	@Override
+	protected Logger getLogInstance() {
+		return logger;
+	}
 
-    public List<DataProvincia> findLast30ByDistrictName(String name){
-        MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
+	@Override
+	protected String getCollectionName() {
+		return COLLECTION_NAME;
+	}
 
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_provincia", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
+	@Override
+	protected MongoCollection<DataProvincia> getCollection() {
+		return dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
+	}
 
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
-
-        List<DataProvincia> list = findByFilters(collection, filters, sortFilters);
-
-        return list.stream().skip(Math.max(0, list.size() - 30)).collect(Collectors.toList());
-    }
-
-    public DataProvincia findYesterdayDataByDistrict(String name, Date currentDate){
-        MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.add(Calendar.DATE, -1);
-        calendar.add(Calendar.HOUR_OF_DAY, -12);
-        Date yesterdayFromCurrentDate = calendar.getTime();
-
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_provincia", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
-        filters.put("data", BasicDBObjectBuilder.start("$gte", yesterdayFromCurrentDate).add("$lte", currentDate).get());
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", 1);
-
-        return findOne(collection, filters, sortFilters);
-    }
-
-
-    public DataProvincia findLast(String name){
-
-        MongoCollection<DataProvincia> collection = dataProvinciaCollectionService.getCollection(COLLECTION_NAME);
-
-        HashMap<String, Object> filters = new HashMap<>();
-        filters.put("denominazione_provincia", Pattern.compile(name, Pattern.CASE_INSENSITIVE));
-
-        HashMap<String, Object> sortFilters = new HashMap<>();
-        sortFilters.put("data", -1);
-
-        return findOne(collection, filters, sortFilters);
-    }
+	@Override
+	protected com.mongodb.async.client.MongoCollection<DataProvincia> getAsyncCollection() {
+		return dataProvinciaCollectionService.getAsyncCollection(COLLECTION_NAME);
+	}
 }
