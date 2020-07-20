@@ -7,9 +7,9 @@ url: localhost
 port: 8080
 
 mongo:
-    clusterHost: ita-covid19-beipl.mongodb.net
-    port: 27017
-    dbName: covid19
+    clusterHost: ${DB_HOST}
+    port: ${DB_PORT}
+    dbName: ${DB_NAME}
     auth: true
-    user: carmelolg
-    password: r1p_oppy
+    user: ${DB_USER}
+    password: ${DB_PASSWORD}
