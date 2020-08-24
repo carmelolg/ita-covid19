@@ -44,7 +44,7 @@ public class NazioneMigrationService extends AbstractMigrationService {
         return new File(Constants.folderNazioni);
     }
 
-    @Scheduled(cron = "0 0/15 18-19 * * *")
+    @Scheduled(cron = "0 0/5 16-19 * * *")
     public void getFile() throws Exception {
 
         try {
