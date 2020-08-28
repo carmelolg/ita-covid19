@@ -1,5 +1,7 @@
 # Ita Covid19 Stats
 
+[![Build Status](https://travis-ci.org/carmelolg/ita-covid19.svg?branch=master)](https://travis-ci.org/carmelolg/ita-covid19)
+
 ## How to build
 
 run: `mvn spring-boot:run -Dspring-boot.run.profiles=<dev|prod>`
