@@ -19,6 +19,9 @@ public class DataNazione extends AbstractFullData{
         TOTALE_CASI,
         TAMPONI,
         CASI_TESTATI,
-        NOTE
+        NOTE,
+        INGRESSI_TERAPIA_INTENSIVA,
+        NOTE_TEST,
+        NOTE_CASI
     }
 }

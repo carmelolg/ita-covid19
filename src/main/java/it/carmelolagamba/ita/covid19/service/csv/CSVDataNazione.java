@@ -89,6 +89,12 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
                 dataNazione.setNote_it(value);
                 dataNazione.setNote_en(value);
                 break;
+            case INGRESSI_TERAPIA_INTENSIVA:
+            	break;
+            case NOTE_TEST:
+            	break;
+            case NOTE_CASI:
+            	break;
             default:
                 throw new IllegalStateException("Unexpected value: " + fields[i]);
         }

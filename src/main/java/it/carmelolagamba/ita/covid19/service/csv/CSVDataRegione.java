@@ -29,8 +29,8 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione> {
 
     @Override
     protected void map(DataRegione dataRegione, int i, String value) {
-
-        final FIELD[] fields = FIELD.values();
+        
+    	final FIELD[] fields = FIELD.values();
         switch (fields[i]) {
             case DATA:
                 try {
@@ -101,6 +101,12 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione> {
                 dataRegione.setNote_it(value);
                 dataRegione.setNote_en(value);
                 break;
+            case INGRESSI_TERAPIA_INTENSIVA:
+            	break;
+            case NOTE_TEST:
+            	break;
+            case NOTE_CASI:
+            	break;
             default:
                 throw new IllegalStateException("Unexpected value: " + fields[i]);
         }
