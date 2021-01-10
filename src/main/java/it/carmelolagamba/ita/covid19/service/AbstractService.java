@@ -74,7 +74,6 @@ public abstract class AbstractService<T extends AbstractFullData> {
             dto.setCurrentTests(last.getTamponi());
             dto.setCurrentTotalCases(last.getTotale_casi());
             dto.setNewPositives(last.getNuovi_positivi());
-            dto.setNewPositives(last.getNuovi_positivi());
             
             int variationNewPositives= (lastYesterday != null) ? last.getTotale_positivi() - lastYesterday.getTotale_positivi() : 0;
             dto.setVariationNewPositives(variationNewPositives);
@@ -99,8 +98,8 @@ public abstract class AbstractService<T extends AbstractFullData> {
 
 
             // percentage test based
-            Double currentTest = Double.valueOf(last.getTamponi());
-            Double percentage = Double.valueOf((currentCase * 100) / currentTest);
+            Double currentTest = Double.valueOf(last.getTamponi()- lastYesterday.getTamponi());
+            Double percentage = Double.valueOf((currentNewPositive * 100) / currentTest);
 
             dto.setCurrentPositivePercentageBasedOnTests(round(percentage));
 
