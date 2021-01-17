@@ -126,7 +126,8 @@ public abstract class AbstractService<T extends AbstractFullData> {
             Double percentageHospitalized = Double.valueOf((currentHospitalized * 100) / currentCase);
 
             dto.setCurrentHospitalizedPercentage(round(percentageHospitalized));
-
+            
+            dto.setTestsToday(last.getTamponi() - lastYesterday.getTamponi());
         }
 
 
