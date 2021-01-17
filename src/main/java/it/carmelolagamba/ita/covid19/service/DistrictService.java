@@ -67,15 +67,6 @@ public class DistrictService {
 		DataProvincia lastYesterday = dataProvinciaDocumentService.findYesterdayDataByDistrict(district,
 				last.getData());
 
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(last.getData());
-		calendar.add(Calendar.DATE, -1);
-		calendar.add(Calendar.HOUR_OF_DAY, -12);
-		Date yesterday = calendar.getTime();
-
-		DataProvincia lastBeforeYesterday = dataProvinciaDocumentService.findYesterdayDataByDistrict(district,
-				yesterday);
-
 		if (last != null && lastYesterday != null) {
 
 			// growth rate
@@ -87,11 +78,6 @@ public class DistrictService {
 
 			dto.setNewPositives(last.getTotale_casi() - lastYesterday.getTotale_casi());
 			dto.setCurrentTotalCases(last.getTotale_casi());
-		}
-
-		if (lastBeforeYesterday != null) {
-			dto.setVariationNewPositives((last.getTotale_casi() - lastYesterday.getTotale_casi())
-					- (lastYesterday.getTotale_casi() - lastBeforeYesterday.getTotale_casi()));
 		}
 
 		return dto;
