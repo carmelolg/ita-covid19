@@ -5,9 +5,13 @@ import java.util.Date;
 public class TamponiResultDto extends ResultDto {
 
 	private int positiviMolecolare;
+	private int increaseFromYesterdayPositiviMolecolare;
 	private int positiviAntigenicoRapido;
+	private int increaseFromYesterdayPositiviAntigenicoRapido;
 	private int totaleMolecolare;
+	private int increaseFromYesterdayTotaleMolecolare;
 	private int totaleAntigenicoRapido;
+	private int increaseFromYesterdayTotaleAntigenicoRapido;
 
 	public TamponiResultDto() {
 	}
@@ -54,6 +58,38 @@ public class TamponiResultDto extends ResultDto {
 
 	public void setTotaleAntigenicoRapido(int totaleAntigenicoRapido) {
 		this.totaleAntigenicoRapido = totaleAntigenicoRapido;
+	}
+
+	public int getIncreaseFromYesterdayPositiviMolecolare() {
+		return increaseFromYesterdayPositiviMolecolare;
+	}
+
+	public void setIncreaseFromYesterdayPositiviMolecolare(int increaseFromYesterdayPositiviMolecolare) {
+		this.increaseFromYesterdayPositiviMolecolare = increaseFromYesterdayPositiviMolecolare;
+	}
+
+	public int getIncreaseFromYesterdayPositiviAntigenicoRapido() {
+		return increaseFromYesterdayPositiviAntigenicoRapido;
+	}
+
+	public void setIncreaseFromYesterdayPositiviAntigenicoRapido(int increaseFromYesterdayPositiviAntigenicoRapido) {
+		this.increaseFromYesterdayPositiviAntigenicoRapido = increaseFromYesterdayPositiviAntigenicoRapido;
+	}
+
+	public int getIncreaseFromYesterdayTotaleMolecolare() {
+		return increaseFromYesterdayTotaleMolecolare;
+	}
+
+	public void setIncreaseFromYesterdayTotaleMolecolare(int increaseFromYesterdayTotaleMolecolare) {
+		this.increaseFromYesterdayTotaleMolecolare = increaseFromYesterdayTotaleMolecolare;
+	}
+
+	public int getIncreaseFromYesterdayTotaleAntigenicoRapido() {
+		return increaseFromYesterdayTotaleAntigenicoRapido;
+	}
+
+	public void setIncreaseFromYesterdayTotaleAntigenicoRapido(int increaseFromYesterdayTotaleAntigenicoRapido) {
+		this.increaseFromYesterdayTotaleAntigenicoRapido = increaseFromYesterdayTotaleAntigenicoRapido;
 	}
 
 }

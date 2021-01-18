@@ -352,7 +352,7 @@ public abstract class AbstractService<T extends AbstractFullData> {
 			andamentoDto.setDescription("Dati non presenti");
 			return andamentoDto;
 		} else {
-			andamentoDto.setDescription(String.format("Statistiche del numero di ospedalizzati in Italia"));
+			andamentoDto.setDescription(String.format("Statistiche del numero di ricoverati in terapia intensiva"));
 
 			list.forEach(data -> {
 				T yesterdayDate = findYesterdayData(name, data.getData());
@@ -381,7 +381,7 @@ public abstract class AbstractService<T extends AbstractFullData> {
 			andamentoDto.setDescription("Dati non presenti");
 			return andamentoDto;
 		} else {
-			andamentoDto.setDescription(String.format("Statistiche del numero di ospedalizzati in Italia"));
+			andamentoDto.setDescription(String.format("Statistiche del numero di morti"));
 
 			list.forEach(data -> {
 				T yesterdayDate = findYesterdayData(name, data.getData());
@@ -408,15 +408,34 @@ public abstract class AbstractService<T extends AbstractFullData> {
 			andamentoDto.setDescription("Dati non presenti");
 			return andamentoDto;
 		} else {
-			andamentoDto.setDescription(String.format("Statistiche del numero di ospedalizzati in Italia"));
+			andamentoDto.setDescription(String.format("Statistiche del numero di tamponi effettuati."));
 
 			list.forEach(data -> {
 				T yesterdayDate = findYesterdayData(name, data.getData());
 				int increaseFromYesterday = (yesterdayDate != null) ? data.getTamponi() - yesterdayDate.getTamponi()
 						: 0;
-				andamentoDto.getResults().add(new TamponiResultDto(data.getTamponi(), increaseFromYesterday,
-						data.getTotale_positivi_test_molecolare(), data.getTotale_positivi_test_antigenico_rapido(),
-						data.getTamponi_test_molecolare(), data.getTamponi_test_antigenico_rapido(), data.getData()));
+				
+				int increaseTamponiMolecolari = 0;
+				int increaseTamponiRapidi = 0;
+				int increasePositiviTamponiMolecolari = 0;
+				int increasePositiviTamponiRapidi = 0;
+				
+				TamponiResultDto result = new TamponiResultDto();
+				result.setData(data.getData());
+				result.setValue(data.getTamponi());
+				result.setIncreaseFromYesterday(increaseFromYesterday);
+				
+				result.setTotaleMolecolare(data.getTamponi_test_molecolare());
+				result.setPositiviMolecolare(data.getTotale_positivi_test_molecolare());
+				result.setIncreaseFromYesterdayTotaleMolecolare(increaseTamponiMolecolari);
+				result.setIncreaseFromYesterdayPositiviMolecolare(increasePositiviTamponiMolecolari);
+				
+				result.setTotaleAntigenicoRapido(data.getTamponi_test_antigenico_rapido());
+				result.setPositiviAntigenicoRapido(data.getTotale_positivi_test_antigenico_rapido());
+				result.setIncreaseFromYesterdayTotaleMolecolare(increaseTamponiRapidi);
+				result.setIncreaseFromYesterdayPositiviMolecolare(increasePositiviTamponiRapidi);
+				
+				andamentoDto.getResults().add(result);
 			});
 
 			return andamentoDto;
@@ -437,7 +456,7 @@ public abstract class AbstractService<T extends AbstractFullData> {
 			andamentoDto.setDescription("Dati non presenti");
 			return andamentoDto;
 		} else {
-			andamentoDto.setDescription(String.format("Statistiche del numero di ospedalizzati in Italia"));
+			andamentoDto.setDescription(String.format("Statistiche del numero di guariti"));
 
 			list.forEach(data -> {
 				T yesterdayDate = findYesterdayData(name, data.getData());
