@@ -3,9 +3,9 @@ package it.carmelolagamba.ita.covid19.view;
 import java.util.Date;
 
 public class ResultDto {
-    private int value;
-    private int increaseFromYesterday;
-    private Date data;
+    protected int value;
+    protected int increaseFromYesterday;
+    protected Date data;
 
     public ResultDto() {
     }

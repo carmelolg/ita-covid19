@@ -95,8 +95,20 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
             	break;
             case NOTE_CASI:
             	break;
+            case TAMPONI_TEST_ANTIGENICO_RAPIDO:
+            	dataNazione.setTamponi_test_antigenico_rapido(FileUtils.convertStringToInteger(value));
+            	break;
+            case TAMPONI_TEST_MOLECOLARE:
+            	dataNazione.setTamponi_test_molecolare(FileUtils.convertStringToInteger(value));
+            	break;
+            case TOTALE_POSITIVI_TEST_ANTIGENICO_RAPIDO:
+            	dataNazione.setTotale_positivi_test_antigenico_rapido(FileUtils.convertStringToInteger(value));
+            	break;
+            case TOTALE_POSITIVI_TEST_MOLECOLARE:
+            	dataNazione.setTotale_positivi_test_molecolare(FileUtils.convertStringToInteger(value));
+            	break;
             default:
-                throw new IllegalStateException("Unexpected value: " + fields[i]);
+                logger.warn("Unexpected value: ", fields[i]);
         }
     }
 

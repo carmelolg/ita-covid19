@@ -22,6 +22,10 @@ public class DataNazione extends AbstractFullData{
         NOTE,
         INGRESSI_TERAPIA_INTENSIVA,
         NOTE_TEST,
-        NOTE_CASI
+        NOTE_CASI,
+        TOTALE_POSITIVI_TEST_MOLECOLARE,
+        TOTALE_POSITIVI_TEST_ANTIGENICO_RAPIDO, 
+        TAMPONI_TEST_MOLECOLARE,
+        TAMPONI_TEST_ANTIGENICO_RAPIDO
     }
 }

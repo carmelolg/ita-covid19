@@ -75,7 +75,7 @@ public class CSVDataProvincia extends AbstractCSVDataReader<DataProvincia>{
                 dataProvincia.setNote_en(value);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + fields[i]);
+                logger.warn("Unexpected value: ", fields[i]);
         }
     }
 
