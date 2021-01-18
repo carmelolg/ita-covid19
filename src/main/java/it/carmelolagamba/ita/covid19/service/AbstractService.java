@@ -431,8 +431,8 @@ public abstract class AbstractService<T extends AbstractFullData> {
 				
 				result.setTotaleAntigenicoRapido(data.getTamponi_test_antigenico_rapido());
 				result.setPositiviAntigenicoRapido(data.getTotale_positivi_test_antigenico_rapido());
-				result.setIncreaseFromYesterdayTotaleMolecolare(increaseTamponiRapidi);
-				result.setIncreaseFromYesterdayPositiviMolecolare(increasePositiviTamponiRapidi);
+				result.setIncreaseFromYesterdayTotaleAntigenicoRapido(increaseTamponiRapidi);
+				result.setIncreaseFromYesterdayPositiviAntigenicoRapido(increasePositiviTamponiRapidi);
 				
 				andamentoDto.getResults().add(result);
 			});
