@@ -412,13 +412,12 @@ public abstract class AbstractService<T extends AbstractFullData> {
 
 			list.forEach(data -> {
 				T yesterdayDate = findYesterdayData(name, data.getData());
-				int increaseFromYesterday = (yesterdayDate != null) ? data.getTamponi() - yesterdayDate.getTamponi()
-						: 0;
+				int increaseFromYesterday = (yesterdayDate != null) ? data.getTamponi() - yesterdayDate.getTamponi() : 0;
 				
-				int increaseTamponiMolecolari = 0;
-				int increaseTamponiRapidi = 0;
-				int increasePositiviTamponiMolecolari = 0;
-				int increasePositiviTamponiRapidi = 0;
+				int increaseTamponiMolecolari = (yesterdayDate != null) ? data.getTamponi_test_molecolare() - yesterdayDate.getTamponi_test_molecolare() : 0;
+				int increaseTamponiRapidi =  (yesterdayDate != null) ? data.getTamponi_test_antigenico_rapido() - yesterdayDate.getTamponi_test_antigenico_rapido() : 0;
+				int increasePositiviTamponiMolecolari =  (yesterdayDate != null) ? data.getTotale_positivi_test_molecolare() - yesterdayDate.getTotale_positivi_test_molecolare() : 0;
+				int increasePositiviTamponiRapidi =  (yesterdayDate != null) ? data.getTotale_positivi_test_antigenico_rapido() - yesterdayDate.getTotale_positivi_test_antigenico_rapido() : 0;
 				
 				TamponiResultDto result = new TamponiResultDto();
 				result.setData(data.getData());
