@@ -1,4 +1,4 @@
-package it.carmelolagamba.mongo.service.custom;
+package it.carmelolagamba.ita.covid19.persistence;
 
 import java.util.Calendar;
 import java.util.Date;

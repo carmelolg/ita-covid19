@@ -13,3 +13,7 @@ mongo:
     auth: true
     user: ${DB_USER}
     password: ${DB_PASSWORD}
+    
+file:
+  vacciniBaseUrl: https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/
+  vacciniSummaryFilename: vaccini-summary-latest.csv

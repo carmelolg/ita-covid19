@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.carmelolagamba.ita.covid19.domain.DataRegione;
-import it.carmelolagamba.mongo.service.custom.DataRegioneDocumentService;
+import it.carmelolagamba.ita.covid19.persistence.DataRegioneDocumentService;
 
 @Component
 public class RegionService extends AbstractService<DataRegione> {

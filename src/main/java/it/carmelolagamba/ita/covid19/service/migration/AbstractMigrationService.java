@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import it.carmelolagamba.ita.covid19.domain.FileImported;
+import it.carmelolagamba.ita.covid19.persistence.FileImportedDocumentService;
 import it.carmelolagamba.ita.covid19.utils.FileUtils;
-import it.carmelolagamba.mongo.service.custom.FileImportedDocumentService;
 
 public abstract class AbstractMigrationService {
 

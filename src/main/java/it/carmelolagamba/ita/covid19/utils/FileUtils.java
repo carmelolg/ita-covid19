@@ -112,4 +112,12 @@ public class FileUtils {
 			return -1;
 		}
 	}
+	
+	public static Double convertStringToDouble(String value) {
+		try {
+			return Double.parseDouble(value);
+		} catch (NumberFormatException e) {
+			return new Double(-1);
+		}
+	}
 }

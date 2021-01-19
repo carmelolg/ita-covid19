@@ -1,4 +1,4 @@
-package it.carmelolagamba.mongo.service.custom;
+package it.carmelolagamba.ita.covid19.persistence;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

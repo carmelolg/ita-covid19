@@ -1,13 +1,14 @@
 package it.carmelolagamba.ita.covid19.service;
 
-import it.carmelolagamba.ita.covid19.domain.DataNazione;
-import it.carmelolagamba.mongo.service.custom.DataNazioneDocumentService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import it.carmelolagamba.ita.covid19.domain.DataNazione;
+import it.carmelolagamba.ita.covid19.persistence.DataNazioneDocumentService;
 
 @Component
 @SuppressWarnings("unchecked")

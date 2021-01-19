@@ -12,6 +12,7 @@ import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
 import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.RegioneMigrationService;
+import it.carmelolagamba.ita.covid19.service.migration.VacciniSummryMigrationService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,6 +30,9 @@ public class MigrationController {
 
 	@Autowired
 	private MigrateAllService migrateAllService;
+	
+	@Autowired
+	private VacciniSummryMigrationService vacciniSummryMigrationService;
 
 	@ApiOperation(value = "Migrate region")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/region")
@@ -54,6 +58,13 @@ public class MigrationController {
 
 	}
 
+	@ApiOperation(value = "Migrate vaccini summary")
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/summary")
+	public String vacciniSummary() throws Exception {
+		vacciniSummryMigrationService.migrateData();
+		return "Dati sommari dei vaccini importati";
+
+	}
 
 	@ApiOperation(value = "Migrate all")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/all")

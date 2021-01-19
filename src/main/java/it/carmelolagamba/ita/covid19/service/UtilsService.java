@@ -1,15 +1,16 @@
 package it.carmelolagamba.ita.covid19.service;
 
-import it.carmelolagamba.ita.covid19.domain.FileImported;
-import it.carmelolagamba.ita.covid19.view.FileImportedDto;
-import it.carmelolagamba.mongo.service.custom.FileImportedDocumentService;
-import it.carmelolagamba.mongo.service.custom.ProvinciaDocumentService;
-import it.carmelolagamba.mongo.service.custom.RegioneDocumentService;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import it.carmelolagamba.ita.covid19.domain.FileImported;
+import it.carmelolagamba.ita.covid19.persistence.FileImportedDocumentService;
+import it.carmelolagamba.ita.covid19.persistence.ProvinciaDocumentService;
+import it.carmelolagamba.ita.covid19.persistence.RegioneDocumentService;
+import it.carmelolagamba.ita.covid19.view.FileImportedDto;
 
 @Component
 public class UtilsService {

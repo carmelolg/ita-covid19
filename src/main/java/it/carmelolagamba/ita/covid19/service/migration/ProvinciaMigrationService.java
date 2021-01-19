@@ -1,21 +1,22 @@
 package it.carmelolagamba.ita.covid19.service.migration;
 
-import it.carmelolagamba.ita.covid19.domain.DataProvincia;
-import it.carmelolagamba.ita.covid19.service.csv.CSVDataProvincia;
-import it.carmelolagamba.ita.covid19.utils.Constants;
-import it.carmelolagamba.ita.covid19.utils.FileUtils;
-import it.carmelolagamba.mongo.service.custom.DataProvinciaDocumentService;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import it.carmelolagamba.ita.covid19.domain.DataProvincia;
+import it.carmelolagamba.ita.covid19.persistence.DataProvinciaDocumentService;
+import it.carmelolagamba.ita.covid19.service.csv.CSVDataProvincia;
+import it.carmelolagamba.ita.covid19.utils.Constants;
+import it.carmelolagamba.ita.covid19.utils.FileUtils;
 
 @Component
 public class ProvinciaMigrationService extends AbstractMigrationService {

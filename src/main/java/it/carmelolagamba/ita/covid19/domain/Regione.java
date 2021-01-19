@@ -5,24 +5,34 @@ import org.bson.types.ObjectId;
 
 public class Regione {
 
-    @BsonId
-    private ObjectId idProperty;
+	@BsonId
+	private ObjectId idProperty;
 
-    String nome;
+	String nome;
+	String code;
 
-    public ObjectId getIdProperty() {
-        return idProperty;
-    }
+	public ObjectId getIdProperty() {
+		return idProperty;
+	}
 
-    public void setIdProperty(ObjectId idProperty) {
-        this.idProperty = idProperty;
-    }
+	public void setIdProperty(ObjectId idProperty) {
+		this.idProperty = idProperty;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 }

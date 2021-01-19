@@ -19,6 +19,7 @@ public class Constants {
     public static String folderNazioni = "data/dati-andamento-nazionale";
     public static String folderProvincia = "data/dati-province";
     public static String folderRegioni = "data/dati-regioni";
+    public static String folderVaccini = "data/dati-vaccini";
 
     public static String nazioneText = "nazione";
     public static String provinciaText = "province";

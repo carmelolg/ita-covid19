@@ -2,21 +2,19 @@ package it.carmelolagamba.ita.covid19.service;
 
 import static it.carmelolagamba.ita.covid19.utils.MathUtils.round;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.carmelolagamba.ita.covid19.domain.DataProvincia;
+import it.carmelolagamba.ita.covid19.persistence.DataProvinciaDocumentService;
 import it.carmelolagamba.ita.covid19.utils.MathUtils;
 import it.carmelolagamba.ita.covid19.view.AndamentoDto;
 import it.carmelolagamba.ita.covid19.view.GenericStatsDto;
 import it.carmelolagamba.ita.covid19.view.GrowthRateDto;
 import it.carmelolagamba.ita.covid19.view.GrowthRateResultDto;
 import it.carmelolagamba.ita.covid19.view.ResultDto;
-import it.carmelolagamba.mongo.service.custom.DataProvinciaDocumentService;
 
 @Component
 public class DistrictService {
