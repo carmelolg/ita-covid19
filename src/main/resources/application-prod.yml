@@ -17,3 +17,4 @@ mongo:
 file:
   vacciniBaseUrl: https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/
   vacciniSummaryFilename: vaccini-summary-latest.csv
+  anagraficaVacciniSummaryFilename: anagrafica-vaccini-summary-latest.csv
