@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import it.carmelolagamba.ita.covid19.service.migration.AnagraficaVacciniSummryMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
 import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
@@ -33,6 +34,9 @@ public class MigrationController {
 	
 	@Autowired
 	private VacciniSummryMigrationService vacciniSummryMigrationService;
+	
+	@Autowired
+	private AnagraficaVacciniSummryMigrationService anagraficaVacciniSummryMigrationService;
 
 	@ApiOperation(value = "Migrate region")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/region")
@@ -63,6 +67,14 @@ public class MigrationController {
 	public String vacciniSummary() throws Exception {
 		vacciniSummryMigrationService.migrateData();
 		return "Dati sommari dei vaccini importati";
+
+	}
+	
+	@ApiOperation(value = "Migrate vaccini summary")
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/anagrafica/summary")
+	public String anagraficaVacciniSummary() throws Exception {
+		anagraficaVacciniSummryMigrationService.migrateData();
+		return "Dati sommari delle anagrafiche vaccinate importati";
 
 	}
 
