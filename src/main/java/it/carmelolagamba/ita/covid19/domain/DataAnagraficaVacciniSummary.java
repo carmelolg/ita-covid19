@@ -14,6 +14,7 @@ public class DataAnagraficaVacciniSummary {
 	private int totale, sesso_maschile, sesso_femminile, categoria_operatori_sanitari_sociosanitari,
 			categoria_personale_non_sanitario, categoria_ospiti_rsa, categoria_over80, prima_dose, seconda_dose;
 	private Date ultimo_aggiornamento;
+	private Date ultimo_aggiornamento_interno;
 
 	public enum FIELD {
 		FASCIA_ANAGRAFICA, TOTALE, SESSO_MASCHILE, SESSO_FEMMINILE, CATEGORIA_OSS, CATEGORIA_PERSONALE_NON_SANITARIO,
@@ -114,6 +115,14 @@ public class DataAnagraficaVacciniSummary {
 
 	public void setUltimo_aggiornamento(Date ultimo_aggiornamento) {
 		this.ultimo_aggiornamento = ultimo_aggiornamento;
+	}
+
+	public Date getUltimo_aggiornamento_interno() {
+		return ultimo_aggiornamento_interno;
+	}
+
+	public void setUltimo_aggiornamento_interno(Date ultimo_aggiornamento_interno) {
+		this.ultimo_aggiornamento_interno = ultimo_aggiornamento_interno;
 	}
 
 }

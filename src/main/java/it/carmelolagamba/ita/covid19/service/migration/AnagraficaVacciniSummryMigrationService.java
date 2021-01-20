@@ -58,7 +58,7 @@ public class AnagraficaVacciniSummryMigrationService
 		return logger;
 	}
 
-	@Scheduled(cron = "0 0/5 * * * *")
+	@Scheduled(cron = "0 0/30 * * * *")
 	public void getFile() throws Exception {
 		try {
 

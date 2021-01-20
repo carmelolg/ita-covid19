@@ -29,12 +29,13 @@ public class CSVDataVacciniSummary extends AbstractCSVDataReader<DataVacciniSumm
 		switch (fields[i]) {
 		case ULTIMO_AGGIORNAMENTO:
 			try {
-				Calendar now = Calendar.getInstance();
-				now.setTimeInMillis(System.currentTimeMillis());
 				Calendar dateCalendar = Calendar.getInstance();
 				dateCalendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(value));
-				dateCalendar.set(Calendar.HOUR_OF_DAY, now.get(Calendar.HOUR_OF_DAY));
 				vacciniSummary.setUltimo_aggiornamento(dateCalendar.getTime());
+
+				Calendar now = Calendar.getInstance();
+				now.setTimeInMillis(System.currentTimeMillis());
+				vacciniSummary.setUltimo_aggiornamento_interno(now.getTime());
 			} catch (ParseException e) {
 				logger.error("Date format error", e);
 			}

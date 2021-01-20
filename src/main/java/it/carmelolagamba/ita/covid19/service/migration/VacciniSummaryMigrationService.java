@@ -20,9 +20,9 @@ import it.carmelolagamba.ita.covid19.utils.FileUtils;
 
 @Component
 @EnableConfigurationProperties({ FileProperties.class })
-public class VacciniSummryMigrationService {
+public class VacciniSummaryMigrationService {
 
-	private static Logger logger = LoggerFactory.getLogger(VacciniSummryMigrationService.class);
+	private static Logger logger = LoggerFactory.getLogger(VacciniSummaryMigrationService.class);
 
 	@Autowired
 	private FileProperties fileProperties;
@@ -46,7 +46,7 @@ public class VacciniSummryMigrationService {
 		return new File(Constants.folderVaccini);
 	}
 
-	@Scheduled(cron = "0 0/5 * * * *")
+	@Scheduled(cron = "0 0/30 * * * *")
 	public void getFile() throws Exception {
 		try {
 

@@ -13,7 +13,7 @@ import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
 import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.RegioneMigrationService;
-import it.carmelolagamba.ita.covid19.service.migration.VacciniSummryMigrationService;
+import it.carmelolagamba.ita.covid19.service.migration.VacciniSummaryMigrationService;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -33,7 +33,7 @@ public class MigrationController {
 	private MigrateAllService migrateAllService;
 	
 	@Autowired
-	private VacciniSummryMigrationService vacciniSummryMigrationService;
+	private VacciniSummaryMigrationService vacciniSummryMigrationService;
 	
 	@Autowired
 	private AnagraficaVacciniSummryMigrationService anagraficaVacciniSummryMigrationService;

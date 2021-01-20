@@ -15,6 +15,8 @@ public class DataVacciniSummary {
 	private int dosi_consegnate;
 	private double percentuale_somministrazione;
 	private Date ultimo_aggiornamento;
+	private Date ultimo_aggiornamento_interno;
+	
 
 	public enum FIELD {
 		AREA,
@@ -71,5 +73,15 @@ public class DataVacciniSummary {
 	public void setUltimo_aggiornamento(Date ultimo_aggiornamento) {
 		this.ultimo_aggiornamento = ultimo_aggiornamento;
 	}
+
+	public Date getUltimo_aggiornamento_interno() {
+		return ultimo_aggiornamento_interno;
+	}
+
+	public void setUltimo_aggiornamento_interno(Date ultimo_aggiornamento_interno) {
+		this.ultimo_aggiornamento_interno = ultimo_aggiornamento_interno;
+	}
+	
+	
 
 }
