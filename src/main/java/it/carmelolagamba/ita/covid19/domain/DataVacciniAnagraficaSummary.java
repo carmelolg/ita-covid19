@@ -5,7 +5,7 @@ import java.util.Date;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 
-public class DataAnagraficaVacciniSummary {
+public class DataVacciniAnagraficaSummary {
 
 	@BsonId
 	private ObjectId idProperty;

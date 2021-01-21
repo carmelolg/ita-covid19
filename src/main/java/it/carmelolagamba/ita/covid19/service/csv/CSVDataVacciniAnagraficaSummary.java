@@ -8,14 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import it.carmelolagamba.ita.covid19.domain.DataAnagraficaVacciniSummary;
-import it.carmelolagamba.ita.covid19.domain.DataAnagraficaVacciniSummary.FIELD;
+import it.carmelolagamba.ita.covid19.domain.DataVacciniAnagraficaSummary;
+import it.carmelolagamba.ita.covid19.domain.DataVacciniAnagraficaSummary.FIELD;
 import it.carmelolagamba.ita.covid19.utils.FileUtils;
 
 @Component
-public class CSVDataAnagraficaVacciniSummary extends AbstractCSVDataReader<DataAnagraficaVacciniSummary> {
+public class CSVDataVacciniAnagraficaSummary extends AbstractCSVDataReader<DataVacciniAnagraficaSummary> {
 
-	private static Logger logger = LoggerFactory.getLogger(CSVDataAnagraficaVacciniSummary.class);
+	private static Logger logger = LoggerFactory.getLogger(CSVDataVacciniAnagraficaSummary.class);
 
 	@Override
 	protected Logger getLogger() {
@@ -23,7 +23,7 @@ public class CSVDataAnagraficaVacciniSummary extends AbstractCSVDataReader<DataA
 	}
 
 	@Override
-	protected void map(DataAnagraficaVacciniSummary anagraficaVacciniSummary, int i, String value) {
+	protected void map(DataVacciniAnagraficaSummary anagraficaVacciniSummary, int i, String value) {
 
 		final FIELD[] fields = FIELD.values();
 		switch (fields[i]) {
@@ -76,8 +76,8 @@ public class CSVDataAnagraficaVacciniSummary extends AbstractCSVDataReader<DataA
 	}
 
 	@Override
-	protected DataAnagraficaVacciniSummary getInstance() {
-		return new DataAnagraficaVacciniSummary();
+	protected DataVacciniAnagraficaSummary getInstance() {
+		return new DataVacciniAnagraficaSummary();
 	}
 
 }

@@ -12,31 +12,31 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import it.carmelolagamba.ita.covid19.config.FileProperties;
-import it.carmelolagamba.ita.covid19.domain.DataAnagraficaVacciniSummary;
-import it.carmelolagamba.ita.covid19.persistence.DataAnagraficaVacciniSummaryDocumentService;
+import it.carmelolagamba.ita.covid19.domain.DataVacciniAnagraficaSummary;
+import it.carmelolagamba.ita.covid19.persistence.DataVacciniAnagraficaSummaryDocumentService;
 import it.carmelolagamba.ita.covid19.service.csv.AbstractCSVDataReader;
-import it.carmelolagamba.ita.covid19.service.csv.CSVDataAnagraficaVacciniSummary;
+import it.carmelolagamba.ita.covid19.service.csv.CSVDataVacciniAnagraficaSummary;
 import it.carmelolagamba.ita.covid19.utils.Constants;
 import it.carmelolagamba.ita.covid19.utils.FileUtils;
 
 @Component
 @EnableConfigurationProperties({ FileProperties.class })
-public class AnagraficaVacciniSummryMigrationService
-		extends AbstractVacciniMigrationService<DataAnagraficaVacciniSummary> {
+public class VacciniAnagraficaSummryMigrationService
+		extends AbstractVacciniMigrationService<DataVacciniAnagraficaSummary> {
 
-	private static Logger logger = LoggerFactory.getLogger(AnagraficaVacciniSummryMigrationService.class);
+	private static Logger logger = LoggerFactory.getLogger(VacciniAnagraficaSummryMigrationService.class);
 
 	@Autowired
 	private FileProperties fileProperties;
 
 	@Autowired
-	private CSVDataAnagraficaVacciniSummary csvDataAnagraficaVacciniSummary;
+	private CSVDataVacciniAnagraficaSummary csvDataAnagraficaVacciniSummary;
 
 	@Autowired
-	private DataAnagraficaVacciniSummaryDocumentService dataAnagraficaVacciniSummaryDocumentService;
+	private DataVacciniAnagraficaSummaryDocumentService dataAnagraficaVacciniSummaryDocumentService;
 
 	@Override
-	protected void migrateInvoke(List<DataAnagraficaVacciniSummary> list) {
+	protected void migrateInvoke(List<DataVacciniAnagraficaSummary> list) {
 		list.stream().forEach(dataAnagraficaVacciniSummaryDocumentService::upsert);
 	}
 
@@ -45,7 +45,7 @@ public class AnagraficaVacciniSummryMigrationService
 	}
 
 	@Override
-	protected AbstractCSVDataReader<DataAnagraficaVacciniSummary> getReader() {
+	protected AbstractCSVDataReader<DataVacciniAnagraficaSummary> getReader() {
 		return csvDataAnagraficaVacciniSummary;
 	}
 

@@ -10,21 +10,21 @@ import org.springframework.stereotype.Component;
 
 import com.mongodb.BasicDBObject;
 
-import it.carmelolagamba.ita.covid19.domain.DataAnagraficaVacciniSummary;
+import it.carmelolagamba.ita.covid19.domain.DataVacciniAnagraficaSummary;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
 @Component
-public class DataAnagraficaVacciniSummaryDocumentService extends AbstractDocumentService {
+public class DataVacciniAnagraficaSummaryDocumentService extends AbstractDocumentService {
 
-	private static final String COLLECTION_NAME = "DataAnagraficaVacciniSummary";
+	private static final String COLLECTION_NAME = "DataVacciniAnagraficaSummary";
 	private static final String FILTER_NAME = "fascia_anagrafica";
 
-	private Logger logger = LoggerFactory.getLogger(DataAnagraficaVacciniSummaryDocumentService.class);
+	private Logger logger = LoggerFactory.getLogger(DataVacciniAnagraficaSummaryDocumentService.class);
 
 	@Autowired
-	private DataAnagraficaVacciniSummaryCollectionService dataAnagraficaVacciniSummaryCollectionService;
+	private DataVacciniAnagraficaSummaryCollectionService dataAnagraficaVacciniSummaryCollectionService;
 
-	public List<DataAnagraficaVacciniSummary> findAll() {
+	public List<DataVacciniAnagraficaSummary> findAll() {
 
 		logger.info("Find all anagrafiche vaccini summary");
 		return findByFilters(dataAnagraficaVacciniSummaryCollectionService.getCollection(COLLECTION_NAME),
@@ -32,10 +32,10 @@ public class DataAnagraficaVacciniSummaryDocumentService extends AbstractDocumen
 
 	}
 
-	public DataAnagraficaVacciniSummary upsert(DataAnagraficaVacciniSummary updateObject) {
+	public DataVacciniAnagraficaSummary upsert(DataVacciniAnagraficaSummary updateObject) {
 
 		BasicDBObject filters = new BasicDBObject(FILTER_NAME, updateObject.getFascia_anagrafica());
-		DataAnagraficaVacciniSummary dataOnDb = findOne(dataAnagraficaVacciniSummaryCollectionService.getCollection(COLLECTION_NAME),
+		DataVacciniAnagraficaSummary dataOnDb = findOne(dataAnagraficaVacciniSummaryCollectionService.getCollection(COLLECTION_NAME),
 				filters);
 
 		if (dataOnDb != null) {
