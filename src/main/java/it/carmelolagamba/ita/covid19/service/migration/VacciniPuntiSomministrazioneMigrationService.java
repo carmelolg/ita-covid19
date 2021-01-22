@@ -51,7 +51,7 @@ public class VacciniPuntiSomministrazioneMigrationService {
 		return new File(Constants.folderVaccini);
 	}
 
-	@Scheduled(cron = "0 0/30 * * * *")
+	//@Scheduled(cron = "0 0/30 * * * *")
 	public void getFile() throws Exception {
 		try {
 
