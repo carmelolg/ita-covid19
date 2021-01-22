@@ -74,7 +74,7 @@ public class VacciniAnagraficaSummryMigrationService
 			}
 
 		} catch (IOException ex) {
-			logger.error("Scheduling per scaricare i dati delle regioni giornalieri andato in errore", ex);
+			logger.error("Scheduling per scaricare i dati delle sulle anagrafiche dei vaccini andato in errore", ex);
 		}
 	}
 

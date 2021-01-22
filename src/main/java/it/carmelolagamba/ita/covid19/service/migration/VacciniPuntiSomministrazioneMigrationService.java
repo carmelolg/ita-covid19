@@ -3,6 +3,7 @@ package it.carmelolagamba.ita.covid19.service.migration;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,11 @@ public class VacciniPuntiSomministrazioneMigrationService {
 		List<DataVacciniPuntiSomministrazione> dataPuntiSomministrazioneList = csvDataPuntiSomministrazione
 				.convertToDataFromFilename(file.getAbsolutePath());
 
-		dataPuntiSomministrazioneDocumentService.replaceAll(dataPuntiSomministrazioneList);
+		try {
+			dataPuntiSomministrazioneDocumentService.replaceAll(dataPuntiSomministrazioneList);
+		} catch (InterruptedException | ExecutionException e) {
+            logger.warn("Interrupted exception replacing all data: {}", e.getMessage());
+		}
 	}
 
 	protected File getFolderPath() {
@@ -62,7 +67,7 @@ public class VacciniPuntiSomministrazioneMigrationService {
 			}
 
 		} catch (IOException ex) {
-			logger.error("Scheduling per scaricare i dati delle regioni giornalieri andato in errore", ex);
+			logger.error("Scheduling per scaricare i dati dei punti di somministrazione andato in errore", ex);
 		}
 	}
 }
