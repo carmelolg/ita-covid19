@@ -108,7 +108,7 @@ public class CSVDataNazione extends AbstractCSVDataReader<DataNazione>{
             	dataNazione.setTotale_positivi_test_molecolare(FileUtils.convertStringToInteger(value));
             	break;
             default:
-                logger.warn("Unexpected value: ", fields[i]);
+                logger.warn("Unexpected value: {}", value);
         }
     }
 

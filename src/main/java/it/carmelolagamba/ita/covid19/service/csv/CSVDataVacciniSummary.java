@@ -53,7 +53,7 @@ public class CSVDataVacciniSummary extends AbstractCSVDataReader<DataVacciniSumm
 			vacciniSummary.setPercentuale_somministrazione(FileUtils.convertStringToDouble(value));
 			break;
 		default:
-            logger.warn("Unexpected value: ", fields[i]);
+            logger.warn("Unexpected value: {}", value);
 		}
 	}
 

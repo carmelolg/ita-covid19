@@ -71,7 +71,7 @@ public class CSVDataVacciniAnagraficaSummary extends AbstractCSVDataReader<DataV
 			anagraficaVacciniSummary.setCategoria_ospiti_rsa(FileUtils.convertStringToInteger(value));
 			break;
 		default:
-			logger.warn("Unexpected value: ", fields[i]);
+            logger.warn("Unexpected value: {}", value);
 		}
 	}
 

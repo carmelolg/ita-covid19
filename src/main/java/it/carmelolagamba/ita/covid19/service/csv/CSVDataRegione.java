@@ -120,7 +120,7 @@ public class CSVDataRegione extends AbstractCSVDataReader<DataRegione> {
 			dataRegione.setTotale_positivi_test_molecolare(FileUtils.convertStringToInteger(value));
 			break;
 		default:
-            logger.warn("Unexpected value: ", fields[i]);
+            logger.warn("Unexpected value: {}", value);
 		}
 	}
 

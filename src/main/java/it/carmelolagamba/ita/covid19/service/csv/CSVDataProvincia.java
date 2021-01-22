@@ -75,7 +75,7 @@ public class CSVDataProvincia extends AbstractCSVDataReader<DataProvincia>{
                 dataProvincia.setNote_en(value);
                 break;
             default:
-                logger.warn("Unexpected value: ", fields[i]);
+                logger.warn("Unexpected value: {}", value);
         }
     }
 
