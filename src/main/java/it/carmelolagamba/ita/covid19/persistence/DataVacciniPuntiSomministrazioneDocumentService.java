@@ -2,6 +2,7 @@ package it.carmelolagamba.ita.covid19.persistence;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.BasicDBObject;
 
 import it.carmelolagamba.ita.covid19.domain.DataVacciniPuntiSomministrazione;
+import it.carmelolagamba.ita.covid19.domain.Regione;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
 @Component
@@ -25,6 +27,9 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 	@Autowired
 	private DataVacciniPuntiSomministrazioneCollectionService dataPuntiSomministrazioneCollectionService;
 
+	@Autowired
+	private RegioneDocumentService regioneDocumentService;
+
 	public List<DataVacciniPuntiSomministrazione> findAll() {
 
 		logger.info("Find all vaccini summary");
@@ -35,7 +40,9 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 
 	public boolean replaceAll(List<DataVacciniPuntiSomministrazione> puntiSomministrazioneList) {
 
-		List<Document> documentList = puntiSomministrazioneList.stream().map(this::map).collect(Collectors.toList());
+		List<Regione> regioni = regioneDocumentService.findAll();
+		List<Document> documentList = puntiSomministrazioneList.stream().map(ps -> this.map(ps, regioni))
+				.collect(Collectors.toList());
 
 		removeByFilters(COLLECTION_NAME, new BasicDBObject());
 		int itemsAdded = insertMany(COLLECTION_NAME, documentList);
@@ -43,11 +50,18 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 		return documentList.size() == itemsAdded;
 	}
 
-	private Document map(DataVacciniPuntiSomministrazione bean) {
+	private Document map(DataVacciniPuntiSomministrazione bean, List<Regione> regioni) {
 		Document entity = new Document();
 
 		if (bean.getArea() != null) {
 			entity.put("area", bean.getArea());
+		
+			Optional<String> areaDescrizione = regioni.stream().filter(r -> r.getCode().equals(bean.getArea()))
+					.map(Regione::getNome).findAny();
+			if (areaDescrizione.isPresent()) {
+				entity.put("area_descrizione", areaDescrizione);
+			}
+
 		}
 
 		if (bean.getProvincia() != null) {

@@ -10,7 +10,7 @@ public class DataVacciniPuntiSomministrazione {
 	@BsonId
 	private ObjectId idProperty;
 
-	private String area;
+	private String area, area_descrizione;
 	private String provincia;
 	private String comune;
 	private String presidio_ospedaliero;
@@ -34,6 +34,14 @@ public class DataVacciniPuntiSomministrazione {
 
 	public void setArea(String area) {
 		this.area = area;
+	}
+
+	public String getArea_descrizione() {
+		return area_descrizione;
+	}
+
+	public void setArea_descrizione(String area_descrizione) {
+		this.area_descrizione = area_descrizione;
 	}
 
 	public String getProvincia() {
