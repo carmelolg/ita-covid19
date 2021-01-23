@@ -25,41 +25,48 @@ public class DataVacciniSomministrazioneRegionaleSummaryDocumentService extends 
 
 	@Autowired
 	private DataVacciniSomministrazioneRegionaleSummaryCollectionService dataVacciniSomministrazioneRegionaleSummaryCollectionService;
-	
+
 	@Autowired
 	private RegioneDocumentService regioneDocumentService;
 
 	public List<DataVacciniSomministrazioneRegionaleSummary> findAll() {
 
 		logger.info("Find all vaccini summary");
-		return findByFilters(dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME),
+		return findByFilters(
+				dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME),
 				new HashMap<String, Object>());
 
 	}
 
-	public DataVacciniSomministrazioneRegionaleSummary upsert(DataVacciniSomministrazioneRegionaleSummary updateObject) {
+	public void removeAll() {
+		removeByFilters(COLLECTION_NAME, new BasicDBObject());
+	}
+
+	public DataVacciniSomministrazioneRegionaleSummary upsert(
+			DataVacciniSomministrazioneRegionaleSummary updateObject) {
 
 		BasicDBObject filters = new BasicDBObject(FILTER_NAME, updateObject.getArea());
-		
-	    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");  
-	    String dateInString = dateFormat.format(updateObject.getData_somministrazione());  
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		String dateInString = dateFormat.format(updateObject.getData_somministrazione());
 		filters.put("data_somministrazione", dateInString);
-		
+
 		filters.put("fornitore", updateObject.getFornitore());
 		filters.put("fascia_anagrafica", updateObject.getFascia_anagrafica());
-		
+
 		logger.info("Import of {} number {}", updateObject.getArea(), updateObject.getData_somministrazione());
-		
-		DataVacciniSomministrazioneRegionaleSummary dataOnDb = findOne(dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME),
-				filters);
+
+		DataVacciniSomministrazioneRegionaleSummary dataOnDb = findOne(
+				dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME), filters);
 
 		if (dataOnDb != null) {
 			return updateObject;
 		} else {
-			if(updateObject.getArea_descrizione() == null) {
+			if (updateObject.getArea_descrizione() == null) {
 				updateObject.setArea_descrizione(regioneDocumentService.findDescriptionByCode(updateObject.getArea()));
 			}
-			return insert(dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME), updateObject);
+			return insert(dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME),
+					updateObject);
 		}
 
 	}

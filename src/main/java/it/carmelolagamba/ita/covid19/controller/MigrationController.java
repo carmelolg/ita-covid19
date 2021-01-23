@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.migration.VacciniAnagraficaSummaryMigrationService;
+import it.carmelolagamba.ita.covid19.service.migration.VacciniPuntiSomministrazioneMigrationService;
+import it.carmelolagamba.ita.covid19.service.migration.VacciniSomministrazioneRegionaleSummaryMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
 import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
@@ -19,7 +21,7 @@ import it.carmelolagamba.ita.covid19.service.migration.VacciniSummaryMigrationSe
 @CrossOrigin(origins = "*")
 @Api(value = "Migration of data")
 public class MigrationController {
-	
+
 	@Autowired
 	private RegioneMigrationService regioneMigrationService;
 
@@ -31,12 +33,18 @@ public class MigrationController {
 
 	@Autowired
 	private MigrateAllService migrateAllService;
-	
+
 	@Autowired
 	private VacciniSummaryMigrationService vacciniSummryMigrationService;
-	
+
 	@Autowired
 	private VacciniAnagraficaSummaryMigrationService anagraficaVacciniSummryMigrationService;
+
+	@Autowired
+	private VacciniPuntiSomministrazioneMigrationService vacciniPuntiSomministrazioneMigrationService;
+
+	@Autowired
+	private VacciniSomministrazioneRegionaleSummaryMigrationService vacciniSomministrazioneRegionaleSummaryMigrationService;
 
 	@ApiOperation(value = "Migrate region")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/region")
@@ -69,13 +77,27 @@ public class MigrationController {
 		return "Dati sommari dei vaccini importati";
 
 	}
-	
+
 	@ApiOperation(value = "Migrate vaccini summary")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/anagrafica/summary")
 	public String anagraficaVacciniSummary() throws Exception {
 		anagraficaVacciniSummryMigrationService.migrateData();
 		return "Dati sommari delle anagrafiche vaccinate importati";
 
+	}
+
+	@ApiOperation(value = "Migrate punti di somministrazione")
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/punti-somministrazione")
+	public String puntiSomministrazione() throws Exception {
+		vacciniPuntiSomministrazioneMigrationService.migrateData();
+		return "Dati dei punti di somministrazione importati";
+
+	}
+
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/somministrazione-regionale/summary")
+	public String somministrazioneRegionale() throws Exception {
+		vacciniSomministrazioneRegionaleSummaryMigrationService.migrateData();
+		return "Dati della somministrazione regionale importati";
 	}
 
 	@ApiOperation(value = "Migrate all")
@@ -94,6 +116,17 @@ public class MigrationController {
 	public String reset() {
 		try {
 			migrateAllService.resetDataMigration();
+			return "Tutti i dati sono stati importati.";
+		} catch (Exception e) {
+			return "Errore nella migrazione dei files [guarda i logs per maggiori informazioni]";
+		}
+	}
+
+	@ApiOperation(value = "Reset Migrate all - Data vaccini")
+	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/reset")
+	public String resetDataVaccini() {
+		try {
+			migrateAllService.resetDataVaccini();
 			return "Tutti i dati sono stati importati.";
 		} catch (Exception e) {
 			return "Errore nella migrazione dei files [guarda i logs per maggiori informazioni]";

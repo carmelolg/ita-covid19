@@ -51,6 +51,7 @@ public class VacciniSomministrazioneRegionaleSummaryMigrationService {
 		}).forEach(dataVacciniSomministrazioneRegionaleSummaryDocumentService::upsert);
 	}
 
+
 	protected File getFolderPath() {
 		return new File(Constants.folderVaccini);
 	}
@@ -72,6 +73,27 @@ public class VacciniSomministrazioneRegionaleSummaryMigrationService {
 
 		} catch (IOException ex) {
 			logger.error("Scheduling per scaricare i dati sui vaccini andato in errore", ex);
+		}
+	}
+	
+	public void resetAllData() throws Exception {
+
+		String fileURL = fileProperties.getVacciniBaseUrl() + fileProperties.getSomministrazioneRegionaleFilename();
+		String saveDir = Constants.folderVaccini;
+		boolean saved = FileUtils.downloadFile(fileURL, saveDir);
+		if (saved) {
+			logger.info("File importato: {}", fileURL);
+
+			File file = new File(getFolderPath() + "/" + fileProperties.getSomministrazioneRegionaleFilename());
+
+			List<DataVacciniSomministrazioneRegionaleSummary> dataVacciniSomministrazioneRegionaleSummaryList = csvDataVacciniSomministrazioneRegionaleSummary
+					.convertToDataFromFilename(file.getAbsolutePath());
+			dataVacciniSomministrazioneRegionaleSummaryList.stream()
+					.forEach(dataVacciniSomministrazioneRegionaleSummaryDocumentService::upsert);
+
+			logger.info("File migrato: {}", fileURL);
+		} else {
+			logger.info("File: {} non ancora disponibile", fileURL);
 		}
 	}
 }

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import it.carmelolagamba.ita.covid19.persistence.DataNazioneDocumentService;
 import it.carmelolagamba.ita.covid19.persistence.DataProvinciaDocumentService;
 import it.carmelolagamba.ita.covid19.persistence.DataRegioneDocumentService;
+import it.carmelolagamba.ita.covid19.persistence.DataVacciniSomministrazioneRegionaleSummaryDocumentService;
 import it.carmelolagamba.ita.covid19.persistence.FileImportedDocumentService;
 import it.carmelolagamba.ita.covid19.utils.Constants;
 import it.carmelolagamba.ita.covid19.utils.FileUtils;
@@ -46,6 +47,12 @@ public class MigrateAllService {
 
 	@Autowired
 	private FileImportedDocumentService fileImportedDocumentService;
+
+	@Autowired
+	private DataVacciniSomministrazioneRegionaleSummaryDocumentService dataVacciniSomministrazioneRegionaleSummaryDocumentService;
+
+	@Autowired
+	private VacciniSomministrazioneRegionaleSummaryMigrationService vacciniSomministrazioneRegionaleSummaryMigrationService;
 
 	public void dowloadAllFilesManually() throws Exception {
 		try {
@@ -154,5 +161,29 @@ public class MigrateAllService {
 		} catch (IOException ex) {
 			logger.error("Download files andato in errore", ex);
 		}
+
+	}
+
+	public void resetDataVaccini() throws Exception {
+		logger.info("Inizio a svuotare le cartelle");
+
+		File folderNazioni = new File(Constants.folderVaccini);
+		if (!folderNazioni.exists()) {
+			folderNazioni.mkdirs();
+		}
+		org.apache.commons.io.FileUtils.cleanDirectory(new File(Constants.folderVaccini));
+
+		logger.info("Cartelle svuotate");
+
+		logger.info("Svuoto le collection");
+
+		dataVacciniSomministrazioneRegionaleSummaryDocumentService.removeAll();
+
+		logger.info("Collection svuotate");
+
+		vacciniSomministrazioneRegionaleSummaryMigrationService.resetAllData();
+
+		logger.info("Tutti i dati sono stati migrati su DB");
+
 	}
 }
