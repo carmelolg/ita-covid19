@@ -2,7 +2,6 @@ package it.carmelolagamba.ita.covid19.persistence;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -10,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.mongodb.BasicDBObject;
 
 import it.carmelolagamba.ita.covid19.domain.DataVacciniPuntiSomministrazione;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
@@ -32,12 +33,14 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 
 	}
 
-	public boolean replaceAll(List<DataVacciniPuntiSomministrazione> puntiSomministrazioneList)
-			throws InterruptedException, ExecutionException {
+	public boolean replaceAll(List<DataVacciniPuntiSomministrazione> puntiSomministrazioneList) {
 
 		List<Document> documentList = puntiSomministrazioneList.stream().map(this::map).collect(Collectors.toList());
 
-		return super.asyncReplaceAll(COLLECTION_NAME, new Document(), documentList);
+		removeByFilters(COLLECTION_NAME, new BasicDBObject());
+		int itemsAdded = insertMany(COLLECTION_NAME, documentList);
+
+		return documentList.size() == itemsAdded;
 	}
 
 	private Document map(DataVacciniPuntiSomministrazione bean) {
