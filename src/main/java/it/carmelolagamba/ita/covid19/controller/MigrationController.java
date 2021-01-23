@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import it.carmelolagamba.ita.covid19.service.migration.VacciniAnagraficaSummryMigrationService;
+import it.carmelolagamba.ita.covid19.service.migration.VacciniAnagraficaSummaryMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.MigrateAllService;
 import it.carmelolagamba.ita.covid19.service.migration.NazioneMigrationService;
 import it.carmelolagamba.ita.covid19.service.migration.ProvinciaMigrationService;
@@ -36,7 +36,7 @@ public class MigrationController {
 	private VacciniSummaryMigrationService vacciniSummryMigrationService;
 	
 	@Autowired
-	private VacciniAnagraficaSummryMigrationService anagraficaVacciniSummryMigrationService;
+	private VacciniAnagraficaSummaryMigrationService anagraficaVacciniSummryMigrationService;
 
 	@ApiOperation(value = "Migrate region")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/region")

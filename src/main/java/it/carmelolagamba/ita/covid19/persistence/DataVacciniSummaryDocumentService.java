@@ -26,6 +26,9 @@ public class DataVacciniSummaryDocumentService extends AbstractDocumentService {
 
 	@Autowired
 	private DataVacciniSummaryCollectionService dataVacciniSummaryCollectionService;
+	
+	@Autowired
+	private RegioneDocumentService regioneDocumentService;
 
 	public List<DataVacciniSummary> findAll() {
 
@@ -38,6 +41,11 @@ public class DataVacciniSummaryDocumentService extends AbstractDocumentService {
 	public DataVacciniSummary upsert(DataVacciniSummary updateObject) {
 
 		BasicDBObject filters = new BasicDBObject(FILTER_NAME, updateObject.getArea());
+		
+		if(updateObject.getArea_descrizione() == null) {
+			updateObject.setArea_descrizione(regioneDocumentService.findDescriptionByCode(updateObject.getArea()));
+		}
+		
 		DataVacciniSummary dataOnDb = findOne(dataVacciniSummaryCollectionService.getCollection(COLLECTION_NAME),
 				filters);
 

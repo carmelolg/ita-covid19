@@ -9,6 +9,7 @@ public class FileProperties {
 	public String vacciniSummaryFilename;
 	public String anagraficaVacciniSummaryFilename;
 	public String puntiSomministrazioneFilename;
+	public String somministrazioneRegionaleFilename;
 
 	public String getVacciniBaseUrl() {
 		return vacciniBaseUrl;
@@ -40,6 +41,14 @@ public class FileProperties {
 
 	public void setPuntiSomministrazioneFilename(String puntiSomministrazioneFilename) {
 		this.puntiSomministrazioneFilename = puntiSomministrazioneFilename;
+	}
+
+	public String getSomministrazioneRegionaleFilename() {
+		return somministrazioneRegionaleFilename;
+	}
+
+	public void setSomministrazioneRegionaleFilename(String somministrazioneRegionaleFilename) {
+		this.somministrazioneRegionaleFilename = somministrazioneRegionaleFilename;
 	}
 
 }

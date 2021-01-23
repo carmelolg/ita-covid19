@@ -16,17 +16,22 @@ import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 @Component
 public class RegioneDocumentService extends AbstractDocumentService {
 
-    private static final String COLLECTION_NAME = "Regione";
+	private static final String COLLECTION_NAME = "Regione";
 
-    private Logger logger = LoggerFactory.getLogger(RegioneDocumentService.class);
+	private Logger logger = LoggerFactory.getLogger(RegioneDocumentService.class);
 
-    @Autowired
-    private RegioneCollectionService regioneCollectionService;
+	@Autowired
+	private RegioneCollectionService regioneCollectionService;
 
-    public List<Regione> findAll() {
-        MongoCollection<Regione> collection = regioneCollectionService.getCollection(COLLECTION_NAME);
-        return findByFilters(collection, new BasicDBObject());
+	public List<Regione> findAll() {
+		MongoCollection<Regione> collection = regioneCollectionService.getCollection(COLLECTION_NAME);
+		return findByFilters(collection, new BasicDBObject());
 
-    }
+	}
+
+	public String findDescriptionByCode(String code) {
+		MongoCollection<Regione> collection = regioneCollectionService.getCollection(COLLECTION_NAME);
+		return findOne(collection, new BasicDBObject("code", code)).getNome();
+	}
 
 }

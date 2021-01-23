@@ -21,10 +21,10 @@ import it.carmelolagamba.ita.covid19.utils.FileUtils;
 
 @Component
 @EnableConfigurationProperties({ FileProperties.class })
-public class VacciniAnagraficaSummryMigrationService
+public class VacciniAnagraficaSummaryMigrationService
 		extends AbstractVacciniMigrationService<DataVacciniAnagraficaSummary> {
 
-	private static Logger logger = LoggerFactory.getLogger(VacciniAnagraficaSummryMigrationService.class);
+	private static Logger logger = LoggerFactory.getLogger(VacciniAnagraficaSummaryMigrationService.class);
 
 	@Autowired
 	private FileProperties fileProperties;

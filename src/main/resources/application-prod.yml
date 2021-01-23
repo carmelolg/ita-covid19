@@ -19,3 +19,4 @@ file:
   vacciniSummaryFilename: vaccini-summary-latest.csv
   anagraficaVacciniSummaryFilename: anagrafica-vaccini-summary-latest.csv
   puntiSomministrazioneFilename: punti-somministrazione-latest.csv
+  somministrazioneRegionaleFilename: somministrazioni-vaccini-latest.csv
