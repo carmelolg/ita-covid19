@@ -27,7 +27,7 @@ import it.carmelolagamba.ita.covid19.view.VaccinoTotaleRegioneDto;
 public class VacciniService {
 
 	private Logger logger = LoggerFactory.getLogger(VacciniService.class);
-
+	
 	@Autowired
 	private DataVacciniSummaryDocumentService dataVacciniSummaryDocumentService;
 

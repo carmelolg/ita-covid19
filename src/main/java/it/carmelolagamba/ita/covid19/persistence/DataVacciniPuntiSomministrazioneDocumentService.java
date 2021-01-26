@@ -59,7 +59,7 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 			Optional<String> areaDescrizione = regioni.stream().filter(r -> r.getCode().equals(bean.getArea()))
 					.map(Regione::getNome).findAny();
 			if (areaDescrizione.isPresent()) {
-				entity.put("area_descrizione", areaDescrizione);
+				entity.put("area_descrizione", areaDescrizione.get());
 			}
 
 		}

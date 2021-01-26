@@ -1,7 +1,5 @@
 package it.carmelolagamba.ita.covid19.persistence;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.mongodb.BasicDBObject;
 
 import it.carmelolagamba.ita.covid19.domain.DataVacciniSomministrazioneRegionaleSummary;
-import it.carmelolagamba.ita.covid19.domain.DataVacciniSummary;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
 @Component
@@ -62,27 +59,25 @@ public class DataVacciniSomministrazioneRegionaleSummaryDocumentService extends 
 		removeByFilters(COLLECTION_NAME, new BasicDBObject());
 	}
 
-	// TODO bugged
 	public DataVacciniSomministrazioneRegionaleSummary upsert(
 			DataVacciniSomministrazioneRegionaleSummary updateObject) {
 
 		BasicDBObject filters = new BasicDBObject(FILTER_NAME, updateObject.getArea());
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		String dateInString = dateFormat.format(updateObject.getData_somministrazione());
-		filters.put("data_somministrazione", dateInString);
-
+		filters.put("data_somministrazione", updateObject.getData_somministrazione());
 		filters.put("fornitore", updateObject.getFornitore());
 		filters.put("fascia_anagrafica", updateObject.getFascia_anagrafica());
 
-		logger.info("Import of {} number {}", updateObject.getArea(), updateObject.getData_somministrazione());
 
 		DataVacciniSomministrazioneRegionaleSummary dataOnDb = findOne(
 				dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME), filters);
 
 		if (dataOnDb != null) {
+			logger.info("Replace of {} {} {} date {}", updateObject.getArea(), updateObject.getFornitore(), updateObject.getFascia_anagrafica(), updateObject.getData_somministrazione());
+			dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME).replaceOne(filters, updateObject);
 			return updateObject;
 		} else {
+			logger.info("Import of {} {} {} date {}", updateObject.getArea(), updateObject.getFornitore(), updateObject.getFascia_anagrafica(), updateObject.getData_somministrazione());
 			if (updateObject.getArea_descrizione() == null) {
 				updateObject.setArea_descrizione(regioneDocumentService.findDescriptionByCode(updateObject.getArea()));
 			}

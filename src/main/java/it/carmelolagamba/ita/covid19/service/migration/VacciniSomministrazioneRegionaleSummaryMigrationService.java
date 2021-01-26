@@ -42,7 +42,7 @@ public class VacciniSomministrazioneRegionaleSummaryMigrationService {
 
 		List<DataVacciniSomministrazioneRegionaleSummary> dataVacciniSomministrazioneRegionaleSummaryList = csvDataVacciniSomministrazioneRegionaleSummary
 				.convertToDataFromFilename(file.getAbsolutePath());
-
+		
 		dataVacciniSomministrazioneRegionaleSummaryList.stream().filter(d -> {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String dateInString = dateFormat.format(d.getData_somministrazione());

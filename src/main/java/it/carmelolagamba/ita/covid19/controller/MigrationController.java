@@ -73,7 +73,7 @@ public class MigrationController {
 	@ApiOperation(value = "Migrate vaccini summary")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/summary")
 	public String vacciniSummary() throws Exception {
-		vacciniSummryMigrationService.migrateData();
+		vacciniSummryMigrationService.getFile();
 		return "Dati sommari dei vaccini importati";
 
 	}
@@ -81,7 +81,7 @@ public class MigrationController {
 	@ApiOperation(value = "Migrate vaccini summary")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/anagrafica/summary")
 	public String anagraficaVacciniSummary() throws Exception {
-		anagraficaVacciniSummryMigrationService.migrateData();
+		anagraficaVacciniSummryMigrationService.getFile();
 		return "Dati sommari delle anagrafiche vaccinate importati";
 
 	}
@@ -89,14 +89,14 @@ public class MigrationController {
 	@ApiOperation(value = "Migrate punti di somministrazione")
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/punti-somministrazione")
 	public String puntiSomministrazione() throws Exception {
-		vacciniPuntiSomministrazioneMigrationService.migrateData();
+		vacciniPuntiSomministrazioneMigrationService.getFile();
 		return "Dati dei punti di somministrazione importati";
 
 	}
 
 	@RequestMapping(method = RequestMethod.GET, path = "/migrate/vaccini/somministrazione-regionale/summary")
 	public String somministrazioneRegionale() throws Exception {
-		vacciniSomministrazioneRegionaleSummaryMigrationService.migrateData();
+		vacciniSomministrazioneRegionaleSummaryMigrationService.getFile();
 		return "Dati della somministrazione regionale importati";
 	}
 
