@@ -16,6 +16,7 @@ import it.carmelolagamba.ita.covid19.service.VacciniService;
 import it.carmelolagamba.ita.covid19.view.RankingDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoNazionaleResponseDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoRegionaleDto;
+import it.carmelolagamba.ita.covid19.view.VaccinoPuntoSomministrazioneDto;
 import it.carmelolagamba.ita.covid19.view.VaccinoTotaleRegioneDto;
 
 @RestController
@@ -26,16 +27,28 @@ public class VacciniController {
 	@Autowired
 	private VacciniService vacciniService;
 
-	@ApiOperation(value = "Vaccini per area o tutte le aree")
+	@ApiOperation(value = "Statistiche vaccini per regione")
 	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/region/{name}/stats")
 	public List<VaccinoTotaleRegioneDto> regions(@PathVariable("name") String name) {
 		return vacciniService.getItalianDataByRegion(Optional.of(name));
 	}
 	
-	@ApiOperation(value = "Vaccini per area o tutte le aree")
+	@ApiOperation(value = "Dettaglio vaccini per regione")
 	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/region/{name}")
 	public List<TracciamentoVaccinoRegionaleDto> regionsByCategory(@PathVariable("name") String name) {
 		return vacciniService.getRegionData(Optional.of(name));
+	}
+	
+	@ApiOperation(value = "Punti di somministrazione per area o tutte le aree")
+	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/region/{name}/somministration_point")
+	public List<VaccinoPuntoSomministrazioneDto> somministrationPointByRegion(@PathVariable("name") String name) {
+		return vacciniService.getAllPuntiSomministrazioneByRegion(Optional.of(name));
+	}
+	
+	@ApiOperation(value = "Punti di somministrazione per area o tutte le aree")
+	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/district/{name}/somministration_point")
+	public List<VaccinoPuntoSomministrazioneDto> somministrationPointByDistrict(@PathVariable("name") String name) {
+		return vacciniService.getAllPuntiSomministrazioneByDistrict(Optional.of(name));
 	}
 
 	@ApiOperation(value = "Vaccini in Italia")
@@ -43,20 +56,26 @@ public class VacciniController {
 	public TracciamentoVaccinoNazionaleResponseDto italianStats() {
 		return vacciniService.getItalianDataGroup();
 	}
+	
+	@ApiOperation(value = "Punti di somministrazione italiani")
+	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/italy/somministration_point")
+	public List<VaccinoPuntoSomministrazioneDto> somministrationPoint() {
+		return vacciniService.getAllPuntiSomministrazione();
+	}
 
-	@ApiOperation(value = "Vaccini in Italia Ranking")
+	@ApiOperation(value = "Vaccini in Italia Ranking: per percentuale di somministrazione")
 	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/ranking/somministration")
 	public RankingDto rankingSomministration() {
 		return vacciniService.getRankingBySomministration();
 	}
 	
-	@ApiOperation(value = "Vaccini in Italia Ranking")
+	@ApiOperation(value = "Vaccini in Italia Ranking: per consegne effettuate")
 	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/ranking/delivered")
 	public RankingDto rankingDelivered() {
 		return vacciniService.getRankingByDosiRicevute();
 	}
 	
-	@ApiOperation(value = "Vaccini in Italia Ranking")
+	@ApiOperation(value = "Vaccini in Italia Ranking: per dosi somministrate")
 	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/ranking/performed")
 	public RankingDto rankingPerformed() {
 		return vacciniService.getRankingByDosiSomministrate();

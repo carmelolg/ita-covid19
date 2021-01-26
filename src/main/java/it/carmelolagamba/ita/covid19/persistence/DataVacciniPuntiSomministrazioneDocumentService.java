@@ -3,6 +3,7 @@ package it.carmelolagamba.ita.covid19.persistence;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -38,6 +39,35 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 
 	}
 
+	public List<DataVacciniPuntiSomministrazione> find(Optional<String> regionName) {
+
+		logger.info("Find all vaccini summary by region {}", regionName.isPresent() ? regionName.get() : "All data");
+
+		HashMap<String, Object> filters = new HashMap<>();
+
+		if (regionName.isPresent()) {
+			filters.put("area_descrizione", regionName.get());
+		}
+
+		return findByFilters(dataPuntiSomministrazioneCollectionService.getCollection(COLLECTION_NAME), filters);
+
+	}
+
+	public List<DataVacciniPuntiSomministrazione> findByDistrict(Optional<String> districtName) {
+
+		logger.info("Find all vaccini summary by region {}",
+				districtName.isPresent() ? districtName.get() : "All data");
+
+		HashMap<String, Object> filters = new HashMap<>();
+
+		if (districtName.isPresent()) {
+			filters.put("provincia", Pattern.compile(districtName.get(), Pattern.CASE_INSENSITIVE));
+		}
+
+		return findByFilters(dataPuntiSomministrazioneCollectionService.getCollection(COLLECTION_NAME), filters);
+
+	}
+
 	public boolean replaceAll(List<DataVacciniPuntiSomministrazione> puntiSomministrazioneList) {
 
 		List<Regione> regioni = regioneDocumentService.findAll();
@@ -55,7 +85,7 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 
 		if (bean.getArea() != null) {
 			entity.put("area", bean.getArea());
-		
+
 			Optional<String> areaDescrizione = regioni.stream().filter(r -> r.getCode().equals(bean.getArea()))
 					.map(Regione::getNome).findAny();
 			if (areaDescrizione.isPresent()) {

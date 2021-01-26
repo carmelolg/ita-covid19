@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import it.carmelolagamba.ita.covid19.domain.mapper.DataVacciniAnagraficaSummaryMapper;
+import it.carmelolagamba.ita.covid19.domain.mapper.DataVacciniPuntiSomministrazioneMapper;
 import it.carmelolagamba.ita.covid19.domain.mapper.DataVacciniSomministrazioneRegionaleSummaryMapper;
 import it.carmelolagamba.ita.covid19.domain.mapper.DataVacciniSummaryMapper;
 import it.carmelolagamba.ita.covid19.persistence.DataVacciniAnagraficaSummaryDocumentService;
+import it.carmelolagamba.ita.covid19.persistence.DataVacciniPuntiSomministrazioneDocumentService;
 import it.carmelolagamba.ita.covid19.persistence.DataVacciniSomministrazioneRegionaleSummaryDocumentService;
 import it.carmelolagamba.ita.covid19.persistence.DataVacciniSummaryDocumentService;
 import it.carmelolagamba.ita.covid19.view.RankingDto;
@@ -21,13 +23,14 @@ import it.carmelolagamba.ita.covid19.view.RankingItemDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoNazionaleDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoNazionaleResponseDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoRegionaleDto;
+import it.carmelolagamba.ita.covid19.view.VaccinoPuntoSomministrazioneDto;
 import it.carmelolagamba.ita.covid19.view.VaccinoTotaleRegioneDto;
 
 @Component
 public class VacciniService {
 
 	private Logger logger = LoggerFactory.getLogger(VacciniService.class);
-	
+
 	@Autowired
 	private DataVacciniSummaryDocumentService dataVacciniSummaryDocumentService;
 
@@ -36,15 +39,40 @@ public class VacciniService {
 
 	@Autowired
 	private DataVacciniAnagraficaSummaryMapper dataVacciniAnagraficaSummaryMapper;
-	
+
 	@Autowired
 	private DataVacciniSomministrazioneRegionaleSummaryDocumentService dataVacciniSomministrazioneRegionaleSummaryDocumentService;
-	
+
 	@Autowired
 	private DataVacciniSomministrazioneRegionaleSummaryMapper dataVacciniSomministrazioneRegionaleSummaryMapper;
 
 	@Autowired
 	private DataVacciniSummaryMapper dataVacciniSummaryMapper;
+
+	@Autowired
+	private DataVacciniPuntiSomministrazioneDocumentService dataVacciniPuntiSomministrazioneDocumentService;
+
+	@Autowired
+	private DataVacciniPuntiSomministrazioneMapper dataVacciniPuntiSomministrazioneMapper;
+
+	public List<VaccinoPuntoSomministrazioneDto> getAllPuntiSomministrazione() {
+		logger.info("Get all punti somministrazione");
+		return dataVacciniPuntiSomministrazioneDocumentService.findAll().stream()
+				.map(dataVacciniPuntiSomministrazioneMapper::convertEntityToDto).collect(Collectors.toList());
+	}
+	
+	public List<VaccinoPuntoSomministrazioneDto> getAllPuntiSomministrazioneByRegion(Optional<String> regionName) {
+		logger.info("Get all italian vaccination data by region");
+		return dataVacciniPuntiSomministrazioneDocumentService.find(regionName).stream()
+				.map(dataVacciniPuntiSomministrazioneMapper::convertEntityToDto).collect(Collectors.toList());
+	}
+	
+	public List<VaccinoPuntoSomministrazioneDto> getAllPuntiSomministrazioneByDistrict(Optional<String> districtName) {
+		logger.info("Get all italian vaccination data by district");
+		return dataVacciniPuntiSomministrazioneDocumentService.findByDistrict(districtName).stream()
+				.map(dataVacciniPuntiSomministrazioneMapper::convertEntityToDto).collect(Collectors.toList());
+	}
+	
 
 	public List<VaccinoTotaleRegioneDto> getItalianDataByRegion(Optional<String> regionName) {
 		logger.info("Get all italian vaccination data");
@@ -55,9 +83,10 @@ public class VacciniService {
 	public List<TracciamentoVaccinoRegionaleDto> getRegionData(Optional<String> regionName) {
 		logger.info("Get all vaccination data by region");
 		return dataVacciniSomministrazioneRegionaleSummaryDocumentService.find(regionName).stream()
-				.map(dataVacciniSomministrazioneRegionaleSummaryMapper::convertEntityToDto).collect(Collectors.toList());
+				.map(dataVacciniSomministrazioneRegionaleSummaryMapper::convertEntityToDto)
+				.collect(Collectors.toList());
 	}
-	
+
 	public TracciamentoVaccinoNazionaleResponseDto getItalianDataGroup() {
 
 		logger.info("Get all italian vaccination data by group");
@@ -173,7 +202,7 @@ public class VacciniService {
 		return ranking;
 
 	}
-	
+
 	private RankingItemDto toRankingItemDto(String area, Object value) {
 		RankingItemDto item = new RankingItemDto();
 		item.setName(area);
