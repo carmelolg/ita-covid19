@@ -29,7 +29,7 @@ public class NazioneController {
 
     @Autowired
     private UtilsService utilsService;
-
+        
     @ApiOperation(value = "Last file imported")
     @RequestMapping(method = RequestMethod.GET, path = "/italy/file/last")
     public FileImportedDto lastFile() {
@@ -113,4 +113,5 @@ public class NazioneController {
     public AndamentoDto totaleNazionaliGuariti() {
         return nationalService.findLast30Recovered();
     }
+	
 }

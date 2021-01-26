@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.BasicDBObject;
 
 import it.carmelolagamba.ita.covid19.domain.DataVacciniSomministrazioneRegionaleSummary;
+import it.carmelolagamba.ita.covid19.domain.DataVacciniSummary;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
 @Component
@@ -37,11 +39,30 @@ public class DataVacciniSomministrazioneRegionaleSummaryDocumentService extends 
 				new HashMap<String, Object>());
 
 	}
+	
+	public List<DataVacciniSomministrazioneRegionaleSummary> find(Optional<String> regionName) {
+
+		logger.info("Find all vaccini summary by region {}", regionName.isPresent() ? regionName.get() : "All data");
+		
+		HashMap<String, Object> filters = new HashMap<>();
+
+		if (regionName.isPresent()) {
+			filters.put("area_descrizione", regionName.get());
+		}
+		
+		HashMap<String, Object> sortFilters = new HashMap<>();
+		sortFilters.put("data_somministrazione", -1);
+
+		return findByFilters(dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME), filters, sortFilters);
+
+	}
+
 
 	public void removeAll() {
 		removeByFilters(COLLECTION_NAME, new BasicDBObject());
 	}
 
+	// TODO bugged
 	public DataVacciniSomministrazioneRegionaleSummary upsert(
 			DataVacciniSomministrazioneRegionaleSummary updateObject) {
 
