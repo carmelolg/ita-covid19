@@ -2,6 +2,8 @@ package it.carmelolagamba.ita.covid19.view;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class VaccinoTotaleRegioneDto {
 
 	private String area;
@@ -9,8 +11,11 @@ public class VaccinoTotaleRegioneDto {
 	private int dosiSomministrate;
 	private int dosiConsegnate;
 	private double percentualeSomministrazione;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="Europe/Rome")
 	private Date ultimoAggiornamento;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="Europe/Rome")
 	private Date ultimoAggiornamentoInterno;
+	
 	public String getArea() {
 		return area;
 	}

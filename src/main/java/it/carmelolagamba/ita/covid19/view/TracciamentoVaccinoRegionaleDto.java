@@ -2,14 +2,18 @@ package it.carmelolagamba.ita.covid19.view;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class TracciamentoVaccinoRegionaleDto {
 
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="Europe/Rome")
 	private Date dataSomministrazione;
 	private String fornitore;
 	private String area, areaDescrizione;
 	private String fasciaAnagrafica;
 	private int sessoMaschile, sessoFemminile, categoriaOss, categoriaNonSanitari, categoriaRsa, categoriaOver80,
 			primaDose, secondaDose;
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="Europe/Rome")
 	private Date ultimoAggiornamentoInterno;
 	
 	/**
