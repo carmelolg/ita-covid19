@@ -20,10 +20,14 @@ public class DataVacciniSomministrazioneRegionaleSummaryDocumentService extends 
 	private static final String COLLECTION_NAME = "DataVacciniSomministrazioneRegionaleSummary";
 	private static final String FILTER_NAME = "area";
 
+	
 	private Logger logger = LoggerFactory.getLogger(DataVacciniSomministrazioneRegionaleSummaryDocumentService.class);
 
 	@Autowired
 	private DataVacciniSomministrazioneRegionaleSummaryCollectionService dataVacciniSomministrazioneRegionaleSummaryCollectionService;
+
+	@Autowired
+    private RegioneDocumentService regioneDocumentService;
 
 	public List<DataVacciniSomministrazioneRegionaleSummary> findAll() {
 
@@ -75,6 +79,9 @@ public class DataVacciniSomministrazioneRegionaleSummaryDocumentService extends 
 			return updateObject;
 		} else {
 			logger.info("Import of {} {} {} date {}", updateObject.getArea(), updateObject.getFornitore(), updateObject.getFascia_anagrafica(), updateObject.getData_somministrazione());
+            if (updateObject.getArea_descrizione() == null) {
+                updateObject.setArea_descrizione(regioneDocumentService.findDescriptionByCode(updateObject.getArea()));
+            }
 			return insert(dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME),
 					updateObject);
 		}

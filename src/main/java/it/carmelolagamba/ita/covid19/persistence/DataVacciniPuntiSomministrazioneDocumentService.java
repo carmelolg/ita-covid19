@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.BasicDBObject;
 
 import it.carmelolagamba.ita.covid19.domain.DataVacciniPuntiSomministrazione;
+import it.carmelolagamba.ita.covid19.domain.Regione;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
 @Component
@@ -68,8 +69,9 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 	}
 
 	public boolean replaceAll(List<DataVacciniPuntiSomministrazione> puntiSomministrazioneList) {
-
-		List<Document> documentList = puntiSomministrazioneList.stream().map(ps -> this.map(ps))
+		
+        List<Regione> regioni = regioneDocumentService.findAll();
+        List<Document> documentList = puntiSomministrazioneList.stream().map(ps -> this.map(ps, regioni))
 				.collect(Collectors.toList());
 
 		removeByFilters(COLLECTION_NAME, new BasicDBObject());
@@ -77,13 +79,19 @@ public class DataVacciniPuntiSomministrazioneDocumentService extends AbstractDoc
 
 		return documentList.size() == itemsAdded;
 	}
-
-	private Document map(DataVacciniPuntiSomministrazione bean) {
+	
+    private Document map(DataVacciniPuntiSomministrazione bean, List<Regione> regioni) {
 		Document entity = new Document();
 
 		if (bean.getArea() != null) {
 			entity.put("area", bean.getArea());
-			entity.put("area_descrizione", bean.getArea_descrizione());
+
+            Optional<String> areaDescrizione = regioni.stream().filter(r -> r.getCode().equals(bean.getArea()))
+                    .map(Regione::getNome).findAny();
+            if (areaDescrizione.isPresent()) {
+                entity.put("area_descrizione", areaDescrizione.get());
+            }
+
 		}
 
 		if (bean.getProvincia() != null) {
