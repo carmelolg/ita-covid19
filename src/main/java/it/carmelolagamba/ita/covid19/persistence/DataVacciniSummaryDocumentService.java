@@ -25,9 +25,6 @@ public class DataVacciniSummaryDocumentService extends AbstractDocumentService {
 	@Autowired
 	private DataVacciniSummaryCollectionService dataVacciniSummaryCollectionService;
 
-	@Autowired
-	private RegioneDocumentService regioneDocumentService;
-
 	public List<DataVacciniSummary> find(Optional<String> regionName) {
 
 		logger.info("Find all vaccini summary by region {}", regionName.isPresent() ? regionName.get() : "All data");
@@ -45,10 +42,6 @@ public class DataVacciniSummaryDocumentService extends AbstractDocumentService {
 	public DataVacciniSummary upsert(DataVacciniSummary updateObject) {
 
 		BasicDBObject filters = new BasicDBObject(FILTER_NAME, updateObject.getArea());
-
-		if (updateObject.getArea_descrizione() == null) {
-			updateObject.setArea_descrizione(regioneDocumentService.findDescriptionByCode(updateObject.getArea()));
-		}
 
 		DataVacciniSummary dataOnDb = findOne(dataVacciniSummaryCollectionService.getCollection(COLLECTION_NAME),
 				filters);

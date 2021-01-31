@@ -25,9 +25,6 @@ public class DataVacciniSomministrazioneRegionaleSummaryDocumentService extends 
 	@Autowired
 	private DataVacciniSomministrazioneRegionaleSummaryCollectionService dataVacciniSomministrazioneRegionaleSummaryCollectionService;
 
-	@Autowired
-	private RegioneDocumentService regioneDocumentService;
-
 	public List<DataVacciniSomministrazioneRegionaleSummary> findAll() {
 
 		logger.info("Find all vaccini summary");
@@ -78,9 +75,6 @@ public class DataVacciniSomministrazioneRegionaleSummaryDocumentService extends 
 			return updateObject;
 		} else {
 			logger.info("Import of {} {} {} date {}", updateObject.getArea(), updateObject.getFornitore(), updateObject.getFascia_anagrafica(), updateObject.getData_somministrazione());
-			if (updateObject.getArea_descrizione() == null) {
-				updateObject.setArea_descrizione(regioneDocumentService.findDescriptionByCode(updateObject.getArea()));
-			}
 			return insert(dataVacciniSomministrazioneRegionaleSummaryCollectionService.getCollection(COLLECTION_NAME),
 					updateObject);
 		}

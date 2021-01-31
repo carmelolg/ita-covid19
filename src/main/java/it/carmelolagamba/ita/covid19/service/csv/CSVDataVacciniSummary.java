@@ -43,6 +43,9 @@ public class CSVDataVacciniSummary extends AbstractCSVDataReader<DataVacciniSumm
 		case AREA:
 			vacciniSummary.setArea(value);
 			break;
+		case NOME_AREA:
+			vacciniSummary.setArea_descrizione(value);
+			break;
 		case DOSI_CONSEGNATE:
 			vacciniSummary.setDosi_consegnate(FileUtils.convertStringToInteger(value));
 			break;
