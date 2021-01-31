@@ -1,6 +1,7 @@
 package it.carmelolagamba.ita.covid19.service;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import it.carmelolagamba.ita.covid19.domain.DataVacciniSomministrazioneRegionaleSummary;
 import it.carmelolagamba.ita.covid19.domain.mapper.DataVacciniAnagraficaSummaryMapper;
 import it.carmelolagamba.ita.covid19.domain.mapper.DataVacciniPuntiSomministrazioneMapper;
 import it.carmelolagamba.ita.covid19.domain.mapper.DataVacciniSomministrazioneRegionaleSummaryMapper;
@@ -22,7 +24,7 @@ import it.carmelolagamba.ita.covid19.view.RankingDto;
 import it.carmelolagamba.ita.covid19.view.RankingItemDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoNazionaleDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoNazionaleResponseDto;
-import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoRegionaleDto;
+import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoRegionaleDetailsDto;
 import it.carmelolagamba.ita.covid19.view.VaccinoPuntoSomministrazioneDto;
 import it.carmelolagamba.ita.covid19.view.VaccinoTotaleRegioneDto;
 
@@ -60,19 +62,18 @@ public class VacciniService {
 		return dataVacciniPuntiSomministrazioneDocumentService.findAll().stream()
 				.map(dataVacciniPuntiSomministrazioneMapper::convertEntityToDto).collect(Collectors.toList());
 	}
-	
+
 	public List<VaccinoPuntoSomministrazioneDto> getAllPuntiSomministrazioneByRegion(Optional<String> regionName) {
 		logger.info("Get all italian vaccination data by region");
 		return dataVacciniPuntiSomministrazioneDocumentService.find(regionName).stream()
 				.map(dataVacciniPuntiSomministrazioneMapper::convertEntityToDto).collect(Collectors.toList());
 	}
-	
+
 	public List<VaccinoPuntoSomministrazioneDto> getAllPuntiSomministrazioneByDistrict(Optional<String> districtName) {
 		logger.info("Get all italian vaccination data by district");
 		return dataVacciniPuntiSomministrazioneDocumentService.findByDistrict(districtName).stream()
 				.map(dataVacciniPuntiSomministrazioneMapper::convertEntityToDto).collect(Collectors.toList());
 	}
-	
 
 	public List<VaccinoTotaleRegioneDto> getItalianDataByRegion(Optional<String> regionName) {
 		logger.info("Get all italian vaccination data");
@@ -80,11 +81,14 @@ public class VacciniService {
 				.map(dataVacciniSummaryMapper::convertEntityToDto).collect(Collectors.toList());
 	}
 
-	public List<TracciamentoVaccinoRegionaleDto> getRegionData(Optional<String> regionName) {
+	public HashMap<String, HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>> getRegionData(
+			Optional<String> regionName) {
 		logger.info("Get all vaccination data by region");
-		return dataVacciniSomministrazioneRegionaleSummaryDocumentService.find(regionName).stream()
-				.map(dataVacciniSomministrazioneRegionaleSummaryMapper::convertEntityToDto)
-				.collect(Collectors.toList());
+
+		List<DataVacciniSomministrazioneRegionaleSummary> allData = dataVacciniSomministrazioneRegionaleSummaryDocumentService
+				.find(regionName);
+
+		return dataVacciniSomministrazioneRegionaleSummaryMapper.group(allData);
 	}
 
 	public TracciamentoVaccinoNazionaleResponseDto getItalianDataGroup() {

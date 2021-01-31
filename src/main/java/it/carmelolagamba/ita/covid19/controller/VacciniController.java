@@ -1,5 +1,6 @@
 package it.carmelolagamba.ita.covid19.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import it.carmelolagamba.ita.covid19.service.VacciniService;
 import it.carmelolagamba.ita.covid19.view.RankingDto;
 import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoNazionaleResponseDto;
-import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoRegionaleDto;
+import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoRegionaleDetailsDto;
 import it.carmelolagamba.ita.covid19.view.VaccinoPuntoSomministrazioneDto;
 import it.carmelolagamba.ita.covid19.view.VaccinoTotaleRegioneDto;
 
@@ -35,7 +36,7 @@ public class VacciniController {
 	
 	@ApiOperation(value = "Dettaglio vaccini per regione")
 	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/region/{name}")
-	public List<TracciamentoVaccinoRegionaleDto> regionsByCategory(@PathVariable("name") String name) {
+	public HashMap<String, HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>> regionsByCategory(@PathVariable("name") String name) {
 		return vacciniService.getRegionData(Optional.of(name));
 	}
 	

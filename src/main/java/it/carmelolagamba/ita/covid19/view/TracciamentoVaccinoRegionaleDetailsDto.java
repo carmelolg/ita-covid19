@@ -4,39 +4,15 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class TracciamentoVaccinoRegionaleDto {
+public class TracciamentoVaccinoRegionaleDetailsDto {
 
-	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="Europe/Rome")
-	private Date dataSomministrazione;
-	private String fornitore;
 	private String area, areaDescrizione;
-	private String fasciaAnagrafica;
-	private int sessoMaschile, sessoFemminile, categoriaOss, categoriaNonSanitari, categoriaRsa, categoriaOver80,
+	private int categoriaOss, categoriaNonSanitari, categoriaRsa, categoriaOver80,
 			primaDose, secondaDose;
+	
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone="Europe/Rome")
 	private Date ultimoAggiornamentoInterno;
 	
-	/**
-	 * Data utile per restituire i soli dati quotidiani, quando verranno restituiti tutti sara un campo null.
-	 */
-	private Date dataRiferimento;
-
-	public Date getDataSomministrazione() {
-		return dataSomministrazione;
-	}
-
-	public void setDataSomministrazione(Date dataSomministrazione) {
-		this.dataSomministrazione = dataSomministrazione;
-	}
-
-	public String getFornitore() {
-		return fornitore;
-	}
-
-	public void setFornitore(String fornitore) {
-		this.fornitore = fornitore;
-	}
-
 	public String getArea() {
 		return area;
 	}
@@ -51,30 +27,6 @@ public class TracciamentoVaccinoRegionaleDto {
 
 	public void setAreaDescrizione(String areaDescrizione) {
 		this.areaDescrizione = areaDescrizione;
-	}
-
-	public String getFasciaAnagrafica() {
-		return fasciaAnagrafica;
-	}
-
-	public void setFasciaAnagrafica(String fasciaAnagrafica) {
-		this.fasciaAnagrafica = fasciaAnagrafica;
-	}
-
-	public int getSessoMaschile() {
-		return sessoMaschile;
-	}
-
-	public void setSessoMaschile(int sessoMaschile) {
-		this.sessoMaschile = sessoMaschile;
-	}
-
-	public int getSessoFemminile() {
-		return sessoFemminile;
-	}
-
-	public void setSessoFemminile(int sessoFemminile) {
-		this.sessoFemminile = sessoFemminile;
 	}
 
 	public int getCategoriaOss() {
@@ -131,14 +83,6 @@ public class TracciamentoVaccinoRegionaleDto {
 
 	public void setUltimoAggiornamentoInterno(Date ultimoAggiornamentoInterno) {
 		this.ultimoAggiornamentoInterno = ultimoAggiornamentoInterno;
-	}
-
-	public Date getDataRiferimento() {
-		return dataRiferimento;
-	}
-
-	public void setDataRiferimento(Date dataRiferimento) {
-		this.dataRiferimento = dataRiferimento;
 	}
 
 }
