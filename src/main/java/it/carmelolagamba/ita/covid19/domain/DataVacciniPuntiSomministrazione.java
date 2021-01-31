@@ -17,7 +17,8 @@ public class DataVacciniPuntiSomministrazione {
 	private Date ultimo_aggiornamento_interno;
 
 	public enum FIELD {
-		AREA, PROVINCIA, COMUNE, PRESIDIO_OSPEDALIERO
+		AREA, PROVINCIA, COMUNE, PRESIDIO_OSPEDALIERO, CODICE_NUTS1,
+		CODICE_NUTS2, CODICE_REGIONE_ISTAT, NOME_AREA
 	}
 
 	public ObjectId getIdProperty() {
