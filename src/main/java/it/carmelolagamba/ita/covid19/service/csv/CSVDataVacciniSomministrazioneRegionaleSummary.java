@@ -37,7 +37,7 @@ public class CSVDataVacciniSomministrazioneRegionaleSummary
 			vacciniSomministrazioneRegionaleSummary.setArea(value);
 			break;
 		case NOME_AREA:
-			vacciniSomministrazioneRegionaleSummary.setArea_descrizione(value);
+			//vacciniSomministrazioneRegionaleSummary.setArea_descrizione(value);
 			break;
 		case FASCIA_ANAGRAFICA:
 			vacciniSomministrazioneRegionaleSummary.setFascia_anagrafica(value);

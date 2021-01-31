@@ -32,7 +32,7 @@ public class CSVDataVacciniPuntiSomministrazione extends AbstractCSVDataReader<D
 			puntiSomministrazione.setArea(value);
 			break;
 		case NOME_AREA:
-			puntiSomministrazione.setArea_descrizione(value);
+			//puntiSomministrazione.setArea_descrizione(value);
 			break;
 		case PROVINCIA:
 			puntiSomministrazione.setProvincia(value);
