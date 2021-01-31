@@ -36,7 +36,7 @@ public class VacciniController {
 	
 	@ApiOperation(value = "Dettaglio vaccini per regione")
 	@RequestMapping(method = RequestMethod.GET, path = "/vaccine/region/{name}")
-	public HashMap<String, HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>> regionsByCategory(@PathVariable("name") String name) {
+	public HashMap<String, List<TracciamentoVaccinoRegionaleDetailsDto>> regionsByCategory(@PathVariable("name") String name) {
 		return vacciniService.getRegionData(Optional.of(name));
 	}
 	

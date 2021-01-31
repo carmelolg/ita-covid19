@@ -1,7 +1,9 @@
 package it.carmelolagamba.ita.covid19.domain.mapper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -11,20 +13,24 @@ import it.carmelolagamba.ita.covid19.view.TracciamentoVaccinoRegionaleDetailsDto
 @Component
 public class DataVacciniSomministrazioneRegionaleSummaryMapper {
 
-	public HashMap<String, HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>> group(
+	public HashMap<String, List<TracciamentoVaccinoRegionaleDetailsDto>> group(
 			List<DataVacciniSomministrazioneRegionaleSummary> allData) {
 
-		HashMap<String, HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>> grouped = new HashMap<String, HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>>();
+		HashMap<String, List<TracciamentoVaccinoRegionaleDetailsDto>> grouped = new HashMap<String, List<TracciamentoVaccinoRegionaleDetailsDto>>();
 
 		for (DataVacciniSomministrazioneRegionaleSummary entity : allData) {
 
 			String key = entity.getFornitore();
 			String innerKey = entity.getFascia_anagrafica();
-			HashMap<String, TracciamentoVaccinoRegionaleDetailsDto> bean = grouped.get(key);
+			List<TracciamentoVaccinoRegionaleDetailsDto> bean = grouped.get(key);
 			if (bean != null) {
-				TracciamentoVaccinoRegionaleDetailsDto detailBean = bean.get(innerKey);
-				if (detailBean != null) {
+				Optional<TracciamentoVaccinoRegionaleDetailsDto> detailBeanOptional = bean.stream().filter(item -> item.getFasciaAnagrafica().equals(innerKey)).findAny();
+				TracciamentoVaccinoRegionaleDetailsDto detailBean = new TracciamentoVaccinoRegionaleDetailsDto();
+				
+				if(detailBeanOptional.isPresent()) {
+					detailBean = detailBeanOptional.get();
 					TracciamentoVaccinoRegionaleDetailsDto detail = new TracciamentoVaccinoRegionaleDetailsDto();
+					detail.setFasciaAnagrafica(innerKey);
 					detail.setCategoriaNonSanitari(
 							entity.getCategoria_personale_non_sanitario() + detailBean.getCategoriaNonSanitari());
 					detail.setCategoriaOss(
@@ -36,14 +42,15 @@ public class DataVacciniSomministrazioneRegionaleSummaryMapper {
 					detail.setArea(entity.getArea());
 					detail.setAreaDescrizione(entity.getArea_descrizione());
 					detail.setUltimoAggiornamentoInterno(entity.getUltimo_aggiornamento_interno());
-					bean.put(innerKey, detail);
-				} else {
-					bean.put(innerKey, convertEntityToDto(entity));
+					bean.removeIf(item -> item.getFasciaAnagrafica().equals(entity.getFascia_anagrafica()));
+					bean.add(detail);
+				}else {
+					bean.add(convertEntityToDto(entity));
 				}
 			} else {
-				HashMap<String, TracciamentoVaccinoRegionaleDetailsDto> fasciaAnagraficaHashMap = new HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>();
-				fasciaAnagraficaHashMap.put(entity.getFascia_anagrafica(), convertEntityToDto(entity));
-				grouped.put(key, fasciaAnagraficaHashMap);
+				List<TracciamentoVaccinoRegionaleDetailsDto> innerList = new ArrayList<TracciamentoVaccinoRegionaleDetailsDto>();
+				innerList.add(convertEntityToDto(entity));
+				grouped.put(key, innerList);
 			}
 
 		}
@@ -56,6 +63,9 @@ public class DataVacciniSomministrazioneRegionaleSummaryMapper {
 
 		TracciamentoVaccinoRegionaleDetailsDto bean = new TracciamentoVaccinoRegionaleDetailsDto();
 
+		bean.setArea(entity.getArea());
+		bean.setAreaDescrizione(entity.getArea_descrizione());
+		bean.setFasciaAnagrafica(entity.getFascia_anagrafica());
 		bean.setCategoriaNonSanitari(entity.getCategoria_personale_non_sanitario());
 		bean.setCategoriaOss(entity.getCategoria_operatori_sanitari_sociosanitari());
 		bean.setCategoriaOver80(entity.getCategoria_over80());

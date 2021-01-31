@@ -81,7 +81,7 @@ public class VacciniService {
 				.map(dataVacciniSummaryMapper::convertEntityToDto).collect(Collectors.toList());
 	}
 
-	public HashMap<String, HashMap<String, TracciamentoVaccinoRegionaleDetailsDto>> getRegionData(
+	public HashMap<String, List<TracciamentoVaccinoRegionaleDetailsDto>> getRegionData(
 			Optional<String> regionName) {
 		logger.info("Get all vaccination data by region");
 
