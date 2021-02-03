@@ -44,7 +44,7 @@ public class CSVDataVacciniPuntiSomministrazione extends AbstractCSVDataReader<D
 			puntiSomministrazione.setPresidio_ospedaliero(value);
 			break;
 		default:
-            logger.warn("Unexpected value: {}", value);
+            logger.debug("Unexpected value: {}", value);
 		}
 	}
 

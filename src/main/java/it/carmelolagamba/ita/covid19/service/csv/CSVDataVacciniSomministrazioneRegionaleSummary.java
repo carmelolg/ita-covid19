@@ -81,7 +81,7 @@ public class CSVDataVacciniSomministrazioneRegionaleSummary
 			vacciniSomministrazioneRegionaleSummary.setFornitore(value);
 			break;
 		default:
-			logger.warn("Unexpected value: {}", value);
+			logger.debug("Unexpected value: {}", value);
 		}
 	}
 
