@@ -73,6 +73,8 @@ public class DataVacciniSomministrazioneRegionaleSummaryMapper {
 		bean.setPrimaDose(entity.getPrima_dose());
 		bean.setSecondaDose(entity.getSeconda_dose());
 		bean.setUltimoAggiornamentoInterno(entity.getUltimo_aggiornamento_interno());
+		bean.setCategoriaForzeArmate(entity.getCategoria_forze_armate());
+		bean.setCategoriaScuola(entity.getCategoria_personale_scolastico());
 
 		return bean;
 	}

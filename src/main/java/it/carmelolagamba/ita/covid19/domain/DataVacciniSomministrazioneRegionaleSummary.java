@@ -15,13 +15,15 @@ public class DataVacciniSomministrazioneRegionaleSummary {
 	private String area, area_descrizione;
 	private String fascia_anagrafica;
 	private int sesso_maschile, sesso_femminile, categoria_operatori_sanitari_sociosanitari,
-			categoria_personale_non_sanitario, categoria_ospiti_rsa, categoria_over80, prima_dose, seconda_dose;
+			categoria_personale_non_sanitario, categoria_ospiti_rsa, categoria_over80, categoria_forze_armate,
+			categoria_personale_scolastico, prima_dose, seconda_dose;
 	private Date ultimo_aggiornamento_interno;
 
 	public enum FIELD {
 		DATA_SOMMINISTRAZIONE, FORNITORE, AREA, FASCIA_ANAGRAFICA, SESSO_MASCHILE, SESSO_FEMMINILE, CATEGORIA_OSS,
-		CATEGORIA_PERSONALE_NON_SANITARIO, CATEGORIA_RSA, CATEGORIA_OVER80, PRIMA_DOSE, SECONDA_DOSE, CODICE_NUTS1,
-		CODICE_NUTS2, CODICE_REGIONE_ISTAT, NOME_AREA
+		CATEGORIA_PERSONALE_NON_SANITARIO, CATEGORIA_RSA, CATEGORIA_OVER80, CATEGORIA_FORZE_ARMATE,
+		CATEGORIA_PERSONALE_SCOLASTICO, PRIMA_DOSE, SECONDA_DOSE, CODICE_NUTS1, CODICE_NUTS2, CODICE_REGIONE_ISTAT,
+		NOME_AREA
 	}
 
 	public ObjectId getIdProperty() {
@@ -142,6 +144,22 @@ public class DataVacciniSomministrazioneRegionaleSummary {
 
 	public void setUltimo_aggiornamento_interno(Date ultimo_aggiornamento_interno) {
 		this.ultimo_aggiornamento_interno = ultimo_aggiornamento_interno;
+	}
+
+	public int getCategoria_forze_armate() {
+		return categoria_forze_armate;
+	}
+
+	public void setCategoria_forze_armate(int categoria_forze_armate) {
+		this.categoria_forze_armate = categoria_forze_armate;
+	}
+
+	public int getCategoria_personale_scolastico() {
+		return categoria_personale_scolastico;
+	}
+
+	public void setCategoria_personale_scolastico(int categoria_personale_scolastico) {
+		this.categoria_personale_scolastico = categoria_personale_scolastico;
 	}
 
 }

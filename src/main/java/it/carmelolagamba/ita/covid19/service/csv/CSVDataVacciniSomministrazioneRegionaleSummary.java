@@ -68,6 +68,12 @@ public class CSVDataVacciniSomministrazioneRegionaleSummary
 		case CATEGORIA_RSA:
 			vacciniSomministrazioneRegionaleSummary.setCategoria_ospiti_rsa(FileUtils.convertStringToInteger(value));
 			break;
+		case CATEGORIA_FORZE_ARMATE:
+			vacciniSomministrazioneRegionaleSummary.setCategoria_forze_armate(FileUtils.convertStringToInteger(value));
+			break;
+		case CATEGORIA_PERSONALE_SCOLASTICO:
+			vacciniSomministrazioneRegionaleSummary.setCategoria_personale_scolastico(FileUtils.convertStringToInteger(value));
+			break;
 		case DATA_SOMMINISTRAZIONE:
 			try {
 				Calendar dateCalendar = Calendar.getInstance();

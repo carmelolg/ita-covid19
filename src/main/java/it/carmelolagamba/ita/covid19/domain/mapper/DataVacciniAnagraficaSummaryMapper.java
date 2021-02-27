@@ -23,6 +23,8 @@ public class DataVacciniAnagraficaSummaryMapper {
 		bean.setSessoFemminile(entity.getSesso_femminile());
 		bean.setUltimoAggiornamento(entity.getUltimo_aggiornamento());
 		bean.setUltimoAggiornamentoInterno(entity.getUltimo_aggiornamento_interno());
+		bean.setCategoriaForzeArmate(entity.getCategoria_forze_armate());
+		bean.setCategoriaScuola(entity.getCategoria_personale_scolastico());
 
 		return bean;
 	}
