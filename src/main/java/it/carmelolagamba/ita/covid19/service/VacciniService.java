@@ -128,6 +128,15 @@ public class VacciniService {
 
 		total.setSessoMaschile(ageGroups.stream().filter(item -> item.getSessoMaschile() > 0)
 				.mapToInt(item -> item.getSessoMaschile()).sum());
+		
+		total.setCategoriaAltro(ageGroups.stream().filter(item -> item.getCategoriaAltro() > 0)
+				.mapToInt(item -> item.getCategoriaAltro()).sum());	
+		
+		total.setCategoriaForzeArmate(ageGroups.stream().filter(item -> item.getCategoriaForzeArmate() > 0)
+				.mapToInt(item -> item.getCategoriaForzeArmate()).sum());
+		
+		total.setCategoriaScuola(ageGroups.stream().filter(item -> item.getCategoriaScuola() > 0)
+				.mapToInt(item -> item.getCategoriaScuola()).sum());
 
 		response.setAll(total);
 		response.setAgeGroups(ageGroups);
