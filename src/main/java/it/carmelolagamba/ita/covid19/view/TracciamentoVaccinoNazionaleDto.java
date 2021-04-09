@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class TracciamentoVaccinoNazionaleDto {
 
 	private String fasciaAnagrafica;
-	private int sessoMaschile, sessoFemminile, categoriaOss, categoriaNonSanitari, categoriaRsa, categoriaOver80,
-			categoriaForzeArmate, categoriaScuola, primaDose, secondaDose;
+	private int sessoMaschile, sessoFemminile, categoriaOss, categoriaNonSanitari, categoriaAltro, categoriaRsa,
+			categoriaOver80, categoriaForzeArmate, categoriaScuola, primaDose, secondaDose;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "Europe/Rome")
 	private Date ultimoAggiornamento, ultimoAggiornamentoInterno;
@@ -115,6 +115,14 @@ public class TracciamentoVaccinoNazionaleDto {
 
 	public void setCategoriaScuola(int categoriaScuola) {
 		this.categoriaScuola = categoriaScuola;
+	}
+
+	public int getCategoriaAltro() {
+		return categoriaAltro;
+	}
+
+	public void setCategoriaAltro(int categoriaAltro) {
+		this.categoriaAltro = categoriaAltro;
 	}
 
 }

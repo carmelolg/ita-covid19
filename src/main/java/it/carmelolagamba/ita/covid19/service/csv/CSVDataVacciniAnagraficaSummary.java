@@ -77,6 +77,9 @@ public class CSVDataVacciniAnagraficaSummary extends AbstractCSVDataReader<DataV
 		case CATEGORIA_PERSONALE_SCOLASTICO:
 			anagraficaVacciniSummary.setCategoria_personale_scolastico(FileUtils.convertStringToInteger(value));
 			break;
+		case CATEGORIA_ALTRO:
+			anagraficaVacciniSummary.setCategoria_altro(FileUtils.convertStringToInteger(value));
+			break;
 		default:
 			logger.debug("Unexpected value: {}", value);
 		}

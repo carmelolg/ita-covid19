@@ -12,15 +12,15 @@ public class DataVacciniAnagraficaSummary {
 
 	private String fascia_anagrafica;
 	private int totale, sesso_maschile, sesso_femminile, categoria_operatori_sanitari_sociosanitari,
-			categoria_personale_non_sanitario, categoria_ospiti_rsa, categoria_over80, categoria_forze_armate,
-			categoria_personale_scolastico, prima_dose, seconda_dose;
+			categoria_personale_non_sanitario, categoria_altro, categoria_ospiti_rsa, categoria_over80,
+			categoria_forze_armate, categoria_personale_scolastico, prima_dose, seconda_dose;
 	private Date ultimo_aggiornamento;
 	private Date ultimo_aggiornamento_interno;
 
 	public enum FIELD {
 		FASCIA_ANAGRAFICA, TOTALE, SESSO_MASCHILE, SESSO_FEMMINILE, CATEGORIA_OSS, CATEGORIA_PERSONALE_NON_SANITARIO,
-		CATEGORIA_RSA, CATEGORIA_OVER80, CATEGORIA_FORZE_ARMATE, CATEGORIA_PERSONALE_SCOLASTICO, PRIMA_DOSE,
-		SECONDA_DOSE, ULTIMO_AGGIORNAMENTO
+		CATEGORIA_ALTRO, CATEGORIA_RSA, CATEGORIA_OVER80, CATEGORIA_FORZE_ARMATE, CATEGORIA_PERSONALE_SCOLASTICO,
+		PRIMA_DOSE, SECONDA_DOSE, ULTIMO_AGGIORNAMENTO
 	}
 
 	public ObjectId getIdProperty() {
@@ -141,6 +141,14 @@ public class DataVacciniAnagraficaSummary {
 
 	public void setCategoria_personale_scolastico(int categoria_personale_scolastico) {
 		this.categoria_personale_scolastico = categoria_personale_scolastico;
+	}
+
+	public int getCategoria_altro() {
+		return categoria_altro;
+	}
+
+	public void setCategoria_altro(int categoria_altro) {
+		this.categoria_altro = categoria_altro;
 	}
 
 }
