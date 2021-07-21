@@ -19,6 +19,7 @@ public class DataVacciniAnagraficaSummaryMapper {
 		bean.setCategoriaRsa(entity.getCategoria_ospiti_rsa());
 		bean.setPrimaDose(entity.getPrima_dose());
 		bean.setSecondaDose(entity.getSeconda_dose());
+		bean.setPregressaInfezione(entity.getPregressa_infezione());
 		bean.setSessoMaschile(entity.getSesso_maschile());
 		bean.setSessoFemminile(entity.getSesso_femminile());
 		bean.setUltimoAggiornamento(entity.getUltimo_aggiornamento());

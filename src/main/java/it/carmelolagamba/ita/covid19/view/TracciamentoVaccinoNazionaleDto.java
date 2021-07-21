@@ -8,7 +8,7 @@ public class TracciamentoVaccinoNazionaleDto {
 
 	private String fasciaAnagrafica;
 	private int sessoMaschile, sessoFemminile, categoriaOss, categoriaNonSanitari, categoriaAltro, categoriaRsa,
-			categoriaOver80, categoriaForzeArmate, categoriaScuola, primaDose, secondaDose;
+			categoriaOver80, categoriaForzeArmate, categoriaScuola, primaDose, secondaDose, pregressaInfezione;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "Europe/Rome")
 	private Date ultimoAggiornamento, ultimoAggiornamentoInterno;
@@ -123,6 +123,14 @@ public class TracciamentoVaccinoNazionaleDto {
 
 	public void setCategoriaAltro(int categoriaAltro) {
 		this.categoriaAltro = categoriaAltro;
+	}
+
+	public int getPregressaInfezione() {
+		return pregressaInfezione;
+	}
+
+	public void setPregressaInfezione(int pregressaInfezione) {
+		this.pregressaInfezione = pregressaInfezione;
 	}
 
 }

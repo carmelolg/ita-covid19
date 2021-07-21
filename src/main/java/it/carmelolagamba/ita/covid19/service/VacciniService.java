@@ -123,6 +123,9 @@ public class VacciniService {
 		total.setSecondaDose(ageGroups.stream().filter(item -> item.getSecondaDose() > 0)
 				.mapToInt(item -> item.getSecondaDose()).sum());
 
+		total.setPregressaInfezione(ageGroups.stream().filter(item -> item.getPregressaInfezione() > 0)
+				.mapToInt(item -> item.getPregressaInfezione()).sum());
+
 		total.setSessoFemminile(ageGroups.stream().filter(item -> item.getSessoFemminile() > 0)
 				.mapToInt(item -> item.getSessoFemminile()).sum());
 
