@@ -16,14 +16,14 @@ public class DataVacciniSomministrazioneRegionaleSummary {
 	private String fascia_anagrafica;
 	private int sesso_maschile, sesso_femminile, categoria_operatori_sanitari_sociosanitari,
 			categoria_personale_non_sanitario, categoria_ospiti_rsa, categoria_over80, categoria_forze_armate,
-			categoria_personale_scolastico, prima_dose, seconda_dose;
+			categoria_personale_scolastico, prima_dose, seconda_dose, pregressa_infezione, dose_aggiuntiva, dose_booster;
 	private Date ultimo_aggiornamento_interno;
 
 	public enum FIELD {
 		DATA_SOMMINISTRAZIONE, FORNITORE, AREA, FASCIA_ANAGRAFICA, SESSO_MASCHILE, SESSO_FEMMINILE, CATEGORIA_OSS,
 		CATEGORIA_PERSONALE_NON_SANITARIO, CATEGORIA_RSA, CATEGORIA_OVER80, CATEGORIA_FORZE_ARMATE,
 		CATEGORIA_PERSONALE_SCOLASTICO, PRIMA_DOSE, SECONDA_DOSE, CODICE_NUTS1, CODICE_NUTS2, CODICE_REGIONE_ISTAT,
-		NOME_AREA
+		NOME_AREA, PREGRESSA_INFEZIONE, DOSE_AGGIUNTIVA, DOSE_BOOSTER
 	}
 
 	public ObjectId getIdProperty() {
@@ -162,4 +162,27 @@ public class DataVacciniSomministrazioneRegionaleSummary {
 		this.categoria_personale_scolastico = categoria_personale_scolastico;
 	}
 
+	public int getPregressa_infezione() {
+		return pregressa_infezione;
+	}
+
+	public void setPregressa_infezione(int pregressa_infezione) {
+		this.pregressa_infezione = pregressa_infezione;
+	}
+
+	public int getDose_aggiuntiva() {
+		return dose_aggiuntiva;
+	}
+
+	public void setDose_aggiuntiva(int dose_aggiuntiva) {
+		this.dose_aggiuntiva = dose_aggiuntiva;
+	}
+
+	public int getDose_booster() {
+		return dose_booster;
+	}
+
+	public void setDose_booster(int dose_booster) {
+		this.dose_booster = dose_booster;
+	}
 }

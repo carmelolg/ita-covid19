@@ -42,6 +42,8 @@ public class DataVacciniSomministrazioneRegionaleSummaryMapper {
 					detail.setArea(entity.getArea());
 					detail.setAreaDescrizione(entity.getArea_descrizione());
 					detail.setUltimoAggiornamentoInterno(entity.getUltimo_aggiornamento_interno());
+					detail.setTerza_dose(entity.getDose_aggiuntiva() + entity.getDose_booster());
+					detail.setPregressa_infezione(entity.getPregressa_infezione());
 					bean.removeIf(item -> item.getFasciaAnagrafica().equals(entity.getFascia_anagrafica()));
 					bean.add(detail);
 				}else {

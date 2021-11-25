@@ -27,6 +27,7 @@ public class DataVacciniAnagraficaSummaryMapper {
 		bean.setCategoriaForzeArmate(entity.getCategoria_forze_armate());
 		bean.setCategoriaScuola(entity.getCategoria_personale_scolastico());
 		bean.setCategoriaAltro(entity.getCategoria_altro());
+		bean.setTerzaDose(entity.getDose_aggiuntiva() + entity.getDose_booster());
 
 		return bean;
 	}
