@@ -101,6 +101,8 @@ public class VacciniService {
 		List<TracciamentoVaccinoNazionaleDto> ageGroups = dataVacciniAnagraficaSummaryDocumentService.findAll().stream()
 				.map(dataVacciniAnagraficaSummaryMapper::convertEntityToDto).collect(Collectors.toList());
 
+
+
 		TracciamentoVaccinoNazionaleDto first = ageGroups.stream().findFirst().orElse(null);
 		total.setUltimoAggiornamento(first.getUltimoAggiornamento());
 		total.setUltimoAggiornamentoInterno(first.getUltimoAggiornamentoInterno());

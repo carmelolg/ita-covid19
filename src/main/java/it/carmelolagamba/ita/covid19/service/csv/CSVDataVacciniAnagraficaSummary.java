@@ -67,7 +67,7 @@ public class CSVDataVacciniAnagraficaSummary extends AbstractCSVDataReader<DataV
             case DOSE_BOOSTER:
                 anagraficaVacciniSummary.setDose_booster(FileUtils.convertStringToInteger(value));
                 break;
-            case CATEGORIA_OSS:
+            /*case CATEGORIA_OSS:
                 anagraficaVacciniSummary
                         .setCategoria_operatori_sanitari_sociosanitari(FileUtils.convertStringToInteger(value));
                 break;
@@ -89,6 +89,7 @@ public class CSVDataVacciniAnagraficaSummary extends AbstractCSVDataReader<DataV
             case CATEGORIA_ALTRO:
                 anagraficaVacciniSummary.setCategoria_altro(FileUtils.convertStringToInteger(value));
                 break;
+                */
             default:
                 logger.debug("Unexpected value: {}", value);
         }

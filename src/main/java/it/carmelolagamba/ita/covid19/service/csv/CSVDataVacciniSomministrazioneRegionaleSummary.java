@@ -63,7 +63,7 @@ public class CSVDataVacciniSomministrazioneRegionaleSummary
             case DOSE_BOOSTER:
                 vacciniSomministrazioneRegionaleSummary.setDose_booster(FileUtils.convertStringToInteger(value));
                 break;
-
+/*
             case CATEGORIA_OSS:
                 vacciniSomministrazioneRegionaleSummary
                         .setCategoria_operatori_sanitari_sociosanitari(FileUtils.convertStringToInteger(value));
@@ -84,6 +84,7 @@ public class CSVDataVacciniSomministrazioneRegionaleSummary
             case CATEGORIA_PERSONALE_SCOLASTICO:
                 vacciniSomministrazioneRegionaleSummary.setCategoria_personale_scolastico(FileUtils.convertStringToInteger(value));
                 break;
+                */
             case DATA_SOMMINISTRAZIONE:
                 try {
                     Calendar dateCalendar = Calendar.getInstance();
