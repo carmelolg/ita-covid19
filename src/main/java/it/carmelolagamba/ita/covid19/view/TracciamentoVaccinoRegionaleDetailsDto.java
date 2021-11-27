@@ -8,7 +8,7 @@ public class TracciamentoVaccinoRegionaleDetailsDto {
 
 	private String area, areaDescrizione, fasciaAnagrafica;
 	private int categoriaOss, categoriaNonSanitari, categoriaRsa, categoriaOver80, categoriaForzeArmate,
-			categoriaScuola, primaDose, secondaDose, pregressa_infezione, terza_dose;
+			categoriaScuola, primaDose, secondaDose, pregressaInfezione, terzaDose;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ", timezone = "Europe/Rome")
 	private Date ultimoAggiornamentoInterno;
@@ -109,19 +109,19 @@ public class TracciamentoVaccinoRegionaleDetailsDto {
 		this.categoriaScuola = categoriaScuola;
 	}
 
-	public int getPregressa_infezione() {
-		return pregressa_infezione;
+	public int getPregressaInfezione() {
+		return pregressaInfezione;
 	}
 
-	public void setPregressa_infezione(int pregressa_infezione) {
-		this.pregressa_infezione = pregressa_infezione;
+	public void setPregressaInfezione(int pregressa_infezione) {
+		this.pregressaInfezione = pregressa_infezione;
 	}
 
-	public int getTerza_dose() {
-		return terza_dose;
+	public int getTerzaDose() {
+		return terzaDose;
 	}
 
-	public void setTerza_dose(int terza_dose) {
-		this.terza_dose = terza_dose;
+	public void setTerzaDose(int terza_dose) {
+		this.terzaDose = terza_dose;
 	}
 }

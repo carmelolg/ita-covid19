@@ -39,11 +39,11 @@ public class DataVacciniSomministrazioneRegionaleSummaryMapper {
 					detail.setCategoriaRsa(entity.getCategoria_ospiti_rsa() + detailBean.getCategoriaRsa());
 					detail.setPrimaDose(entity.getPrima_dose() + detailBean.getPrimaDose());
 					detail.setSecondaDose(entity.getSeconda_dose() + detailBean.getSecondaDose());
-					detail.setTerza_dose(entity.getDose_aggiuntiva() + entity.getDose_booster() + detailBean.getTerza_dose());
+					detail.setTerzaDose(entity.getDose_aggiuntiva() + entity.getDose_booster() + detailBean.getTerzaDose());
 					detail.setArea(entity.getArea());
 					detail.setAreaDescrizione(entity.getArea_descrizione());
 					detail.setUltimoAggiornamentoInterno(entity.getUltimo_aggiornamento_interno());
-					detail.setPregressa_infezione(entity.getPregressa_infezione());
+					detail.setPregressaInfezione(entity.getPregressa_infezione());
 					bean.removeIf(item -> item.getFasciaAnagrafica().equals(entity.getFascia_anagrafica()));
 					bean.add(detail);
 				}else {
@@ -74,7 +74,7 @@ public class DataVacciniSomministrazioneRegionaleSummaryMapper {
 		bean.setCategoriaRsa(entity.getCategoria_ospiti_rsa());
 		bean.setPrimaDose(entity.getPrima_dose());
 		bean.setSecondaDose(entity.getSeconda_dose());
-		bean.setTerza_dose(entity.getDose_booster() + entity.getDose_aggiuntiva());
+		bean.setTerzaDose(entity.getDose_booster() + entity.getDose_aggiuntiva());
 		bean.setUltimoAggiornamentoInterno(entity.getUltimo_aggiornamento_interno());
 		bean.setCategoriaForzeArmate(entity.getCategoria_forze_armate());
 		bean.setCategoriaScuola(entity.getCategoria_personale_scolastico());
