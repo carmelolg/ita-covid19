@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.mongodb.BasicDBObject;
 
 import it.carmelolagamba.ita.covid19.domain.DataVacciniAnagraficaSummary;
+import it.carmelolagamba.mongo.filter.SortOperator;
 import it.carmelolagamba.mongo.service.crud.AbstractDocumentService;
 
 @Component
@@ -27,8 +28,12 @@ public class DataVacciniAnagraficaSummaryDocumentService extends AbstractDocumen
 	public List<DataVacciniAnagraficaSummary> findAll() {
 
 		logger.info("Find all anagrafiche vaccini summary");
+
+		HashMap<String, Object> sortFilters = new HashMap<>();
+		sortFilters.put("fascia_anagrafica", SortOperator.ASC.getValue());
+		
 		return findByFilters(dataAnagraficaVacciniSummaryCollectionService.getCollection(COLLECTION_NAME),
-				new HashMap<String, Object>());
+				new HashMap<String, Object>(), sortFilters);
 
 	}
 
