@@ -101,8 +101,6 @@ public class VacciniService {
 		List<TracciamentoVaccinoNazionaleDto> ageGroups = dataVacciniAnagraficaSummaryDocumentService.findAll().stream()
 				.map(dataVacciniAnagraficaSummaryMapper::convertEntityToDto).collect(Collectors.toList());
 
-
-
 		TracciamentoVaccinoNazionaleDto first = ageGroups.stream().findFirst().orElse(null);
 		total.setUltimoAggiornamento(first.getUltimoAggiornamento());
 		total.setUltimoAggiornamentoInterno(first.getUltimoAggiornamentoInterno());
@@ -125,6 +123,9 @@ public class VacciniService {
 		total.setSecondaDose(ageGroups.stream().filter(item -> item.getSecondaDose() > 0)
 				.mapToInt(item -> item.getSecondaDose()).sum());
 
+		total.setTerzaDose(ageGroups.stream().filter(item -> item.getTerzaDose() > 0)
+				.mapToInt(item -> item.getTerzaDose()).sum());
+		
 		total.setPregressaInfezione(ageGroups.stream().filter(item -> item.getPregressaInfezione() > 0)
 				.mapToInt(item -> item.getPregressaInfezione()).sum());
 
